@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_solicitud_l"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/menu_solicitud_l" />
+        <item
+            android:id="@+id/nav_lista_l"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/menu_lista_l" />
+        <item
+            android:id="@+id/nav_devolucion_l"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/menu_Devolucion_l" />
+        <item
+            android:id="@+id/nav_registro_b"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/menu_Registro_B" />
+        <item
+            android:id="@+id/nav_listado_p"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/menu_listado_pres" />
+        <item
+            android:id="@+id/nav_listado_b"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/menu_listado_b" />
+        <item
+            android:id="@+id/nav_listado_l"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/menu_listado_l" />
+        <item
+            android:id="@+id/nav_listas"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/menu_listas" />
+        <item
+            android:id="@+id/nav_registro_l"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/menu_registro_l" />
+        <item
+            android:id="@+id/nav_solicitud_l_pen"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/menu_solicitud_l_pen" />
+
+    </group>
+</menu>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_solicitud_l">
+
+    <fragment
+        android:id="@+id/nav_solicitud_l"
+        android:name="com.example.istateca.ui.solicitud_libro.HomeFragment"
+        android:label="@string/menu_solicitud_l"
+        tools:layout="@layout/fragment_solicitud_l" />
+
+    <fragment
+        android:id="@+id/nav_lista_l"
+        android:name="com.example.istateca.ui.lista_libros.GalleryFragment"
+        android:label="@string/menu_lista_l"
+        tools:layout="@layout/fragment_l_libros" />
+
+    <fragment
+        android:id="@+id/nav_devolucion_l"
+        android:name="com.example.istateca.ui.devolucion_libros.SlideshowFragment"
+        android:label="@string/menu_Devolucion_l"
+        tools:layout="@layout/fragment_devolucion_l" />
+    <fragment
+        android:id="@+id/nav_registro_b"
+        android:name="com.example.istateca.ui.registro_bibliotecario.BibliotecarioFragment"
+        android:label="@string/menu_Registro_B"
+        tools:layout="@layout/fragment_bibliotecario" />
+    <fragment
+        android:id="@+id/nav_listado_p"
+        android:name="com.example.istateca.ui.listado_prestamos.lisatdo_prestamosFragment"
+        android:label="@string/menu_listado_pres"
+        tools:layout="@layout/fragment_lisatdo_prestamos" />
+    <fragment
+        android:id="@+id/nav_listado_b"
+        android:name="com.example.istateca.ui.listado_bibliotecario.listado_bibliotecarioFragment"
+        android:label="@string/menu_listado_b"
+        tools:layout="@layout/fragment_listado_bibliotecario" />
+    <fragment
+        android:id="@+id/nav_listado_l"
+        android:name="com.example.istateca.ui.lisatdo_libros.listado_l_Fragment"
+        android:label="@string/menu_listado_l"
+        tools:layout="@layout/fragment_listado_l_" />
+    <fragment
+        android:id="@+id/nav_listas"
+        android:name="com.example.istateca.ui.listas.listasFragment"
+        android:label="@string/menu_listas"
+        tools:layout="@layout/fragment_listas" />
+    <fragment
+        android:id="@+id/nav_registro_l"
+        android:name="com.example.istateca.ui.registro_libros.registro_librosFragment"
+        android:label="@string/menu_registro_l"
+        tools:layout="@layout/fragment_registro_libros" />
+    <fragment
+        android:id="@+id/nav_solicitud_l_pen"
+        android:name="com.example.istateca.ui.solicitud_l_pendientes.solicitud_l_pendientesFragment"
+        android:label="@string/menu_Registro_B"
+        tools:layout="@layout/fragment_solicitud_l_pendientes" />
+</navigation>

@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">IstaTeca</string>
+    <string name="title_activity_vprincipal">V_principal</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_lista_l">Lista de libros</string>
+    <string name="menu_solicitud_l">Solicitud del libro</string>
+    <string name="menu_Devolucion_l">Devolucion del libro</string>
+    <string name="menu_Registro_B">Registro Bibliotecario</string>
+    <string name="menu_listado_pres">Listado de Prestamos</string>
+    <string name="menu_listado_b">Listado de Bibliotecario</string>
+    <string name="menu_listado_l">Listado de Libros</string>
+    <string name="menu_listas">Listas</string>
+    <string name="menu_registro_l">Registro de Libros</string>
+    <string name="menu_solicitud_l_pen">Solicitud de libros pendientes</string>
+
 </resources>
