@@ -16,7 +16,7 @@ import com.example.istateca.R;
 
 public class registro_librosFragment extends Fragment {
 
-    private RegistroLibrosViewModel mViewModel;
+
 
     public static registro_librosFragment newInstance() {
         return new registro_librosFragment();
@@ -31,7 +31,7 @@ public class registro_librosFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(RegistroLibrosViewModel.class);
+      //  mViewModel = new ViewModelProvider(this).get(RegistroLibrosViewModel.class);
         // TODO: Use the ViewModel
     }
 
