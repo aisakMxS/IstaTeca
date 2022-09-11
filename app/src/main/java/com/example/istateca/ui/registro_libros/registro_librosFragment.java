@@ -50,12 +50,14 @@ public class registro_librosFragment extends Fragment {
 
 
 
-                Libro l = new Libro(1,"Dewey","El chema",1,"adquisicionqwe",1980,"Editort","Cuenca", 90, "Area", "Isbn123"
-                        , "Español", "Descripcion aasfa", "IUno", "IDos","Itres","Dimensiones", "Estado", false,byteArrray,"asfasdURL",1,null,true,"Christian",byteArrray);
+                Libro l = new Libro(5,"Dewey","El chema",1,"adquisicionqwe",1980,"Editort","Cuenca", 90, "Area", "Isbn123"
+                        , "Español", "Descripcion aasfa", "IUno", "IDos","Itres","Dimensiones", "Estado", false,null,"asfasdURL",1,null,true,"Christian",null);
 
                 create(l);
 
+
             }
+
         });
 
 
@@ -63,7 +65,7 @@ public class registro_librosFragment extends Fragment {
     }
 
     private void create(Libro l){
-        Retrofit retrofit= new Retrofit.Builder().baseUrl("http://192.168.68.110:8080/api/").addConverterFactory(GsonConverterFactory.create()).build();
+        Retrofit retrofit= new Retrofit.Builder().baseUrl("http://10.0.2.2:8080/api/").addConverterFactory(GsonConverterFactory.create()).build();
         libroService= retrofit.create(LibroService.class);
         Call<Libro> call= libroService.addlibro(l);
         call.enqueue(new Callback<Libro>() {
@@ -76,7 +78,7 @@ public class registro_librosFragment extends Fragment {
                 }
                 Libro l=response.body();
                // Toast.makeText(registro_librosFragment.this,l.getCodigoDewey()+" created!", Toast.LENGTH_LONG).show();
-
+                Toast.makeText(getActivity(), l.getTitulo()+" Creado", Toast.LENGTH_LONG).show();
             }
 
             @Override
