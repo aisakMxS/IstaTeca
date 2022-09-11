@@ -3,19 +3,28 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/drawable/ic_baseline_save_24.xml" value="0.2555" />
-        <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/layout/fragment_l_libros.xml" value="0.1" />
-        <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/layout/fragment_registro_libros.xml" value="0.2" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/IstaTeca/app/src/main/res/drawable/side_nav_bar.xml" value="0.147" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/IstaTeca/app/src/main/res/layout/activity_main.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/IstaTeca/app/src/main/res/layout/activity_vprincipal.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/IstaTeca/app/src/main/res/layout/app_bar_vprincipal.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/IstaTeca/app/src/main/res/layout/content_vprincipal.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/IstaTeca/app/src/main/res/layout/fragment_bibliotecario.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/IstaTeca/app/src/main/res/layout/fragment_devolucion_l.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/IstaTeca/app/src/main/res/layout/fragment_gallery.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/IstaTeca/app/src/main/res/layout/fragment_home.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/IstaTeca/app/src/main/res/layout/fragment_l_libros.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/IstaTeca/app/src/main/res/layout/fragment_slideshow.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/IstaTeca/app/src/main/res/layout/fragment_solicitud_l.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/IstaTeca/app/src/main/res/layout/nav_header_vprincipal.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/IstaTeca/app/src/main/res/menu/activity_main_drawer.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/IstaTeca/app/src/main/res/menu/v_principal.xml" value="0.27447916666666666" />
       </map>
     </option>
-  </component>
-  <component name="FrameworkDetectionExcludesConfiguration">
-    <file type="web" url="file://$PROJECT_DIR$" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
-    <option name="id" value="jpab" />
+    <option name="id" value="Android" />
   </component>
 </project>
