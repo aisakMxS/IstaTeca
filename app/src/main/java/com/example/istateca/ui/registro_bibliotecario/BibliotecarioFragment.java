@@ -13,26 +13,28 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.istateca.R;
+import com.example.istateca.databinding.FragmentBibliotecarioBinding;
 
 public class BibliotecarioFragment extends Fragment {
 
-    private BibliotecarioViewModel mViewModel;
+    private FragmentBibliotecarioBinding binding;
 
-    public static BibliotecarioFragment newInstance() {
-        return new BibliotecarioFragment();
-    }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_bibliotecario, container, false);
-    }
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
 
+        binding = FragmentBibliotecarioBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
+
+
+
+        return root;
+    }
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(BibliotecarioViewModel.class);
-        // TODO: Use the ViewModel
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
 }
