@@ -2,6 +2,7 @@ package com.example.istateca.ui.registro_libros;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.Dialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.istateca.Clases.Libro;
@@ -32,7 +35,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class registro_librosFragment extends Fragment {
     LibroService libroService;
     private FragmentRegistroLibrosBinding binding;
-
+    Dialog dialogo;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -88,10 +91,34 @@ public class registro_librosFragment extends Fragment {
             }
 
         });
+        dialogo=new Dialog(getActivity());
+        binding.btnAgregarTipo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogo();
+            }
+        });
+
 
 
         return root;
     }
+
+    public void dialogo(){
+        TextView txtcerrar;
+        Button agregar;
+        dialogo.setContentView(R.layout.dialogo_tipo);
+        txtcerrar=(TextView) dialogo.findViewById(R.id.txt_cerrar);
+        agregar=(Button) dialogo.findViewById(R.id.btn_agregar);
+        txtcerrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogo.dismiss();
+            }
+        });
+        dialogo.show();
+    }
+
 
     private void create(Libro l){
         Retrofit retrofit= new Retrofit.Builder().baseUrl("http://192.168.68.110:8080/api/").addConverterFactory(GsonConverterFactory.create()).build();
