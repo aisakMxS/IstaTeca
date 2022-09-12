@@ -6,7 +6,6 @@ import android.app.Dialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -14,13 +13,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.istateca.Clases.Libro;
+import com.example.istateca.Clases.Tipo;
 import com.example.istateca.R;
 import com.example.istateca.Utils.Apis;
 import com.example.istateca.Utils.LibroService;
+import com.example.istateca.Utils.TipoService;
+import com.example.istateca.databinding.DialogoTipoBinding;
 import com.example.istateca.databinding.FragmentRegistroLibrosBinding;
 
 import java.sql.Time;
@@ -34,7 +37,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class registro_librosFragment extends Fragment {
     LibroService libroService;
+    TipoService tipoService;
     private FragmentRegistroLibrosBinding binding;
+    private DialogoTipoBinding binding1;
     Dialog dialogo;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -106,10 +111,14 @@ public class registro_librosFragment extends Fragment {
 
     public void dialogo(){
         TextView txtcerrar;
-        Button agregar;
+        EditText nombre;
+        Button agregar;int a=0;
+        String agregar_tipo;
         dialogo.setContentView(R.layout.dialogo_tipo);
         txtcerrar=(TextView) dialogo.findViewById(R.id.txt_cerrar);
+        nombre=(EditText) dialogo.findViewById(R.id.txt_agregar);
         agregar=(Button) dialogo.findViewById(R.id.btn_agregar);
+
         txtcerrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -117,6 +126,15 @@ public class registro_librosFragment extends Fragment {
             }
         });
         dialogo.show();
+        agregar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Tipo t= new Tipo(a,nombre.getText().toString());
+                CrearTipo(t);
+                nombre.setText("");
+                System.out.println("tipo creadooooooo");
+            }
+        });
     }
 
 
@@ -139,6 +157,28 @@ public class registro_librosFragment extends Fragment {
 
             @Override
             public void onFailure(Call<Libro> call, Throwable t) {
+                Log.e("Error:",t.getMessage());
+                System.out.println("error");
+            }
+        });
+    }
+    private void CrearTipo(Tipo l){
+        Retrofit retrofit= new Retrofit.Builder().baseUrl("http://10.0.2.2:8080/api/").addConverterFactory(GsonConverterFactory.create()).build();
+        tipoService= retrofit.create(TipoService.class);
+        Call<Tipo> call= tipoService.addTipo(l);
+        call.enqueue(new Callback<Tipo>() {
+            @Override
+            public void onResponse(Call<Tipo> call, Response<Tipo> response) {
+                if(!response.isSuccessful()){
+                    Log.e("Response erra", response.message());
+                    return;
+                }
+                Tipo l=response.body();
+                Toast.makeText(getActivity(), " Tipo creado correctamente", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<Tipo> call, Throwable t) {
                 Log.e("Error:",t.getMessage());
                 System.out.println("error");
             }
