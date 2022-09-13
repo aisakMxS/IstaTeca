@@ -1,13 +1,22 @@
 package com.example.istateca.ui.registro_libros;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Dialog;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +35,7 @@ import com.example.istateca.Utils.TipoService;
 import com.example.istateca.databinding.DialogoTipoBinding;
 import com.example.istateca.databinding.FragmentRegistroLibrosBinding;
 
+import java.io.ByteArrayOutputStream;
 import java.sql.Time;
 import java.sql.Timestamp;
 
@@ -38,9 +48,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class registro_librosFragment extends Fragment {
     LibroService libroService;
     TipoService tipoService;
+    int a=0;
     private FragmentRegistroLibrosBinding binding;
     private DialogoTipoBinding binding1;
     Dialog dialogo;
+    Bitmap bitmap;
+    ActivityResultLauncher<Intent> activitResultLauncher;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -49,14 +63,23 @@ public class registro_librosFragment extends Fragment {
         binding = FragmentRegistroLibrosBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-
+        activitylauncher();
+        binding.imgFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                abrircamara();
+            }
+        });
         binding.imgGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String inputString = "Hello World!";
-                byte[] byteArrray = inputString.getBytes();
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 1, stream);
+                byte[] byteArray = stream.toByteArray();
+                bitmap.recycle();
 
+                /*
                 String codigoDewey=binding.txtCodigodewey.getText().toString();
                 String titulo=binding.txtTituloLlibro.getText().toString();
                 int tipo= Integer.parseInt(binding.txtTipo.getText().toString());
@@ -83,14 +106,19 @@ public class registro_librosFragment extends Fragment {
                 String donante= binding.txtAnadirDonante.getText().toString();
                 byte[] documentodonacion= null;
 
+                 */
 
-                //Libro l = new Libro(5,"Dewey","El chema",1,"adquisicionqwe",1980,"Editort","Cuenca", 90, "Area", "Isbn123"
-                  //      , "Español", "Descripcion aasfa", "IUno", "IDos","Itres","Dimensiones", "Estado", false,null,"asfasdURL",1,null,true,"Christian",null);
 
-                Libro l = new Libro(5,codigoDewey,titulo,tipo,adquisicion,anio,editor,ciudad,numpaginas,area,codisbn,idioma,descripcion,
-                        in1,in2,in3,dimensiones,estadolibro,activo,imagen,url,idBibliotecario,fecha,disponibilidad,donante,documentodonacion);
+                Libro l = new Libro(5,"Dewey","El chema",a,"adquisicionqwe",1980,"Editort","Cuenca", 90, "Area", "Isbn123"
+                    , "Español", "Descripcion aasfa", "IUno", "IDos","Itres","Dimensiones", "Estado", false,byteArray,"asfasdURL",
+                        1,null,true,"Christian",null);
+
+                //Libro l = new Libro(5,codigoDewey,titulo,tipo,adquisicion,anio,editor,ciudad,numpaginas,area,codisbn,idioma,descripcion,
+                    //    in1,in2,in3,dimensiones,estadolibro,activo,imagen,url,idBibliotecario,fecha,disponibilidad,donante,documentodonacion);
 
                 create(l);
+
+
 
 
             }
@@ -112,7 +140,7 @@ public class registro_librosFragment extends Fragment {
     public void dialogo(){
         TextView txtcerrar;
         EditText nombre;
-        Button agregar;int a=0;
+        Button agregar;
         String agregar_tipo;
         dialogo.setContentView(R.layout.dialogo_tipo);
         txtcerrar=(TextView) dialogo.findViewById(R.id.txt_cerrar);
@@ -139,7 +167,7 @@ public class registro_librosFragment extends Fragment {
 
 
     private void create(Libro l){
-        Retrofit retrofit= new Retrofit.Builder().baseUrl("http://192.168.68.110:8080/api/").addConverterFactory(GsonConverterFactory.create()).build();
+        Retrofit retrofit= new Retrofit.Builder().baseUrl("http://192.168.0.107:8080/api/").addConverterFactory(GsonConverterFactory.create()).build();
         libroService= retrofit.create(LibroService.class);
         Call<Libro> call= libroService.addlibro(l);
         call.enqueue(new Callback<Libro>() {
@@ -162,8 +190,30 @@ public class registro_librosFragment extends Fragment {
             }
         });
     }
+
+    public void abrircamara(){
+        Intent camaraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        activitResultLauncher.launch(camaraIntent);
+    }
+
+    public void activitylauncher(){
+        activitResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+
+                if(result.getData() != null){
+                    bitmap=result.getData().getExtras().getParcelable("data");
+                    binding.imgFoto.setImageBitmap(bitmap);
+
+                }
+
+            }
+        });
+    }
+
+
     private void CrearTipo(Tipo l){
-        Retrofit retrofit= new Retrofit.Builder().baseUrl("http://10.0.2.2:8080/api/").addConverterFactory(GsonConverterFactory.create()).build();
+        Retrofit retrofit= new Retrofit.Builder().baseUrl("http://192.168.0.107:8080/api/").addConverterFactory(GsonConverterFactory.create()).build();
         tipoService= retrofit.create(TipoService.class);
         Call<Tipo> call= tipoService.addTipo(l);
         call.enqueue(new Callback<Tipo>() {
