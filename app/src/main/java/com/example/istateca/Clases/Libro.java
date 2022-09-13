@@ -6,7 +6,7 @@ public class Libro {
     private int id;
     private String codigoDewey;
     private String titulo;
-    private int tipo;
+    private int tipos;
     private String adquisicion;
     private int anioPublicacion;
     private String editor;
@@ -38,7 +38,7 @@ public class Libro {
         this.id = id;
         this.codigoDewey = codigoDewey;
         this.titulo = titulo;
-        this.tipo = idTipo;
+        this.tipos = idTipo;
         this.adquisicion = adquisicion;
         this.anioPublicacion = anioPublicacion;
         this.editor = editor;
@@ -112,11 +112,11 @@ public class Libro {
     }
 
     public int getIdTipo() {
-        return tipo;
+        return tipos;
     }
 
     public void setIdTipo(int idTipo) {
-        this.tipo = idTipo;
+        this.tipos = idTipo;
     }
 
     public String getAdquisicion() {

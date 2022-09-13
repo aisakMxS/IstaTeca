@@ -35,9 +35,12 @@ import com.example.istateca.Utils.TipoService;
 import com.example.istateca.databinding.DialogoTipoBinding;
 import com.example.istateca.databinding.FragmentRegistroLibrosBinding;
 
-import java.io.ByteArrayOutputStream;
-import java.sql.Time;
+
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -74,10 +77,13 @@ public class registro_librosFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                /*
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 1, stream);
                 byte[] byteArray = stream.toByteArray();
                 bitmap.recycle();
+
+                 */
 
                 /*
                 String codigoDewey=binding.txtCodigodewey.getText().toString();
@@ -109,9 +115,16 @@ public class registro_librosFragment extends Fragment {
                  */
 
 
+
+
+
+
+
+
                 Libro l = new Libro(5,"Dewey","El chema",a,"adquisicionqwe",1980,"Editort","Cuenca", 90, "Area", "Isbn123"
-                    , "Español", "Descripcion aasfa", "IUno", "IDos","Itres","Dimensiones", "Estado", false,byteArray,"asfasdURL",
+                    , "Español", "Descripcion aasfa", "IUno", "IDos","Itres","Dimensiones", "Estado", false,null,"asfasdURL",
                         1,null,true,"Christian",null);
+
 
                 //Libro l = new Libro(5,codigoDewey,titulo,tipo,adquisicion,anio,editor,ciudad,numpaginas,area,codisbn,idioma,descripcion,
                     //    in1,in2,in3,dimensiones,estadolibro,activo,imagen,url,idBibliotecario,fecha,disponibilidad,donante,documentodonacion);
@@ -136,6 +149,7 @@ public class registro_librosFragment extends Fragment {
 
         return root;
     }
+
 
     public void dialogo(){
         TextView txtcerrar;
@@ -167,7 +181,7 @@ public class registro_librosFragment extends Fragment {
 
 
     private void create(Libro l){
-        Retrofit retrofit= new Retrofit.Builder().baseUrl("http://192.168.0.107:8080/api/").addConverterFactory(GsonConverterFactory.create()).build();
+        Retrofit retrofit= new Retrofit.Builder().baseUrl("http://192.168.68.110:8080/api/").addConverterFactory(GsonConverterFactory.create()).build();
         libroService= retrofit.create(LibroService.class);
         Call<Libro> call= libroService.addlibro(l);
         call.enqueue(new Callback<Libro>() {
@@ -213,7 +227,7 @@ public class registro_librosFragment extends Fragment {
 
 
     private void CrearTipo(Tipo l){
-        Retrofit retrofit= new Retrofit.Builder().baseUrl("http://192.168.0.107:8080/api/").addConverterFactory(GsonConverterFactory.create()).build();
+        Retrofit retrofit= new Retrofit.Builder().baseUrl("http://192.168.68.110:8080/api/").addConverterFactory(GsonConverterFactory.create()).build();
         tipoService= retrofit.create(TipoService.class);
         Call<Tipo> call= tipoService.addTipo(l);
         call.enqueue(new Callback<Tipo>() {
