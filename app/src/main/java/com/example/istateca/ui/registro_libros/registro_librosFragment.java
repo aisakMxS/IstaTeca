@@ -119,9 +119,9 @@ public class registro_librosFragment extends Fragment {
 
 
 
+                Tipo t= new Tipo(2,"Var");
 
-
-                Libro l = new Libro(5,"Dewey","El chema",a,"adquisicionqwe",1980,"Editort","Cuenca", 90, "Area", "Isbn123"
+                Libro l = new Libro(1,"Deweys","El chemas",t,"adquisicionqwe",1980,"Editort","Cuenca", 90, "Area", "Isbn123"
                     , "Español", "Descripcion aasfa", "IUno", "IDos","Itres","Dimensiones", "Estado", false,null,"asfasdURL",
                         1,null,true,"Christian",null);
 

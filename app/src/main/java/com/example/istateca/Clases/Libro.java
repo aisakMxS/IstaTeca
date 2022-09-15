@@ -6,7 +6,7 @@ public class Libro {
     private int id;
     private String codigoDewey;
     private String titulo;
-    private int tipos;
+    private Tipo tipo;
     private String adquisicion;
     private int anioPublicacion;
     private String editor;
@@ -34,11 +34,11 @@ public class Libro {
 
     }
 
-    public Libro(int id, String codigoDewey, String titulo, int idTipo, String adquisicion, int anioPublicacion, String editor, String ciudad, int numPaginas, String area, String codIsbn, String idioma, String descripcion, String indiceUno, String indiceDos, String indiceTres, String dimensiones, String estadoLibro, boolean activo, byte[] imagen, String urlDigital, int idbibliotecario, Timestamp fechaCreacion, boolean disponibilidad, String nombreDonante, byte[] documentoDonacion) {
+    public Libro(int id, String codigoDewey, String titulo, Tipo idTipo, String adquisicion, int anioPublicacion, String editor, String ciudad, int numPaginas, String area, String codIsbn, String idioma, String descripcion, String indiceUno, String indiceDos, String indiceTres, String dimensiones, String estadoLibro, boolean activo, byte[] imagen, String urlDigital, int idbibliotecario, Timestamp fechaCreacion, boolean disponibilidad, String nombreDonante, byte[] documentoDonacion) {
         this.id = id;
         this.codigoDewey = codigoDewey;
         this.titulo = titulo;
-        this.tipos = idTipo;
+        this.tipo = idTipo;
         this.adquisicion = adquisicion;
         this.anioPublicacion = anioPublicacion;
         this.editor = editor;
@@ -111,12 +111,12 @@ public class Libro {
         this.titulo = titulo;
     }
 
-    public int getIdTipo() {
-        return tipos;
+    public Tipo getTipo() {
+        return tipo;
     }
 
-    public void setIdTipo(int idTipo) {
-        this.tipos = idTipo;
+    public void setTipo(Tipo tipo) {
+        this.tipo = tipo;
     }
 
     public String getAdquisicion() {
