@@ -1,6 +1,7 @@
 package com.example.istateca.Clases;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 public class Libro {
     private int id;
@@ -25,7 +26,7 @@ public class Libro {
     private byte [] imagen;
     private String urlDigital;
     private int idbibliotecario;
-    private Timestamp fechaCreacion;
+    private Date fechaCreacion;
     private boolean disponibilidad;
     private String nombreDonante;
     private byte[] documentoDonacion;
@@ -34,7 +35,7 @@ public class Libro {
 
     }
 
-    public Libro(int id, String codigoDewey, String titulo, Tipo idTipo, String adquisicion, int anioPublicacion, String editor, String ciudad, int numPaginas, String area, String codIsbn, String idioma, String descripcion, String indiceUno, String indiceDos, String indiceTres, String dimensiones, String estadoLibro, boolean activo, byte[] imagen, String urlDigital, int idbibliotecario, Timestamp fechaCreacion, boolean disponibilidad, String nombreDonante, byte[] documentoDonacion) {
+    public Libro(int id, String codigoDewey, String titulo, Tipo idTipo, String adquisicion, int anioPublicacion, String editor, String ciudad, int numPaginas, String area, String codIsbn, String idioma, String descripcion, String indiceUno, String indiceDos, String indiceTres, String dimensiones, String estadoLibro, boolean activo, byte[] imagen, String urlDigital, int idbibliotecario, Date fechaCreacion, boolean disponibilidad, String nombreDonante, byte[] documentoDonacion) {
         this.id = id;
         this.codigoDewey = codigoDewey;
         this.titulo = titulo;
@@ -263,7 +264,7 @@ public class Libro {
         this.idbibliotecario = bibliotecario;
     }
 
-    public Timestamp getFechaCreacion() {
+    public Date getFechaCreacion() {
         return fechaCreacion;
     }
 

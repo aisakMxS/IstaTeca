@@ -21,8 +21,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +42,10 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -57,6 +62,9 @@ public class registro_librosFragment extends Fragment {
     Dialog dialogo;
     Bitmap bitmap;
     ActivityResultLauncher<Intent> activitResultLauncher;
+    ArrayList<Tipo> lista_tipos= new ArrayList<>();
+    String url="http://192.168.68.110:8080/api/";
+
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -134,9 +142,14 @@ public class registro_librosFragment extends Fragment {
 
 
 
+
+
             }
 
+
         });
+
+
         dialogo=new Dialog(getActivity());
         binding.btnAgregarTipo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,8 +159,49 @@ public class registro_librosFragment extends Fragment {
         });
 
 
+        binding.imgAnadirDonante.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("BBoton Añadir donante");
+                getTipo();
+            }
+        });
 
+        binding.imgLista.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for(int i=0; i<lista_tipos.size(); i++){
+                    System.out.println("Nombre"+ lista_tipos.get(i).getNombre());
+                }
+                System.out.println(lista_tipos.size());
+            }
+        });
         return root;
+    }
+
+    private void getTipo(){
+        Retrofit retrofit= new Retrofit.Builder()
+                .baseUrl(url).addConverterFactory(GsonConverterFactory.create()).build();
+        tipoService= retrofit.create(TipoService.class);
+        Call<ArrayList<Tipo>> call= tipoService.getTipo();
+
+        call.enqueue(new Callback<ArrayList<Tipo>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Tipo>> call, Response<ArrayList<Tipo>> response) {
+                if(response.isSuccessful()){
+                    System.out.println(response.message());
+                    System.out.println("Estoy aquiiiiiiii en el on response");
+                    return;
+                }
+                lista_tipos = response.body();
+                System.out.println(lista_tipos.size());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Tipo>> call, Throwable t) {
+                System.out.println("Errooooooooooor");
+            }
+        });
     }
 
 
@@ -180,8 +234,10 @@ public class registro_librosFragment extends Fragment {
     }
 
 
+
+
     private void create(Libro l){
-        Retrofit retrofit= new Retrofit.Builder().baseUrl("http://192.168.68.110:8080/api/").addConverterFactory(GsonConverterFactory.create()).build();
+        Retrofit retrofit= new Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create()).build();
         libroService= retrofit.create(LibroService.class);
         Call<Libro> call= libroService.addlibro(l);
         call.enqueue(new Callback<Libro>() {
@@ -227,7 +283,7 @@ public class registro_librosFragment extends Fragment {
 
 
     private void CrearTipo(Tipo l){
-        Retrofit retrofit= new Retrofit.Builder().baseUrl("http://192.168.68.110:8080/api/").addConverterFactory(GsonConverterFactory.create()).build();
+        Retrofit retrofit= new Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create()).build();
         tipoService= retrofit.create(TipoService.class);
         Call<Tipo> call= tipoService.addTipo(l);
         call.enqueue(new Callback<Tipo>() {
