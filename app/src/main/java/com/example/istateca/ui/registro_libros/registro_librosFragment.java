@@ -1,6 +1,7 @@
 package com.example.istateca.ui.registro_libros;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Dialog;
@@ -52,6 +53,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.moshi.MoshiConverterFactory;
 
 public class registro_librosFragment extends Fragment {
     LibroService libroService;
@@ -62,7 +64,7 @@ public class registro_librosFragment extends Fragment {
     Dialog dialogo;
     Bitmap bitmap;
     ActivityResultLauncher<Intent> activitResultLauncher;
-    ArrayList<Tipo> lista_tipos= new ArrayList<>();
+    List<Tipo> lista_tipos= new ArrayList<>();
     String url="http://192.168.68.110:8080/api/";
 
 
@@ -181,15 +183,18 @@ public class registro_librosFragment extends Fragment {
 
     private void getTipo(){
         Retrofit retrofit= new Retrofit.Builder()
-                .baseUrl(url).addConverterFactory(GsonConverterFactory.create()).build();
+                .baseUrl(url).addConverterFactory(MoshiConverterFactory.create()).build();
         tipoService= retrofit.create(TipoService.class);
-        Call<ArrayList<Tipo>> call= tipoService.getTipo();
 
-        call.enqueue(new Callback<ArrayList<Tipo>>() {
+
+
+        Call<List<Tipo>> call= tipoService.getTipos();
+
+        call.enqueue(new Callback<List<Tipo>>() {
             @Override
-            public void onResponse(Call<ArrayList<Tipo>> call, Response<ArrayList<Tipo>> response) {
+            public void onResponse(Call<List<Tipo>> call, Response<List<Tipo>> response) {
                 if(response.isSuccessful()){
-                    System.out.println(response.message());
+                    Log.e("Response err: ", response.message());
                     System.out.println("Estoy aquiiiiiiii en el on response");
                     return;
                 }
@@ -198,10 +203,12 @@ public class registro_librosFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ArrayList<Tipo>> call, Throwable t) {
-                System.out.println("Errooooooooooor");
+            public void onFailure(Call<List<Tipo>> call, Throwable t) {
+                Log.e("Response err: ", t.getMessage());
             }
         });
+
+
     }
 
 
