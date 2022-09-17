@@ -62,7 +62,7 @@ public class registro_librosFragment extends Fragment {
     Bitmap bitmap;
     ActivityResultLauncher<Intent> activitResultLauncher;
     List<Tipo> lista_tipos= new ArrayList<>();
-    String url="http://10.0.2.2:8080/api/";
+    String url="http://192.168.68.110:8080/api/";
 
 
 
@@ -74,9 +74,8 @@ public class registro_librosFragment extends Fragment {
         View root = binding.getRoot();
 
         activitylauncher();
-        getTipo();
 
-        combotipo();
+
 
         binding.imgFoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,13 +154,16 @@ public class registro_librosFragment extends Fragment {
                 dialogo();
             }
         });
+        getTipo();
         combotipo();
+
         return root;
     }
 
     private void combotipo(){
-        getTipo();
+
         ArrayList<String> comboTiposList = new ArrayList<String>();
+        comboTiposList.add("Seleccione: ");
         for (int i=0; i< lista_tipos.size(); i++){
             comboTiposList.add(lista_tipos.get(i).getNombre());
         }
@@ -289,6 +291,7 @@ public class registro_librosFragment extends Fragment {
                     return;
                 }
                 Tipo l=response.body();
+                getTipo();
                 combotipo();
                 Toast.makeText(getActivity(), " Tipo creado correctamente", Toast.LENGTH_LONG).show();
             }
