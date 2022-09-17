@@ -154,6 +154,12 @@ public class registro_librosFragment extends Fragment {
                 dialogo();
             }
         });
+        binding.btnAgregarAutor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogoautor();
+            }
+        });
         getTipo();
         combotipo();
 
@@ -211,7 +217,6 @@ public class registro_librosFragment extends Fragment {
         txtcerrar=(TextView) dialogo.findViewById(R.id.txt_cerrar);
         nombre=(EditText) dialogo.findViewById(R.id.txt_agregar);
         agregar=(Button) dialogo.findViewById(R.id.btn_agregar);
-
         txtcerrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -226,6 +231,32 @@ public class registro_librosFragment extends Fragment {
                 CrearTipo(t);
                 nombre.setText("");
                 System.out.println("tipo creadooooooo");
+            }
+        });
+    }
+    public void dialogoautor(){
+        TextView txtcerrar;
+        EditText nombre;
+        Button agregar;
+        String agregar_tipo;
+        dialogo.setContentView(R.layout.dialogo_autor);
+        txtcerrar=(TextView) dialogo.findViewById(R.id.txt_cerrar);
+        nombre=(EditText) dialogo.findViewById(R.id.txt_agregar);
+        agregar=(Button) dialogo.findViewById(R.id.btn_agregar);
+        txtcerrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogo.dismiss();
+            }
+        });
+        dialogo.show();
+        agregar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Tipo t= new Tipo(a,nombre.getText().toString());
+                CrearTipo(t);
+                nombre.setText("");
+                System.out.println("autor creadooooooo");
             }
         });
     }
