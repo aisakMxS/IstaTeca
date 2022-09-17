@@ -4,104 +4,76 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 public class Libro {
-    private int id;
-    private String codigoDewey;
+    private int id_libro;
+    private String codigo_dewey;
     private String titulo;
     private Tipo tipo;
     private String adquisicion;
-    private int anioPublicacion;
+    private int anio_publicacion;
     private String editor;
     private String ciudad;
-    private int numPaginas;
+    private int num_paginas;
     private String area;
-    private String codIsbn;
+    private String cod_ISBN;
     private String idioma;
     private String descripcion;
-    private String indiceUno;
-    private String indiceDos;
-    private String indiceTres;
+    private String indice_uno;
+    private String indice_dos;
+    private String indice_tres;
     private String dimensiones;
-    private String estadoLibro;
+    private String estado_libro;
     private boolean activo;
     private byte [] imagen;
-    private String urlDigital;
+    private String url_digital;
     private int idbibliotecario;
-    private Date fechaCreacion;
+    private String fecha_creacion;
     private boolean disponibilidad;
-    private String nombreDonante;
-    private byte[] documentoDonacion;
+    private String nombre_donante;
+    private byte[] documento_donacion;
 
-    public Libro() {
-
-    }
-
-    public Libro(int id, String codigoDewey, String titulo, Tipo idTipo, String adquisicion, int anioPublicacion, String editor, String ciudad, int numPaginas, String area, String codIsbn, String idioma, String descripcion, String indiceUno, String indiceDos, String indiceTres, String dimensiones, String estadoLibro, boolean activo, byte[] imagen, String urlDigital, int idbibliotecario, Date fechaCreacion, boolean disponibilidad, String nombreDonante, byte[] documentoDonacion) {
-        this.id = id;
-        this.codigoDewey = codigoDewey;
+    public Libro(int id_libro, String codigo_dewey, String titulo, Tipo tipo, String adquisicion, int anio_publicacion, String editor, String ciudad, int num_paginas, String area, String cod_ISBN, String idioma, String descripcion, String indice_uno, String indice_dos, String indice_tres, String dimensiones, String estadoLibro, boolean activo, byte[] imagen, String url_digital, int idbibliotecario, String fecha_creacion, boolean disponibilidad, String nombre_donante, byte[] documento_donacion) {
+        this.id_libro = id_libro;
+        this.codigo_dewey = codigo_dewey;
         this.titulo = titulo;
-        this.tipo = idTipo;
+        this.tipo = tipo;
         this.adquisicion = adquisicion;
-        this.anioPublicacion = anioPublicacion;
+        this.anio_publicacion = anio_publicacion;
         this.editor = editor;
         this.ciudad = ciudad;
-        this.numPaginas = numPaginas;
+        this.num_paginas = num_paginas;
         this.area = area;
-        this.codIsbn = codIsbn;
+        this.cod_ISBN = cod_ISBN;
         this.idioma = idioma;
         this.descripcion = descripcion;
-        this.indiceUno = indiceUno;
-        this.indiceDos = indiceDos;
-        this.indiceTres = indiceTres;
+        this.indice_uno = indice_uno;
+        this.indice_dos = indice_dos;
+        this.indice_tres = indice_tres;
         this.dimensiones = dimensiones;
-        this.estadoLibro = estadoLibro;
+        this.estado_libro = estadoLibro;
         this.activo = activo;
         this.imagen = imagen;
-        this.urlDigital = urlDigital;
+        this.url_digital = url_digital;
         this.idbibliotecario = idbibliotecario;
-        this.fechaCreacion = fechaCreacion;
+        this.fecha_creacion = fecha_creacion;
         this.disponibilidad = disponibilidad;
-        this.nombreDonante = nombreDonante;
-        this.documentoDonacion = documentoDonacion;
+        this.nombre_donante = nombre_donante;
+        this.documento_donacion = documento_donacion;
     }
 
-    public int getIdbibliotecario() {
-        return idbibliotecario;
+    public int getId_libro() {
+        return id_libro;
     }
 
-    public void setIdbibliotecario(int idbibliotecario) {
-        this.idbibliotecario = idbibliotecario;
+    public void setId_libro(int id_libro) {
+        this.id_libro = id_libro;
     }
 
-    public String getNombreDonante() {
-        return nombreDonante;
+    public String getCodigo_dewey() {
+        return codigo_dewey;
     }
 
-    public void setNombreDonante(String nombreDonante) {
-        this.nombreDonante = nombreDonante;
-    }
-
-    public byte[] getDocumentoDonacion() {
-        return documentoDonacion;
-    }
-
-    public void setDocumentoDonacion(byte[] documentoDonacion) {
-        this.documentoDonacion = documentoDonacion;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getCodigoDewey() {
-        return codigoDewey;
-    }
-
-    public void setCodigoDewey(String codigoDewey) {
-        this.codigoDewey = codigoDewey;
+    public void setCodigo_dewey(String codigo_dewey) {
+        this.codigo_dewey = codigo_dewey;
     }
 
     public String getTitulo() {
@@ -128,12 +100,12 @@ public class Libro {
         this.adquisicion = adquisicion;
     }
 
-    public int getAnioPublicacion() {
-        return anioPublicacion;
+    public int getAnio_publicacion() {
+        return anio_publicacion;
     }
 
-    public void setAnioPublicacion(int anioPublicacion) {
-        this.anioPublicacion = anioPublicacion;
+    public void setAnio_publicacion(int anio_publicacion) {
+        this.anio_publicacion = anio_publicacion;
     }
 
     public String getEditor() {
@@ -152,12 +124,12 @@ public class Libro {
         this.ciudad = ciudad;
     }
 
-    public int getNumPaginas() {
-        return numPaginas;
+    public int getNum_paginas() {
+        return num_paginas;
     }
 
-    public void setNumPaginas(int numPaginas) {
-        this.numPaginas = numPaginas;
+    public void setNum_paginas(int num_paginas) {
+        this.num_paginas = num_paginas;
     }
 
     public String getArea() {
@@ -168,12 +140,12 @@ public class Libro {
         this.area = area;
     }
 
-    public String getCodIsbn() {
-        return codIsbn;
+    public String getCod_ISBN() {
+        return cod_ISBN;
     }
 
-    public void setCodIsbn(String codIsbn) {
-        this.codIsbn = codIsbn;
+    public void setCod_ISBN(String cod_ISBN) {
+        this.cod_ISBN = cod_ISBN;
     }
 
     public String getIdioma() {
@@ -192,28 +164,28 @@ public class Libro {
         this.descripcion = descripcion;
     }
 
-    public String getIndiceUno() {
-        return indiceUno;
+    public String getIndice_uno() {
+        return indice_uno;
     }
 
-    public void setIndiceUno(String indiceUno) {
-        this.indiceUno = indiceUno;
+    public void setIndice_uno(String indice_uno) {
+        this.indice_uno = indice_uno;
     }
 
-    public String getIndiceDos() {
-        return indiceDos;
+    public String getIndice_dos() {
+        return indice_dos;
     }
 
-    public void setIndiceDos(String indiceDos) {
-        this.indiceDos = indiceDos;
+    public void setIndice_dos(String indice_dos) {
+        this.indice_dos = indice_dos;
     }
 
-    public String getIndiceTres() {
-        return indiceTres;
+    public String getIndice_tres() {
+        return indice_tres;
     }
 
-    public void setIndiceTres(String indiceTres) {
-        this.indiceTres = indiceTres;
+    public void setIndice_tres(String indice_tres) {
+        this.indice_tres = indice_tres;
     }
 
     public String getDimensiones() {
@@ -225,11 +197,11 @@ public class Libro {
     }
 
     public String getEstadoLibro() {
-        return estadoLibro;
+        return estado_libro;
     }
 
     public void setEstadoLibro(String estadoLibro) {
-        this.estadoLibro = estadoLibro;
+        this.estado_libro = estadoLibro;
     }
 
     public boolean isActivo() {
@@ -248,28 +220,28 @@ public class Libro {
         this.imagen = imagen;
     }
 
-    public String getUrlDigital() {
-        return urlDigital;
+    public String getUrl_digital() {
+        return url_digital;
     }
 
-    public void setUrlDigital(String urlDigital) {
-        this.urlDigital = urlDigital;
+    public void setUrl_digital(String url_digital) {
+        this.url_digital = url_digital;
     }
 
-    public int getBibliotecario() {
+    public int getIdbibliotecario() {
         return idbibliotecario;
     }
 
-    public void setBibliotecario(int bibliotecario) {
-        this.idbibliotecario = bibliotecario;
+    public void setIdbibliotecario(int idbibliotecario) {
+        this.idbibliotecario = idbibliotecario;
     }
 
-    public Date getFechaCreacion() {
-        return fechaCreacion;
+    public String getFecha_creacion() {
+        return fecha_creacion;
     }
 
-    public void setFechaCreacion(Timestamp fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
+    public void setFecha_creacion(String fecha_creacion) {
+        this.fecha_creacion = fecha_creacion;
     }
 
     public boolean isDisponibilidad() {
@@ -278,6 +250,22 @@ public class Libro {
 
     public void setDisponibilidad(boolean disponibilidad) {
         this.disponibilidad = disponibilidad;
+    }
+
+    public String getNombre_donante() {
+        return nombre_donante;
+    }
+
+    public void setNombre_donante(String nombre_donante) {
+        this.nombre_donante = nombre_donante;
+    }
+
+    public byte[] getDocumento_donacion() {
+        return documento_donacion;
+    }
+
+    public void setDocumento_donacion(byte[] documento_donacion) {
+        this.documento_donacion = documento_donacion;
     }
 }
 

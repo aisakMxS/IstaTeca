@@ -2,20 +2,20 @@ package com.example.istateca.Clases;
 
 public class Tipo {
 
-    private int idTipo;
+    private int id_tipo;
     private String nombre;
 
     public Tipo(int tipo, String nombre) {
-        this.idTipo = tipo;
+        this.id_tipo = tipo;
         this.nombre = nombre;
     }
 
     public int getId() {
-        return idTipo;
+        return id_tipo;
     }
 
     public void setId(int id) {
-        this.idTipo = id;
+        this.id_tipo = id;
     }
 
     public String getNombre() {

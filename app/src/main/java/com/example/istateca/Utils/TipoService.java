@@ -13,7 +13,7 @@ public interface TipoService {
     @GET("listartipo")
     Call<List<Tipo>> getTipos();
 
-    @POST("crearTipo")
+    @POST("creartipo")
     Call<Tipo>addTipo(@Body Tipo tipo);
 
 }

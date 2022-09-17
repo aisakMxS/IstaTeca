@@ -1,12 +1,14 @@
 package com.example.istateca.ui.registro_libros;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResult;
@@ -16,12 +18,14 @@ import androidx.activity.result.contract.ActivityResultContracts;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,12 +43,12 @@ import com.example.istateca.databinding.DialogoTipoBinding;
 import com.example.istateca.databinding.FragmentRegistroLibrosBinding;
 
 
-import java.sql.Timestamp;
-import java.text.DateFormat;
+import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -77,6 +81,10 @@ public class registro_librosFragment extends Fragment {
         View root = binding.getRoot();
 
         activitylauncher();
+
+        getTipo();
+
+        combotipo();
         binding.imgFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,16 +92,32 @@ public class registro_librosFragment extends Fragment {
             }
         });
         binding.imgGuardar.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
+                byte[] byteArray;
 
-                /*
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 1, stream);
-                byte[] byteArray = stream.toByteArray();
-                bitmap.recycle();
+                //Imagen
+                if(bitmap!=null) {
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 1, stream);
+                    byteArray = stream.toByteArray();
+                    bitmap.recycle();
+                }else{
+                    byteArray= null;
+                }
 
-                 */
+                //Fecha
+                String d = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").format(new Date());
+
+
+
+
+
+
+
+
+
 
                 /*
                 String codigoDewey=binding.txtCodigodewey.getText().toString();
@@ -127,13 +151,11 @@ public class registro_librosFragment extends Fragment {
 
 
 
-
-
                 Tipo t= new Tipo(2,"Var");
 
-                Libro l = new Libro(1,"Deweys","El chemas",t,"adquisicionqwe",1980,"Editort","Cuenca", 90, "Area", "Isbn123"
-                    , "Español", "Descripcion aasfa", "IUno", "IDos","Itres","Dimensiones", "Estado", false,null,"asfasdURL",
-                        1,null,true,"Christian",null);
+                Libro l = new Libro(a,"Deweys","El chemas",t,"adquisicionqwe",1980,"Editort","Cuenca", 90, "Area", "Isbn123"
+                    , "Español", "Descripcion aasfa", "IUno", "IDos","Itres","Dimensiones", "Estado", false,byteArray,"asfasdURL",
+                        1,d,true,"Christian",null);
 
 
                 //Libro l = new Libro(5,codigoDewey,titulo,tipo,adquisicion,anio,editor,ciudad,numpaginas,area,codisbn,idioma,descripcion,
@@ -157,33 +179,30 @@ public class registro_librosFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 dialogo();
+                combotipo();
+
             }
         });
 
-
-        binding.imgAnadirDonante.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("BBoton Añadir donante");
-                getTipo();
-            }
-        });
-
-        binding.imgLista.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                for(int i=0; i<lista_tipos.size(); i++){
-                    System.out.println("Nombre"+ lista_tipos.get(i).getNombre());
-                }
-                System.out.println(lista_tipos.size());
-            }
-        });
         return root;
+    }
+
+    private void combotipo(){
+        getTipo();
+        ArrayList<String> comboTiposList = new ArrayList<String>();
+        for (int i=0; i< lista_tipos.size(); i++){
+            comboTiposList.add(lista_tipos.get(i).getNombre());
+        }
+
+
+
+        binding.comboDisponibilidad.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, comboTiposList));
+
     }
 
     private void getTipo(){
         Retrofit retrofit= new Retrofit.Builder()
-                .baseUrl(url).addConverterFactory(MoshiConverterFactory.create()).build();
+                .baseUrl(url).addConverterFactory(GsonConverterFactory.create()).build();
         tipoService= retrofit.create(TipoService.class);
 
 
@@ -195,11 +214,12 @@ public class registro_librosFragment extends Fragment {
             public void onResponse(Call<List<Tipo>> call, Response<List<Tipo>> response) {
                 if(response.isSuccessful()){
                     Log.e("Response err: ", response.message());
-                    System.out.println("Estoy aquiiiiiiii en el on response");
+                    lista_tipos = response.body();
+                    System.out.println(lista_tipos.size());
+                    combotipo();
                     return;
                 }
-                lista_tipos = response.body();
-                System.out.println(lista_tipos.size());
+
             }
 
             @Override
@@ -298,9 +318,12 @@ public class registro_librosFragment extends Fragment {
             public void onResponse(Call<Tipo> call, Response<Tipo> response) {
                 if(!response.isSuccessful()){
                     Log.e("Response erra", response.message());
+
                     return;
                 }
                 Tipo l=response.body();
+
+                combotipo();
                 Toast.makeText(getActivity(), " Tipo creado correctamente", Toast.LENGTH_LONG).show();
             }
 

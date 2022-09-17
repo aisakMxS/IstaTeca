@@ -11,7 +11,7 @@ import retrofit2.http.POST;
 
 public interface LibroService {
 
-    @GET("listalibros")
+    @GET("listarlibros")
     Call<List<Libro>> getPersonas();
 
     @POST("crearlibro")
