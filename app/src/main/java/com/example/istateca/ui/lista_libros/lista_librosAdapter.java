@@ -10,6 +10,11 @@ import android.widget.TextView;
 import com.example.istateca.Clases.Libro;
 import com.example.istateca.R;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class lista_librosAdapter extends BaseAdapter {
@@ -46,8 +51,25 @@ public class lista_librosAdapter extends BaseAdapter {
         txtfechadecreacion=view.findViewById(R.id.txt_fecha_creacion);
         txtnumpaginas=view.findViewById(R.id.txt_num_paginas);
 
+        final String OLD_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS";
+        final String NEW_FORMAT = "yyyy-MM-dd";
+        String oldDateString = libros.get(position).getFecha_creacion();
+        String newDateString;
+
+        final DateFormat formatter = new SimpleDateFormat(OLD_FORMAT);
+         Date d= null;
+        try {
+            d = formatter.parse(oldDateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        ((SimpleDateFormat) formatter).applyPattern(NEW_FORMAT);
+        newDateString = formatter.format(d);
+
+
+
         txttitulo.setText(libros.get(position).getTitulo());
-        txtfechadecreacion.setText(libros.get(position).getFecha_creacion());
+        txtfechadecreacion.setText(newDateString);
         txtnumpaginas.setText(String.valueOf(libros.get(position).getNum_paginas()));
         return view;
     }

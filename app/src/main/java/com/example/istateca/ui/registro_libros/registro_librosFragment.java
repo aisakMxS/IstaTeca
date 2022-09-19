@@ -42,6 +42,7 @@ import com.example.istateca.databinding.DialogoTipoBinding;
 import com.example.istateca.databinding.FragmentRegistroLibrosBinding;
 
 import java.io.ByteArrayOutputStream;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -66,7 +67,6 @@ public class registro_librosFragment extends Fragment {
     ActivityResultLauncher<Intent> activitResultLauncher;
     List<Tipo> lista_tipos= new ArrayList<>();
     ArrayList<String> comboAutorList = new ArrayList<String>();
-    String url="http://192.168.68.110:8080/api/";
 
 
 
@@ -104,6 +104,8 @@ public class registro_librosFragment extends Fragment {
 
                 //Fecha
                 String d = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").format(new Date());
+
+
 
 
                 /*
@@ -183,7 +185,7 @@ public class registro_librosFragment extends Fragment {
 
     private void getTipo(){
         Retrofit retrofit= new Retrofit.Builder()
-                .baseUrl(url).addConverterFactory(GsonConverterFactory.create()).build();
+                .baseUrl(Apis.URL_001).addConverterFactory(GsonConverterFactory.create()).build();
         tipoService= retrofit.create(TipoService.class);
 
 
@@ -272,7 +274,7 @@ public class registro_librosFragment extends Fragment {
 
 
     private void create(Libro l){
-        Retrofit retrofit= new Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create()).build();
+        Retrofit retrofit= new Retrofit.Builder().baseUrl(Apis.URL_001).addConverterFactory(GsonConverterFactory.create()).build();
         libroService= retrofit.create(LibroService.class);
         Call<Libro> call= libroService.addlibro(l);
         call.enqueue(new Callback<Libro>() {
@@ -318,7 +320,7 @@ public class registro_librosFragment extends Fragment {
 
 
     private void CrearTipo(Tipo l){
-        Retrofit retrofit= new Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create()).build();
+        Retrofit retrofit= new Retrofit.Builder().baseUrl(Apis.URL_001).addConverterFactory(GsonConverterFactory.create()).build();
         tipoService= retrofit.create(TipoService.class);
         Call<Tipo> call= tipoService.addTipo(l);
         call.enqueue(new Callback<Tipo>() {
