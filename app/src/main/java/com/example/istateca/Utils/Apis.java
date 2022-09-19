@@ -6,5 +6,8 @@ public class Apis {
     public static  LibroService getLibroService(){
         return ClienteApi.getClient(URL_001).create(LibroService.class);
     }
+    public static  PrestamoService getPrestamoService(){
+        return ClienteApi.getClient(URL_001).create(PrestamoService.class);
+    }
 
 }
