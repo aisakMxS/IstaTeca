@@ -30,12 +30,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.istateca.Clases.Autor;
 import com.example.istateca.Clases.Libro;
 import com.example.istateca.Clases.Tipo;
 import com.example.istateca.R;
 import com.example.istateca.Utils.Apis;
 import com.example.istateca.Utils.LibroService;
 import com.example.istateca.Utils.TipoService;
+import com.example.istateca.databinding.DialogoAutorBinding;
 import com.example.istateca.databinding.DialogoTipoBinding;
 import com.example.istateca.databinding.FragmentRegistroLibrosBinding;
 
@@ -58,10 +60,12 @@ public class registro_librosFragment extends Fragment {
     int a=0;
     private FragmentRegistroLibrosBinding binding;
     private DialogoTipoBinding binding1;
+    private DialogoAutorBinding bindingautor;
     Dialog dialogo;
     Bitmap bitmap;
     ActivityResultLauncher<Intent> activitResultLauncher;
     List<Tipo> lista_tipos= new ArrayList<>();
+    ArrayList<String> comboAutorList = new ArrayList<String>();
     String url="http://192.168.68.110:8080/api/";
 
 
@@ -231,10 +235,13 @@ public class registro_librosFragment extends Fragment {
                 CrearTipo(t);
                 nombre.setText("");
                 System.out.println("tipo creadooooooo");
+                dialogo.dismiss();
             }
         });
     }
     public void dialogoautor(){
+
+
         TextView txtcerrar;
         EditText nombre;
         Button agregar;
@@ -253,10 +260,10 @@ public class registro_librosFragment extends Fragment {
         agregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Tipo t= new Tipo(a,nombre.getText().toString());
-                CrearTipo(t);
-                nombre.setText("");
-                System.out.println("autor creadooooooo");
+                comboAutorList.add(nombre.getText().toString());
+                binding.comboAutores.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, comboAutorList));
+                dialogo.dismiss();
+
             }
         });
     }
@@ -334,6 +341,8 @@ public class registro_librosFragment extends Fragment {
             }
         });
     }
+
+
 
 
 
