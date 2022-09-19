@@ -30,16 +30,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.istateca.Clases.Autor;
 import com.example.istateca.Clases.Libro;
 import com.example.istateca.Clases.Tipo;
 import com.example.istateca.R;
 import com.example.istateca.Utils.Apis;
 import com.example.istateca.Utils.LibroService;
 import com.example.istateca.Utils.TipoService;
+import com.example.istateca.databinding.DialogoAutorBinding;
 import com.example.istateca.databinding.DialogoTipoBinding;
 import com.example.istateca.databinding.FragmentRegistroLibrosBinding;
 
 import java.io.ByteArrayOutputStream;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -58,11 +61,12 @@ public class registro_librosFragment extends Fragment {
     int a=0;
     private FragmentRegistroLibrosBinding binding;
     private DialogoTipoBinding binding1;
+    private DialogoAutorBinding bindingautor;
     Dialog dialogo;
     Bitmap bitmap;
     ActivityResultLauncher<Intent> activitResultLauncher;
     List<Tipo> lista_tipos= new ArrayList<>();
-    String url="http://192.168.68.110:8080/api/";
+    ArrayList<String> comboAutorList = new ArrayList<String>();
 
 
 
@@ -100,6 +104,8 @@ public class registro_librosFragment extends Fragment {
 
                 //Fecha
                 String d = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").format(new Date());
+
+
 
 
                 /*
@@ -179,7 +185,7 @@ public class registro_librosFragment extends Fragment {
 
     private void getTipo(){
         Retrofit retrofit= new Retrofit.Builder()
-                .baseUrl(url).addConverterFactory(GsonConverterFactory.create()).build();
+                .baseUrl(Apis.URL_001).addConverterFactory(GsonConverterFactory.create()).build();
         tipoService= retrofit.create(TipoService.class);
 
 
@@ -231,10 +237,13 @@ public class registro_librosFragment extends Fragment {
                 CrearTipo(t);
                 nombre.setText("");
                 System.out.println("tipo creadooooooo");
+                dialogo.dismiss();
             }
         });
     }
     public void dialogoautor(){
+
+
         TextView txtcerrar;
         EditText nombre;
         Button agregar;
@@ -253,10 +262,10 @@ public class registro_librosFragment extends Fragment {
         agregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Tipo t= new Tipo(a,nombre.getText().toString());
-                CrearTipo(t);
-                nombre.setText("");
-                System.out.println("autor creadooooooo");
+                comboAutorList.add(nombre.getText().toString());
+                binding.comboAutores.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, comboAutorList));
+                dialogo.dismiss();
+
             }
         });
     }
@@ -265,7 +274,7 @@ public class registro_librosFragment extends Fragment {
 
 
     private void create(Libro l){
-        Retrofit retrofit= new Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create()).build();
+        Retrofit retrofit= new Retrofit.Builder().baseUrl(Apis.URL_001).addConverterFactory(GsonConverterFactory.create()).build();
         libroService= retrofit.create(LibroService.class);
         Call<Libro> call= libroService.addlibro(l);
         call.enqueue(new Callback<Libro>() {
@@ -311,7 +320,7 @@ public class registro_librosFragment extends Fragment {
 
 
     private void CrearTipo(Tipo l){
-        Retrofit retrofit= new Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create()).build();
+        Retrofit retrofit= new Retrofit.Builder().baseUrl(Apis.URL_001).addConverterFactory(GsonConverterFactory.create()).build();
         tipoService= retrofit.create(TipoService.class);
         Call<Tipo> call= tipoService.addTipo(l);
         call.enqueue(new Callback<Tipo>() {
@@ -334,6 +343,8 @@ public class registro_librosFragment extends Fragment {
             }
         });
     }
+
+
 
 
 

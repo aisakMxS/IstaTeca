@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/nav_lista_l"
-        android:name="com.example.istateca.ui.lista_libros.GalleryFragment"
+        android:name="com.example.istateca.ui.lista_libros.listar_librosFragment"
         android:label="@string/menu_lista_l"
         tools:layout="@layout/fragment_l_libros" />
 
