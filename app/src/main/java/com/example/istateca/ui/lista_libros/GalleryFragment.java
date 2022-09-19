@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.istateca.databinding.FragmentLLibrosBinding;
 
 public class GalleryFragment extends Fragment {
@@ -23,7 +25,8 @@ public class GalleryFragment extends Fragment {
         binding = FragmentLLibrosBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textGallery;
+        final TextView textView = binding.empty;
+        final RecyclerView view= binding.listaLibros;
         galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
