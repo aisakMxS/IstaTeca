@@ -2,7 +2,6 @@ package com.example.istateca;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import com.example.istateca.databinding.ActivityMainBinding;
@@ -18,10 +17,17 @@ public class MainActivity extends AppCompatActivity {
         binding.button.setOnClickListener(v -> {
             openActivity();
         });
+        binding.txtUsuario.setOnClickListener(v -> {
+            openRegistro();
+        });
     }
 
     private  void openActivity(){
         Intent intent = new Intent(this,V_principal.class);
+        startActivity(intent);
+    }
+    private void openRegistro(){
+        Intent intent = new Intent(this, RegistroActivity.class);
         startActivity(intent);
     }
 }

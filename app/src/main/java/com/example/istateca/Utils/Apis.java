@@ -9,5 +9,8 @@ public class Apis {
     public static  PrestamoService getPrestamoService(){
         return ClienteApi.getClient(URL_001).create(PrestamoService.class);
     }
+    public static  UsuarioService getUsuarioService(){
+        return UsuarioApi.getUsu(URL_001).create(UsuarioService.class);
+    }
 
 }
