@@ -137,10 +137,15 @@ public class registro_librosFragment extends Fragment {
 
                  */
 
-                Tipo t= new Tipo(2,"Var");
+                String tipo= (String) binding.comboTipo.getSelectedItem();
+                System.out.println(tipo);
 
-                Libro l = new Libro(a,"Deweys","El chemas",t,"adquisicionqwe",1980,"Editort","Cuenca", 90, "Area", "Isbn123"
-                        , "Español", "Descripcion aasfa", "IUno", "IDos","Itres","Dimensiones", "Estado", false,byteArray,"asfasdURL",
+
+
+
+
+                Libro l = new Libro(a,"Deweys","El chemas",objetotipo(tipo),"adquisicionqwe",1980,"Editort","Cuenca", 90, "Area", "Isbn123"
+                        , "Español", "Descripcion aasfa", "IUno", "IDos","Itres","Dimensiones", "Estado", true,byteArray,"asfasdURL",
                         1,d,true,"Christian",null);
 
 
@@ -170,6 +175,17 @@ public class registro_librosFragment extends Fragment {
         combotipo();
 
         return root;
+    }
+
+    private Tipo objetotipo(String nombre){
+        Tipo t=null;
+        for(int i=0; i<lista_tipos.size(); i++){
+            if(lista_tipos.get(i).getNombre().equals(nombre)){
+                t = new Tipo(lista_tipos.get(i).getId(), nombre);
+
+            }
+        }
+        return t;
     }
 
     private void combotipo(){
@@ -311,7 +327,6 @@ public class registro_librosFragment extends Fragment {
                 if(result.getData() != null){
                     bitmap=result.getData().getExtras().getParcelable("data");
                     binding.imgFoto.setImageBitmap(bitmap);
-                    System.out.println("el pepe");
 
                 }
 
