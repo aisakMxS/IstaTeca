@@ -311,6 +311,7 @@ public class registro_librosFragment extends Fragment {
                 if(result.getData() != null){
                     bitmap=result.getData().getExtras().getParcelable("data");
                     binding.imgFoto.setImageBitmap(bitmap);
+                    System.out.println("el pepe");
 
                 }
 
