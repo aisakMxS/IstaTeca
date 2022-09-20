@@ -1,18 +1,14 @@
 package com.example.istateca.ui.registro_libros;
 
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.annotation.RequiresApi;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 
 import androidx.annotation.NonNull;
@@ -26,15 +22,17 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.istateca.Clases.Autor;
+import com.example.istateca.Clases.AutorLibro;
 import com.example.istateca.Clases.Libro;
 import com.example.istateca.Clases.Tipo;
 import com.example.istateca.R;
 import com.example.istateca.Utils.Apis;
+import com.example.istateca.Utils.AutorService;
+import com.example.istateca.Utils.Autor_LibroService;
 import com.example.istateca.Utils.LibroService;
 import com.example.istateca.Utils.TipoService;
 import com.example.istateca.databinding.DialogoAutorBinding;
@@ -42,7 +40,6 @@ import com.example.istateca.databinding.DialogoTipoBinding;
 import com.example.istateca.databinding.FragmentRegistroLibrosBinding;
 
 import java.io.ByteArrayOutputStream;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -58,6 +55,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class registro_librosFragment extends Fragment {
     LibroService libroService;
     TipoService tipoService;
+    AutorService autorService;
+    Autor_LibroService autor_libroService;
     int a=0;
     private FragmentRegistroLibrosBinding binding;
     private DialogoTipoBinding binding1;
@@ -66,7 +65,9 @@ public class registro_librosFragment extends Fragment {
     Bitmap bitmap;
     ActivityResultLauncher<Intent> activitResultLauncher;
     List<Tipo> lista_tipos= new ArrayList<>();
+    List<Autor> lista_autores= new ArrayList<>();
     ArrayList<String> comboAutorList = new ArrayList<String>();
+
 
 
 
@@ -78,6 +79,7 @@ public class registro_librosFragment extends Fragment {
         View root = binding.getRoot();
 
         activitylauncher();
+        getAutor();
 
 
 
@@ -106,12 +108,8 @@ public class registro_librosFragment extends Fragment {
                 String d = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").format(new Date());
 
 
-
-
-                /*
                 String codigoDewey=binding.txtCodigodewey.getText().toString();
                 String titulo=binding.txtTituloLlibro.getText().toString();
-                int tipo= Integer.parseInt(binding.txtTipo.getText().toString());
                 String adquisicion= binding.txtAdquisicionLibro.getText().toString();
                 int anio= Integer.parseInt(binding.txtAnioPublicacion.getText().toString());
                 String editor=binding.txtEditor.getText().toString();
@@ -121,21 +119,16 @@ public class registro_librosFragment extends Fragment {
                 String codisbn= binding.txtCodigoIsbn.getText().toString();
                 String idioma=binding.txtIdioma.getText().toString();
                 String descripcion= binding.txtDescripcion.getText().toString();
-                String in1= "Indice 1";
-                String in2= "Indice 2";
-                String in3= "Indice 3";
+                String in1= binding.txtIndice1.getText().toString();
+                String in2= binding.txtIndice2.getText().toString();
+                String in3= binding.txtIndice3.getText().toString();
+                String donante= binding.txtNombreDonante.getText().toString();
                 String dimensiones=binding.txtDimensiones.getText().toString();
                 String estadolibro=binding.txtEstadoLibro.getText().toString();
                 Boolean activo=true;
-                byte[] imagen = null;
                 String url=  binding.txtUrl.getText().toString();
-                int idBibliotecario= Integer.parseInt(binding.txtBibliotecarioRegistra.getText().toString());
-                Timestamp fecha= null;
                 boolean disponibilidad= false;
-                String donante= binding.txtAnadirDonante.getText().toString();
                 byte[] documentodonacion= null;
-
-                 */
 
                 String tipo= (String) binding.comboTipo.getSelectedItem();
                 System.out.println(tipo);
@@ -143,16 +136,19 @@ public class registro_librosFragment extends Fragment {
 
 
 
+               Libro li = new Libro(1,"Deweys","El chemas",objetotipo(tipo),"adquisicionqwe",1980,"Editort","Cuenca", 90, "Area", "Isbn123"
+                      , "Español", "Descripcion aasfa", "IUno", "IDos","Itres","Dimensiones", "Estado", true,byteArray,"asfasdURL",
+                       1,d,true,"Christian",null);
 
-                Libro l = new Libro(a,"Deweys","El chemas",objetotipo(tipo),"adquisicionqwe",1980,"Editort","Cuenca", 90, "Area", "Isbn123"
-                        , "Español", "Descripcion aasfa", "IUno", "IDos","Itres","Dimensiones", "Estado", true,byteArray,"asfasdURL",
-                        1,d,true,"Christian",null);
 
-
-                //Libro l = new Libro(5,codigoDewey,titulo,tipo,adquisicion,anio,editor,ciudad,numpaginas,area,codisbn,idioma,descripcion,
-                //    in1,in2,in3,dimensiones,estadolibro,activo,imagen,url,idBibliotecario,fecha,disponibilidad,donante,documentodonacion);
+                Libro l = new Libro(a,codigoDewey,titulo,objetotipo(tipo),adquisicion,anio,editor,ciudad,numpaginas,area,codisbn,idioma,descripcion,
+                    in1,in2,in3,dimensiones,estadolibro,activo,byteArray,url,0,d,disponibilidad,donante,documentodonacion);
 
                 create(l);
+
+                CrearAutores(1,1);
+
+
 
             }
         });
@@ -175,6 +171,47 @@ public class registro_librosFragment extends Fragment {
         combotipo();
 
         return root;
+    }
+
+    private void CrearAutores(int id_autor, int id_libro){
+        if(comboAutorList.size()<1){
+            Autor au= new Autor(id_autor,comboAutorList.get(0));
+            CrearAutor(au);
+            getAutor();
+
+            Libro li = new Libro(id_libro,"Deweys","El chemas",null,"adquisicionqwe",1980,"Editort","Cuenca", 90, "Area", "Isbn123"
+                    , "Español", "Descripcion aasfa", "IUno", "IDos","Itres","Dimensiones", "Estado", true,null,"asfasdURL",
+                    1,null,true,"Christian",null);
+
+            AutorLibro autorLibro = new AutorLibro(a, li, au);
+            CrearAutor_Libro(autorLibro);
+        }else {
+            for(int i=0; i<comboAutorList.size(); i++){
+                int con=0;
+                Autor au= new Autor(id_autor,comboAutorList.get(i));
+                for(int j=0; j<lista_autores.size(); j++){
+                    if(lista_autores.get(j).getNombre().equalsIgnoreCase(au.getNombre())){
+                        System.out.println("Autor Existente");
+                        con=1;
+                    }
+                }
+                if(con!=1){
+                    CrearAutor(au);
+                    getAutor();
+
+
+                    Libro li = new Libro(id_libro,"Deweys","El chemas",null,"adquisicionqwe",1980,"Editort","Cuenca", 90, "Area", "Isbn123"
+                            , "Español", "Descripcion aasfa", "IUno", "IDos","Itres","Dimensiones", "Estado", true,null,"asfasdURL",
+                            1,null,true,"Christian",null);
+                    AutorLibro autorLibro = new AutorLibro(a, li, au);
+                    CrearAutor_Libro(autorLibro);
+                }
+            }
+        }
+
+
+
+
     }
 
     private Tipo objetotipo(String nombre){
@@ -222,6 +259,36 @@ public class registro_librosFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Tipo>> call, Throwable t) {
+                Log.e("Response err: ", t.getMessage());
+            }
+        });
+
+
+    }
+
+    private void getAutor(){
+        Retrofit retrofit= new Retrofit.Builder()
+                .baseUrl(Apis.URL_001).addConverterFactory(GsonConverterFactory.create()).build();
+        autorService= retrofit.create(AutorService.class);
+
+
+
+        Call<List<Autor>> call= autorService.getAutor();
+
+        call.enqueue(new Callback<List<Autor>>() {
+            @Override
+            public void onResponse(Call<List<Autor>> call, Response<List<Autor>> response) {
+                if(response.isSuccessful()){
+                    Log.e("Response err: ", response.message());
+                    lista_autores = response.body();
+                    System.out.println(lista_autores.size());
+                    combotipo();
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Autor>> call, Throwable t) {
                 Log.e("Response err: ", t.getMessage());
             }
         });
@@ -354,6 +421,55 @@ public class registro_librosFragment extends Fragment {
 
             @Override
             public void onFailure(Call<Tipo> call, Throwable t) {
+                Log.e("Error:",t.getMessage());
+                System.out.println("error");
+            }
+        });
+    }
+
+    private void CrearAutor(Autor A){
+        Retrofit retrofit= new Retrofit.Builder().baseUrl(Apis.URL_001).addConverterFactory(GsonConverterFactory.create()).build();
+        autorService= retrofit.create(AutorService.class);
+        Call<Autor> call= autorService.addAutor(A);
+        call.enqueue(new Callback<Autor>() {
+            @Override
+            public void onResponse(Call<Autor> call, Response<Autor> response) {
+                if(!response.isSuccessful()){
+                    Log.e("Autor Creado", response.message());
+
+                    return;
+                }
+                Autor l=response.body();
+                Toast.makeText(getActivity(), " Autor creado correctamente", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<Autor> call, Throwable t) {
+                Log.e("Error:",t.getMessage());
+                System.out.println("error");
+            }
+        });
+    }
+
+    private void CrearAutor_Libro(AutorLibro al){
+        Retrofit retrofit= new Retrofit.Builder().baseUrl(Apis.URL_001).addConverterFactory(GsonConverterFactory.create()).build();
+        autor_libroService= retrofit.create(Autor_LibroService.class);
+        Call<AutorLibro> call= autor_libroService.addAutor(al);
+        System.out.println(al.getLibro().getId_libro());
+        System.out.println(al.getAutor().getId());
+        call.enqueue(new Callback<AutorLibro>() {
+            @Override
+            public void onResponse(Call<AutorLibro> call, Response<AutorLibro> response) {
+                if(!response.isSuccessful()){
+                    Log.e("Autor Libro Creado", response.message());
+                    return;
+                }
+                AutorLibro l=response.body();
+                Toast.makeText(getActivity(), " Autor creado correctamente", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<AutorLibro> call, Throwable t) {
                 Log.e("Error:",t.getMessage());
                 System.out.println("error");
             }
