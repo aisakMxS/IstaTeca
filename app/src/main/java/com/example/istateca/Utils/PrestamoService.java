@@ -14,5 +14,5 @@ public interface PrestamoService {
     Call<List<Prestamo>> getListarPrestamo();
 
     @POST("crearPrestamo")
-    Call<Prestamo>addlibro(@Body Prestamo prestamo);
+    Call<Prestamo>addPrestamo(@Body Prestamo prestamo);
 }

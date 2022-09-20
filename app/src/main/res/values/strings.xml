@@ -21,4 +21,19 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string-array name="documentohabilitante">
+        <item>Seleccione</item>
+        <item>Cedula</item>
+        <item>Pasaporte</item>
+        <item>Licencia de conducir</item>
+    </string-array>
+
+    <string-array name="estadosolicitud">
+        <item>Seleccione</item>
+        <item>Solicitado</item>
+        <item>Entregado</item>
+        <item>Recibido</item>
+
+    </string-array>
+
 </resources>
