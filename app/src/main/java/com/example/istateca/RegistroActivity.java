@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.istateca.Clases.Persona;
 import com.example.istateca.Utils.Apis;
@@ -33,10 +34,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RegistroActivity extends AppCompatActivity  implements View.OnTouchListener
 {
 
-    UsuarioService usuarioService;
+    private UsuarioService usuarioService;
     String url="http://10.0.2.2:8080/api/";
     ActivityRegistroBinding binding;
-    List<Persona>list;
 
     EditText txtcedula;
     EditText txtnombres;
@@ -44,7 +44,7 @@ public class RegistroActivity extends AppCompatActivity  implements View.OnTouch
     EditText txtcelular;
     EditText txtcorreo;
     EditText txtclave;
-    Button btnregister;
+    Button btnregister, btnSearch;
     Context context;
 
     @Override
@@ -53,10 +53,24 @@ public class RegistroActivity extends AppCompatActivity  implements View.OnTouch
         binding = ActivityRegistroBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         usuarioService = Apis.getUsuarioService();
-        //getUsu();
-        //eventcedula();
-        //getCed();
-        initComponents();
+
+        btnSearch=findViewById(R.id.btnBuscar);
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getUsu();
+            }
+        });
+
+/*        btnregister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                *//*usuarioService = Apis.getUsuarioService();*//*
+         *//* openMain();*//*
+                Toast.makeText(context, "access", Toast.LENGTH_SHORT).show();
+            }
+        });*/
+
 
     }
 
@@ -77,9 +91,8 @@ public class RegistroActivity extends AppCompatActivity  implements View.OnTouch
                 .baseUrl(url).addConverterFactory(GsonConverterFactory
                         .create())
                 .build();
-
         usuarioService= retrofit.create(UsuarioService.class);
-        Call<Persona> call= usuarioService.getUsuarioByCedula(txtcedula.getText().toString());
+        Call<Persona> call= usuarioService.getUsuario(txtcedula.getText().toString());
         call.enqueue(new Callback<Persona>() {
             @Override
             public void onResponse(Call<Persona> call, Response<Persona> response) {
@@ -87,12 +100,26 @@ public class RegistroActivity extends AppCompatActivity  implements View.OnTouch
                     Log.e("Error: ",response.message());
                     return;
                 }
-                String tcedula = response.body().getCedula();
-                String tnombres = response.body().getNombres();
-                String tusuarios = response.body().getUsuario();
-                String tcelular = response.body().getCedular();
-                String tcorreo = response.body().getCorreo();
-                String tclave = response.body().getClave();
+                String cedu = txtcedula.getText().toString().trim();
+                String nomb = txtnombres.getText().toString().trim();
+                String usua = txtusuario.getText().toString().trim();
+                String celu = txtcelular.getText().toString().trim();
+                String corr = txtcorreo.getText().toString().trim();
+                String clav = txtclave.getText().toString().trim();
+
+                if(cedu.isEmpty()||nomb.isEmpty()||usua.isEmpty()||
+                        celu.isEmpty()||corr.isEmpty()||clav.isEmpty()){
+                    Toast.makeText(context, "Required", Toast.LENGTH_SHORT).show();
+                    return;
+
+                }else{
+                    cedu = response.body().getCedula();
+                    nomb = response.body().getNombres();
+                    usua = response.body().getUsuario();
+                    celu = response.body().getCedular();
+                    corr = response.body().getCorreo();
+                    clav = response.body().getClave();
+                }
 
 /*              Persona person = response.body();
                 System.out.println(person);*/
@@ -104,7 +131,12 @@ public class RegistroActivity extends AppCompatActivity  implements View.OnTouch
         });
     }
 
-    public void getCed(String c){
+    private  void openMain(){
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
+    }
+
+    /*public void getCed(String c){
         Retrofit retrofit= new Retrofit.Builder()
                 .baseUrl(url).addConverterFactory(GsonConverterFactory
                         .create())
@@ -132,9 +164,9 @@ public class RegistroActivity extends AppCompatActivity  implements View.OnTouch
             }
         });
 
-    }
+    }*/
 
-    public void initComponents(){
+   /* public void initComponents(){
         txtcedula = (EditText) findViewById(R.id.txt_cedula);
         txtnombres= (EditText) findViewById(R.id.txt_nombres);
         txtusuario= (EditText) findViewById(R.id.txt_usuario);
@@ -142,16 +174,16 @@ public class RegistroActivity extends AppCompatActivity  implements View.OnTouch
         txtcorreo= (EditText) findViewById(R.id.txt_correo);
         txtclave= (EditText) findViewById(R.id.txt_clave);
 
-        /*btnregister.setOnClickListener(new View.OnClickListener(){
+        *//*btnregister.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 requestRegister();
             }
-        });*/
+        });*//*
 
 
-    }
+    }*/
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -193,8 +225,6 @@ public class RegistroActivity extends AppCompatActivity  implements View.OnTouch
 
 
     }*/
-
-
 
 
 }

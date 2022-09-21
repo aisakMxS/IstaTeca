@@ -12,5 +12,5 @@ public interface UsuarioService {
     Call <Persona> getUsuarios();*/
 
     @GET("fenix_alumno")
-    Call<Persona> getUsuarioByCedula(@Query("ced")String ced);
+    Call<Persona> getUsuario(@Query("ced")String ced);
 }
