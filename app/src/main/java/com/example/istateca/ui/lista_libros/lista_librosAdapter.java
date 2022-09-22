@@ -1,14 +1,18 @@
 package com.example.istateca.ui.lista_libros;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.istateca.Clases.Libro;
 import com.example.istateca.R;
+import com.example.istateca.databinding.FragmentLLibrosBinding;
+import com.example.istateca.ui.registro_libros.DetalleLibroFragment;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -20,6 +24,8 @@ import java.util.List;
 public class lista_librosAdapter extends BaseAdapter {
     List<Libro> libros;
     Context context;
+    FragmentLLibrosBinding binding;
+    ImageView imagen;
     TextView txttitulo, txtnumpaginas,txtfechadecreacion;
 
     public lista_librosAdapter(List<Libro> libros, Context context) {
@@ -57,7 +63,7 @@ public class lista_librosAdapter extends BaseAdapter {
         String newDateString;
 
         final DateFormat formatter = new SimpleDateFormat(OLD_FORMAT);
-         Date d= null;
+        Date d= null;
         try {
             d = formatter.parse(oldDateString);
         } catch (ParseException e) {
@@ -71,6 +77,23 @@ public class lista_librosAdapter extends BaseAdapter {
         txttitulo.setText(libros.get(position).getTitulo());
         txtfechadecreacion.setText(newDateString);
         txtnumpaginas.setText(String.valueOf(libros.get(position).getNum_paginas()));
+        imagen=view.findViewById(R.id.img_flecha);
+        imagen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                detalleLibro(libros.get(position).getId_libro());
+
+            }
+        });
+
         return view;
     }
+
+    private void detalleLibro(int id){
+        Intent intent =new Intent(context, DetalleLibroFragment.class);
+        intent.putExtra("id_libro",id);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
 }
