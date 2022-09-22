@@ -67,7 +67,7 @@ public class registro_librosFragment extends Fragment {
     List<Tipo> lista_tipos= new ArrayList<>();
     List<Autor> lista_autores= new ArrayList<>();
     ArrayList<String> comboAutorList = new ArrayList<String>();
-
+    int idautor=0;
 
 
 
@@ -136,18 +136,20 @@ public class registro_librosFragment extends Fragment {
 
 
 
-               Libro li = new Libro(1,"Deweys","El chemas",objetotipo(tipo),"adquisicionqwe",1980,"Editort","Cuenca", 90, "Area", "Isbn123"
-                      , "Español", "Descripcion aasfa", "IUno", "IDos","Itres","Dimensiones", "Estado", true,byteArray,"asfasdURL",
-                       1,d,true,"Christian",null);
+               //Libro li = new Libro(1,"Deweys","El chemas",objetotipo(tipo),"adquisicionqwe",1980,"Editort","Cuenca", 90, "Area", "Isbn123"
+                 //     , "Español", "Descripcion aasfa", "IUno", "IDos","Itres","Dimensiones", "Estado", true,byteArray,"asfasdURL",
+                   //    1,d,true,"Christian",null);
 
 
                 Libro l = new Libro(a,codigoDewey,titulo,objetotipo(tipo),adquisicion,anio,editor,ciudad,numpaginas,area,codisbn,idioma,descripcion,
                     in1,in2,in3,dimensiones,estadolibro,activo,byteArray,url,0,d,disponibilidad,donante,documentodonacion);
 
+
                 create(l);
 
-                CrearAutores(1,1);
+                CrearAutores();
 
+                limpiarcampos();
 
 
             }
@@ -173,22 +175,45 @@ public class registro_librosFragment extends Fragment {
         return root;
     }
 
-    private void CrearAutores(int id_autor, int id_libro){
+    private void limpiarcampos(){
+        binding.comboTipo.setSelection(0);
+
+        //comboAutorList=null;
+       // binding.comboAutores.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, comboAutorList));
+
+        binding.imgFoto.setImageBitmap(null);
+        binding.txtAdquisicionLibro.setText("");
+        binding.txtAnioPublicacion.setText("");
+        binding.txtArea.setText("");
+        binding.txtCiudad.setText("");
+        binding.txtArea.setText("");
+        binding.txtCodigodewey.setText("");
+        binding.txtCodigoIsbn.setText("");
+        binding.txtDescripcion.setText("");
+        binding.txtDimensiones.setText("");
+        binding.txtCiudad.setText("");
+        binding.txtEditor.setText("");
+        binding.txtEstadoLibro.setText("");
+        binding.txtIdioma.setText("");
+        binding.txtIndice1.setText("");
+        binding.txtIndice2.setText("");
+        binding.txtIndice3.setText("");
+        binding.txtNombreDonante.setText("");
+        binding.txtNumeroPaginas.setText("");
+        binding.txtTituloLlibro.setText("");
+        binding.txtUrl.setText("");
+    }
+
+    private void CrearAutores(){
         if(comboAutorList.size()<1){
-            Autor au= new Autor(id_autor,comboAutorList.get(0));
+            Autor au= new Autor(a,comboAutorList.get(0));
             CrearAutor(au);
             getAutor();
-
-            Libro li = new Libro(id_libro,"Deweys","El chemas",null,"adquisicionqwe",1980,"Editort","Cuenca", 90, "Area", "Isbn123"
-                    , "Español", "Descripcion aasfa", "IUno", "IDos","Itres","Dimensiones", "Estado", true,null,"asfasdURL",
-                    1,null,true,"Christian",null);
-
-            AutorLibro autorLibro = new AutorLibro(a, li, au);
-            CrearAutor_Libro(autorLibro);
+            crearautor_libro(au.getNombre(),1);
         }else {
             for(int i=0; i<comboAutorList.size(); i++){
                 int con=0;
-                Autor au= new Autor(id_autor,comboAutorList.get(i));
+                Autor au= new Autor(lista_autores.size()+1,comboAutorList.get(i));
                 for(int j=0; j<lista_autores.size(); j++){
                     if(lista_autores.get(j).getNombre().equalsIgnoreCase(au.getNombre())){
                         System.out.println("Autor Existente");
@@ -199,19 +224,45 @@ public class registro_librosFragment extends Fragment {
                     CrearAutor(au);
                     getAutor();
 
+                    crearautor_libro(au.getNombre(),1);
 
-                    Libro li = new Libro(id_libro,"Deweys","El chemas",null,"adquisicionqwe",1980,"Editort","Cuenca", 90, "Area", "Isbn123"
-                            , "Español", "Descripcion aasfa", "IUno", "IDos","Itres","Dimensiones", "Estado", true,null,"asfasdURL",
-                            1,null,true,"Christian",null);
-                    AutorLibro autorLibro = new AutorLibro(a, li, au);
-                    CrearAutor_Libro(autorLibro);
+
+
+
                 }
+
+
             }
         }
 
 
 
 
+    }
+
+    private void crearautor_libro(String nombreautor, int idlibro){
+
+
+
+        getAutor();
+        int id_autor=0;
+        System.out.println("Sizeee"+ lista_autores.size());
+        System.out.println("Sizeee " +lista_autores.get(lista_autores.size()-1).getNombre());
+        for (int i=0; i<lista_autores.size(); i++){
+            if(lista_autores.get(i).getNombre().equalsIgnoreCase(nombreautor)){
+                id_autor=lista_autores.get(i).getId();
+                System.out.println("forrrr  "+ lista_autores.get(i).getId());
+                System.out.println(" Entre al for "+lista_autores.get(i).getNombre());
+            }
+        }
+
+
+        Autor au1= new Autor(id_autor,nombreautor);
+        Libro li = new Libro(1,"Deweys","El chemas",null,"adquisicionqwe",1980,"Editort","Cuenca", 90, "Area", "Isbn123"
+                , "Español", "Descripcion aasfa", "IUno", "IDos","Itres","Dimensiones", "Estado", true,null,"asfasdURL",
+                1,null,true,"Christian",null);
+        AutorLibro autorLibro = new AutorLibro(a, li, au1);
+        CrearAutor_Libro(autorLibro);
     }
 
     private Tipo objetotipo(String nombre){
@@ -278,13 +329,14 @@ public class registro_librosFragment extends Fragment {
         call.enqueue(new Callback<List<Autor>>() {
             @Override
             public void onResponse(Call<List<Autor>> call, Response<List<Autor>> response) {
-                if(response.isSuccessful()){
+                if(!response.isSuccessful()){
                     Log.e("Response err: ", response.message());
-                    lista_autores = response.body();
-                    System.out.println(lista_autores.size());
-                    combotipo();
                     return;
                 }
+                lista_autores = response.body();
+
+                System.out.println("Actualizando Autores"+ lista_autores.size());
+                combotipo();
             }
 
             @Override
@@ -440,7 +492,9 @@ public class registro_librosFragment extends Fragment {
                     return;
                 }
                 Autor l=response.body();
+                System.out.println("Autor Metodo: " +l.getId());
                 Toast.makeText(getActivity(), " Autor creado correctamente", Toast.LENGTH_LONG).show();
+                getAutor();
             }
 
             @Override
