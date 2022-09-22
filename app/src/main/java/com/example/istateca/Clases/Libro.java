@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 public class Libro {
-    private int id_libro;
+    public int id_libro;
     private String codigo_dewey;
     private String titulo;
     private Tipo tipo;
