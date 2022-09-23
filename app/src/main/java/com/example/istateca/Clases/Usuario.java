@@ -6,6 +6,7 @@ public class Usuario {
     private String observacion;
     private Persona persona;
 
+
     public Usuario(int id, int calificacion, String observacion, Persona persona) {
         this.id = id;
         this.calificacion = calificacion;

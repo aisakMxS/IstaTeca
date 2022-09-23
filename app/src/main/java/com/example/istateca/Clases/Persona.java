@@ -10,6 +10,7 @@ public class Persona {
     private String cedular;
     private boolean activo;
 
+
     public Persona(int id, String cedula, String usuario, String clave, String nombres, String correo, String cedular, boolean activo) {
         this.id = id;
         this.cedula = cedula;
