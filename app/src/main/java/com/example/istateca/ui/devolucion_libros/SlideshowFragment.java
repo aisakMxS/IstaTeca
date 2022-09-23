@@ -6,7 +6,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -40,12 +43,18 @@ public class SlideshowFragment extends Fragment {
     PrestamoService prestamoService;
     LibroService libroService;
     UsuarioService usuarioService;
-
     List<Prestamo> lista_prestamo= new ArrayList<>();
     List<Persona> lista_persona= new ArrayList<>();
     List<Usuario> lista_usuario = new ArrayList<>();
     List<Bibliotecario> lista_bibliBibliotecarios = new ArrayList<>();
     List<Libro> lista_libro= new ArrayList<>();
+    ArrayList<Integer> lista_datos = new ArrayList<Integer>();
+    ArrayList<Integer> lista_da = new ArrayList<Integer>();
+    ArrayList<Integer> lista_d = new ArrayList<Integer>();
+
+
+
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -80,65 +89,150 @@ public class SlideshowFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String cedula=binding.txtCedulaEstudiante.getText().toString();
-                //listar(cedula);
                 System.out.println(cedula);
+                getBuscarCedula(cedula);
+                comboLibro(cedula);
+            }
+        });
+        binding.comboLibro.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int d=0;
+                System.out.println("posicion " + position + "es " + id );
+                for (int i=0; i< lista_datos.size(); i++){
 
-                comboLibro();
+                    if (lista_datos.get(i)==position){
+                        System.out.println("datos " + lista_datos.get(i) + " posicioon " + position);
+
+                        for (int y=0;y< lista_prestamo.size(); y++){
+                            for (int z=0;z< lista_da.size(); z++){
+                                System.out.println("comparacion");
+
+                                if (lista_prestamo.get(y).getId_prestamo()==lista_da.get(z)){
+                                    System.out.println(lista_prestamo.get(y).getId_prestamo() + "prestmao");
+                                    System.out.println(lista_prestamo.get(y).getId_prestamo() + " lista prestmao");
+                                    binding.txtBibliotecarioRecibe.setText(lista_prestamo.get(y).getBibliotecario_recibido()+"");
+                                    binding.txtBibliotecarioEntrega.setText(lista_prestamo.get(y).getDocumento_habilitante());
+                                    binding.txtFechaEntrega.setText(lista_prestamo.get(y).getFecha_entrega());
+                                    binding.txtEstadoL.setText(lista_prestamo.get(y).getEstado_prestamo());
+                                    break;
+                                }
+                            }
+
+                        }
+
+                    }
+                }
+
+
+
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
             }
         });
 
-        getPrestamo();
+
+
+        //getUsuario();
         listarLibros();
         return root;
 
     }
-
-    private void listar(String cedula){
-        for (int i = 0; i < lista_prestamo.size(); i++) {
-
-            if (lista_persona.get(i).getCedula().equals(cedula)){
-                if (lista_prestamo.get(i).getEstado_libro().equals("entregado")) {
-                    /*if (lista_prestamo.get(i).getId_libro() == lista_libro.get(i).getId_libro()) {
-                        comboLibroList.add(lista_libro.get(i).getTitulo());
-                    }*/
-                    System.out.println("entre al metodo");
-                }
-            }
-        }
-    }
-
-
-    private void getPrestamo(){
-
-        prestamoService= Apis.getPrestamoService();
-        Call<List<Prestamo>>call=prestamoService.getListarPrestamo();
-
+    private void getBuscarCedula(String id) {
+        Retrofit retrofit= new Retrofit.Builder()
+                .baseUrl(Apis.URL_001)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        prestamoService =retrofit.create(PrestamoService.class);
+        Call<List<Prestamo>> call=prestamoService.getBuscarCedula(id);
         call.enqueue(new Callback<List<Prestamo>>() {
             @Override
-            public void onResponse(Call<List<Prestamo>> call, Response<List<Prestamo>> response) {
-                System.out.println("Entro al REpose");
-                if(response.isSuccessful()) {
-                    Log.e("Response err: ", response.message());
-                    System.out.println("Estoy aquiiiiiiii en el on response");
-                    lista_prestamo = response.body();
+            public void onResponse(Call<List<Prestamo>> call, Response <List<Prestamo>> response) {
+                if (!response.isSuccessful()){
 
-                    System.out.println(lista_prestamo.size());
-                    //comboLibro();
+                    Log.e("Response err: ",response.message());
                     return;
-                }
 
+                }
+                lista_prestamo =response.body();
+                //Prestamo prestamo=response.body();
+
+                System.out.println(lista_prestamo.size() + " prestamos cedula");
+               // Libro libros=response.body();
+                //cargarDatos(libros);
             }
 
             @Override
             public void onFailure(Call<List<Prestamo>> call, Throwable t) {
+                System.out.println(t.getMessage());
+            }
+        });
+    }
+
+   /* public void getUsu(){
+        Retrofit retrofit=new Retrofit.Builder()
+                .baseUrl(Apis.URL_001)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        usuarioService= retrofit.create(UsuarioService.class);
+        Call<Persona> call= usuarioService.getUsuario(binding.txtCedulaEstudiante.getText().toString());
+        call.enqueue(new Callback<Persona>() {
+            @Override
+            public void onResponse(Call<Persona> call, Response<Persona> response) {
+                if (response.isSuccessful()){
+                    Log.e("Response err: ", response.message());
+                    System.out.println("Estoy aquiiiiiiii en el on response");
+                    lista_persona = (List<Persona>) response.body();
+                    System.out.println(lista_persona.size());
+                    //comboLibro();
+                    return;
+                }
+            }
+            @Override
+            public void onFailure(Call<Persona> call, Throwable t) {
                 System.out.println("Error");
                 Log.e("Error:",t.getMessage());
             }
         });
-
     }
+    public void getUsuario(){
+        Retrofit retrofit=new Retrofit.Builder()
+                .baseUrl(Apis.URL_001)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        usuarioService=retrofit.create(UsuarioService.class);
+        Call<List<Usuario>> call= usuarioService.getListarUsuario();
+        call.enqueue(new Callback<List<Usuario>>() {
+            @Override
+            public void onResponse(Call<List<Usuario>> call, Response<List<Usuario>> response) {
+                if (!response.isSuccessful()){
+                    Log.e("Response err: ",response.message());
+                    return;
+                }
+                lista_usuario=response.body();
+                System.out.println(lista_usuario.size() + " usuarios");
+            }
+
+            @Override
+            public void onFailure(Call<List<Usuario>> call, Throwable t) {
+                System.out.println(t.getMessage());
+            }
+        });
+    }*/
+    private int comboL(String nombre){
+        int t=0;
+        for(int i=0; i<lista_libro.size(); i++){
+            if(lista_libro.get(i).getTitulo().equals(nombre)){
+                System.out.println(lista_libro.get(i).getTitulo());
+                t= lista_libro.get(i).getId_libro();
+            }
+        }
+        return t;
+    }
+
     private void listarLibros(){
-        System.out.println("entro ");
         Retrofit retrofit=new Retrofit.Builder()
                 .baseUrl(Apis.URL_001)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -154,7 +248,7 @@ public class SlideshowFragment extends Fragment {
                     return;
                 }
                 lista_libro=response.body();
-                System.out.println("te amo");
+                System.out.println(lista_libro.size() + " libros");
             }
 
             @Override
@@ -164,12 +258,32 @@ public class SlideshowFragment extends Fragment {
         });
     }
 
+    /*private void getPrestamo(){
+        prestamoService= Apis.getPrestamoService();
+        Call<List<Prestamo>>call=prestamoService.getListarPrestamo();
+        call.enqueue(new Callback<List<Prestamo>>() {
+            @Override
+            public void onResponse(Call<List<Prestamo>> call, Response<List<Prestamo>> response) {
+                if(response.isSuccessful()) {
+                    Log.e("Response err: ", response.message());
+                    lista_prestamo = response.body();
+                    System.out.println(lista_prestamo.size() + " prestamos");
+                    //comboLibro();
+                    return;
+                }
 
+            }
 
+            @Override
+            public void onFailure(Call<List<Prestamo>> call, Throwable t) {
+                System.out.println("Error");
+                Log.e("Error:",t.getMessage());
+            }
+        });
 
+    }*/
 
-
-    private void comboLibro() {
+    private void comboLibro(String cedula) {
 
         ArrayList<String> comboTiposList = new ArrayList<String>();
 
@@ -177,24 +291,21 @@ public class SlideshowFragment extends Fragment {
 
 
         for (int i=0; i< lista_prestamo.size(); i++){
-            int x= lista_prestamo.get(i).getLibro().getId_libro();
-            System.out.println("Lista prestamo" + x );
+            System.out.println("libro prestamo" + lista_prestamo.get(i).getLibro().getId_libro());
             for (int y=0; y< lista_libro.size(); y++){
-                int z= lista_libro.get(y).getId_libro();
-                System.out.println("libro " + z);
-               if(lista_prestamo.get(i).getLibro().getId_libro()==lista_libro.get(y).getId_libro()){
+                System.out.println("libro lista" + lista_libro.get(i).getId_libro());
+                //if (lista_prestamo.get(i).getEstado_libro().equalsIgnoreCase("entregado")){
+                    if((lista_prestamo.get(i).getLibro().getId_libro()==lista_libro.get(y).getId_libro())){
+                        comboTiposList.add(lista_libro.get(y).getTitulo());
+                    }
+                //}
 
-                    comboTiposList.add(lista_libro.get(y).getTitulo());
-
-                }
             }
-
-            //comboTiposList.add(lista_prestamo.get(i).getDocumento_habilitante());
         }
         binding.comboLibro.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, comboTiposList));
-
-
     }
+
+
 
     @Override
     public void onDestroyView() {
