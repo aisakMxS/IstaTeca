@@ -48,9 +48,6 @@ public class SlideshowFragment extends Fragment {
     List<Usuario> lista_usuario = new ArrayList<>();
     List<Bibliotecario> lista_bibliBibliotecarios = new ArrayList<>();
     List<Libro> lista_libro= new ArrayList<>();
-    ArrayList<Integer> lista_datos = new ArrayList<Integer>();
-    ArrayList<Integer> lista_da = new ArrayList<Integer>();
-    ArrayList<Integer> lista_d = new ArrayList<Integer>();
 
 
 
@@ -91,39 +88,30 @@ public class SlideshowFragment extends Fragment {
                 String cedula=binding.txtCedulaEstudiante.getText().toString();
                 System.out.println(cedula);
                 getBuscarCedula(cedula);
-                comboLibro(cedula);
+
             }
         });
         binding.comboLibro.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int d=0;
                 System.out.println("posicion " + position + "es " + id );
-                for (int i=0; i< lista_datos.size(); i++){
+                if (position>0){
+                    for (int i=1; i<= lista_prestamo.size(); i++){
 
-                    if (lista_datos.get(i)==position){
-                        System.out.println("datos " + lista_datos.get(i) + " posicioon " + position);
+                        if (i==id){
+                            System.out.println("posicion: " + i + " lista " + position);
+                            binding.txtDocumento.setText(lista_prestamo.get(i-1).getDocumento_habilitante());
+                            binding.txtEstadoL.setText(lista_prestamo.get(i-1).getEstado_libro());
+                            binding.txtFechaEntrega.setText(lista_prestamo.get(i-1).getFecha_entrega());
+                            binding.txtFechaMaxima.setText(lista_prestamo.get(i-1).getFecha_maxima());
 
-                        for (int y=0;y< lista_prestamo.size(); y++){
-                            for (int z=0;z< lista_da.size(); z++){
-                                System.out.println("comparacion");
-
-                                if (lista_prestamo.get(y).getId_prestamo()==lista_da.get(z)){
-                                    System.out.println(lista_prestamo.get(y).getId_prestamo() + "prestmao");
-                                    System.out.println(lista_prestamo.get(y).getId_prestamo() + " lista prestmao");
-                                    binding.txtBibliotecarioRecibe.setText(lista_prestamo.get(y).getBibliotecario_recibido()+"");
-                                    binding.txtBibliotecarioEntrega.setText(lista_prestamo.get(y).getDocumento_habilitante());
-                                    binding.txtFechaEntrega.setText(lista_prestamo.get(y).getFecha_entrega());
-                                    binding.txtEstadoL.setText(lista_prestamo.get(y).getEstado_prestamo());
-                                    break;
-                                }
-                            }
+                            String hola = String.valueOf(lista_prestamo.get(i-1).getBibliotecario_entrega());
+                            binding.txtBibliotecarioEntrega.setText(hola);
 
                         }
-
                     }
                 }
-
 
 
             }
@@ -132,8 +120,6 @@ public class SlideshowFragment extends Fragment {
 
             }
         });
-
-
 
         //getUsuario();
         listarLibros();
@@ -162,6 +148,7 @@ public class SlideshowFragment extends Fragment {
                 System.out.println(lista_prestamo.size() + " prestamos cedula");
                // Libro libros=response.body();
                 //cargarDatos(libros);
+                comboLibro();
             }
 
             @Override
@@ -169,41 +156,16 @@ public class SlideshowFragment extends Fragment {
                 System.out.println(t.getMessage());
             }
         });
+
     }
 
-   /* public void getUsu(){
-        Retrofit retrofit=new Retrofit.Builder()
-                .baseUrl(Apis.URL_001)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        usuarioService= retrofit.create(UsuarioService.class);
-        Call<Persona> call= usuarioService.getUsuario(binding.txtCedulaEstudiante.getText().toString());
-        call.enqueue(new Callback<Persona>() {
-            @Override
-            public void onResponse(Call<Persona> call, Response<Persona> response) {
-                if (response.isSuccessful()){
-                    Log.e("Response err: ", response.message());
-                    System.out.println("Estoy aquiiiiiiii en el on response");
-                    lista_persona = (List<Persona>) response.body();
-                    System.out.println(lista_persona.size());
-                    //comboLibro();
-                    return;
-                }
-            }
-            @Override
-            public void onFailure(Call<Persona> call, Throwable t) {
-                System.out.println("Error");
-                Log.e("Error:",t.getMessage());
-            }
-        });
-    }
     public void getUsuario(){
         Retrofit retrofit=new Retrofit.Builder()
                 .baseUrl(Apis.URL_001)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         usuarioService=retrofit.create(UsuarioService.class);
-        Call<List<Usuario>> call= usuarioService.getListarUsuario();
+        Call<List<Usuario>> call= usuarioService.getListarUsuarios();
         call.enqueue(new Callback<List<Usuario>>() {
             @Override
             public void onResponse(Call<List<Usuario>> call, Response<List<Usuario>> response) {
@@ -220,17 +182,8 @@ public class SlideshowFragment extends Fragment {
                 System.out.println(t.getMessage());
             }
         });
-    }*/
-    private int comboL(String nombre){
-        int t=0;
-        for(int i=0; i<lista_libro.size(); i++){
-            if(lista_libro.get(i).getTitulo().equals(nombre)){
-                System.out.println(lista_libro.get(i).getTitulo());
-                t= lista_libro.get(i).getId_libro();
-            }
-        }
-        return t;
     }
+
 
     private void listarLibros(){
         Retrofit retrofit=new Retrofit.Builder()
@@ -283,26 +236,18 @@ public class SlideshowFragment extends Fragment {
 
     }*/
 
-    private void comboLibro(String cedula) {
-
+    private void comboLibro() {
         ArrayList<String> comboTiposList = new ArrayList<String>();
-
         comboTiposList.add("Seleccione: ");
-
-
         for (int i=0; i< lista_prestamo.size(); i++){
-            System.out.println("libro prestamo" + lista_prestamo.get(i).getLibro().getId_libro());
             for (int y=0; y< lista_libro.size(); y++){
-                System.out.println("libro lista" + lista_libro.get(i).getId_libro());
-                //if (lista_prestamo.get(i).getEstado_libro().equalsIgnoreCase("entregado")){
-                    if((lista_prestamo.get(i).getLibro().getId_libro()==lista_libro.get(y).getId_libro())){
+                    if((lista_prestamo.get(i).getLibro().getId_libro()==lista_libro.get(y).getId_libro())&&lista_prestamo.get(i).getEstado_prestamo().equalsIgnoreCase("entregado")){
                         comboTiposList.add(lista_libro.get(y).getTitulo());
                     }
-                //}
-
             }
         }
         binding.comboLibro.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, comboTiposList));
+
     }
 
 
