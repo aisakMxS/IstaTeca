@@ -14,11 +14,14 @@
 
         <ScrollView
 
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/scrollView3"
+            android:layout_width="0dp"
 
-            tools:layout_editor_absoluteX="-30dp"
-            tools:layout_editor_absoluteY="121dp">
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -28,16 +31,6 @@
                 tools:context=".MainActivity"
                 tools:layout_editor_absoluteX="67dp"
                 tools:layout_editor_absoluteY="90dp">
-
-                <Button
-                    android:id="@+id/btn_modificar_solicitud"
-                    android:layout_width="65dp"
-                    android:layout_height="59dp"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="4dp"
-                    android:text="Button"
-                    app:layout_constraintStart_toEndOf="@+id/btn_guardar_solicitud"
-                    app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
                     android:id="@+id/btn_imprimir_solicitud"
@@ -52,10 +45,12 @@
                 <Button
                     android:id="@+id/btn_guardar_solicitud"
                     android:layout_width="65dp"
-                    android:layout_height="59dp"
-                    android:layout_marginStart="24dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="64dp"
                     android:layout_marginTop="4dp"
+                    android:layout_marginBottom="539dp"
                     android:text="Button"
+                    app:layout_constraintBottom_toTopOf="@+id/txt_estado_solicitud"
                     app:layout_constraintStart_toEndOf="@+id/btn_imprimir_solicitud"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -66,8 +61,8 @@
                     android:layout_marginTop="4dp"
                     android:text="Button"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.343"
-                    app:layout_constraintStart_toEndOf="@+id/btn_modificar_solicitud"
+                    app:layout_constraintHorizontal_bias="0.596"
+                    app:layout_constraintStart_toEndOf="@+id/btn_guardar_solicitud"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
@@ -75,11 +70,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="28dp"
-                    android:layout_marginEnd="40dp"
                     android:ems="10"
                     android:inputType="number"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btn_modificar_solicitud" />
+                    app:layout_constraintHorizontal_bias="0.8"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView37" />
 
                 <EditText
                     android:id="@+id/Txt_titulo_solicitud"
@@ -105,26 +101,13 @@
 
                 <Button
                     android:id="@+id/Btn_fechaEntrega_solicitud"
-                    android:layout_width="203dp"
-                    android:layout_height="0dp"
-                    android:layout_marginEnd="40dp"
-                    android:layout_marginBottom="212dp"
+                    android:layout_width="124dp"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="80dp"
                     android:text="Capturar fecha"
-                    app:layout_constraintBottom_toTopOf="@+id/Rb_intalaciones_solicitud"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/Cb_documentoHabilitante_solicitud" />
-
-                <Spinner
-                    android:id="@+id/Spiner_estadoPrestamo_solicitud"
-                    android:layout_width="228dp"
-                    android:layout_height="37dp"
-                    android:layout_marginTop="614dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="39dp"
-                    app:layout_constraintBottom_toTopOf="@+id/radioGroup2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:entries="@array/estadosolicitud"/>
 
                 <EditText
                     android:id="@+id/Txt_bibliotecarioEntrega_solicitud"
@@ -141,8 +124,8 @@
                     android:id="@+id/Txt_fechaMaximaDev_solicitud"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="40dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="32dp"
                     android:ems="10"
                     android:inputType="date"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -153,57 +136,32 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:layout_marginEnd="40dp"
                     android:ems="10"
                     android:inputType="number"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/Txt_cedula_estudante_solicitud" />
-
-                <RadioButton
-                    android:id="@+id/Rb_domiciliario_solicitud"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="Prestamo Domiciliario"
-                    android:textSize="12sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/Rb_intalaciones_solicitud"
-                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintHorizontal_bias="0.8"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView25"
-                    app:layout_constraintVertical_bias="1.0" />
-
-                <RadioButton
-                    android:id="@+id/Rb_intalaciones_solicitud"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:text="Prestamo en la instalaciones"
-                    android:textSize="12sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/Btn_fechaEntrega_solicitud"
-                    app:layout_constraintVertical_bias="1.0" />
+                    app:layout_constraintTop_toBottomOf="@+id/Txt_cedula_estudante_solicitud" />
 
                 <RadioGroup
                     android:id="@+id/radioGroup2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="219dp"
                     android:layout_marginBottom="33dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/Rb_intalaciones_solicitud"
-                    app:layout_constraintStart_toEndOf="@+id/Rb_domiciliario_solicitud"
-                    app:layout_constraintTop_toBottomOf="@+id/Spiner_estadoPrestamo_solicitud" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textView25" />
 
                 <TextView
                     android:id="@+id/textView8"
                     android:layout_width="101dp"
                     android:layout_height="43dp"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="28dp"
+                    android:layout_marginTop="24dp"
                     android:text="Cedula del Estudiante:"
                     app:layout_constraintEnd_toStartOf="@+id/Txt_cedula_estudante_solicitud"
-                    app:layout_constraintHorizontal_bias="0.327"
+                    app:layout_constraintHorizontal_bias="0.244"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/btn_imprimir_solicitud" />
 
@@ -212,10 +170,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="48dp"
+                    android:layout_marginTop="36dp"
                     android:text="Codigo DEWEY:"
                     app:layout_constraintEnd_toStartOf="@+id/Txt_codigo_DEWEY_solicitud"
-                    app:layout_constraintHorizontal_bias="0.27"
+                    app:layout_constraintHorizontal_bias="0.229"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
@@ -224,7 +182,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginTop="40dp"
                     android:text="Titulo Libro:"
                     app:layout_constraintEnd_toStartOf="@+id/Txt_titulo_solicitud"
                     app:layout_constraintHorizontal_bias="0.152"
@@ -239,7 +197,7 @@
                     android:layout_marginTop="48dp"
                     android:text="Estado del libro:"
                     app:layout_constraintEnd_toStartOf="@+id/Txt_estado_solicitud"
-                    app:layout_constraintHorizontal_bias="0.288"
+                    app:layout_constraintHorizontal_bias="0.244"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
@@ -250,7 +208,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="36dp"
                     android:layout_marginEnd="47dp"
-                    android:text="Docuemnto habilitante"
+                    android:text="Documento habilitante"
                     app:layout_constraintEnd_toStartOf="@+id/Cb_documentoHabilitante_solicitud"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView16" />
@@ -259,10 +217,10 @@
                     android:id="@+id/textView20"
                     android:layout_width="76dp"
                     android:layout_height="42dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="28dp"
                     android:text="Fecha de entrega:"
                     app:layout_constraintEnd_toStartOf="@+id/Btn_fechaEntrega_solicitud"
-                    app:layout_constraintHorizontal_bias="0.336"
+                    app:layout_constraintHorizontal_bias="0.206"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
@@ -273,7 +231,7 @@
                     android:layout_marginTop="32dp"
                     android:text="Bibliotecario encargado"
                     app:layout_constraintEnd_toStartOf="@+id/Txt_bibliotecarioEntrega_solicitud"
-                    app:layout_constraintHorizontal_bias="0.409"
+                    app:layout_constraintHorizontal_bias="0.318"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
@@ -281,23 +239,22 @@
                     android:id="@+id/textView23"
                     android:layout_width="107dp"
                     android:layout_height="41dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="20dp"
                     android:text="Fecha maxima de devolucion:"
                     app:layout_constraintEnd_toStartOf="@+id/Txt_fechaMaximaDev_solicitud"
-                    app:layout_constraintHorizontal_bias="0.49"
+                    app:layout_constraintHorizontal_bias="0.355"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
                 <TextView
                     android:id="@+id/textView25"
-                    android:layout_width="105dp"
+                    android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="24dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginEnd="75dp"
                     android:text="Estado del prestamo:"
-                    app:layout_constraintEnd_toStartOf="@+id/Spiner_estadoPrestamo_solicitud"
-                    app:layout_constraintHorizontal_bias="0.435"
+                    app:layout_constraintEnd_toStartOf="@+id/radioGroup2"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
@@ -315,23 +272,14 @@
 
                 <TextView
                     android:id="@+id/textView37"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="60dp"
+                    android:layout_height="18dp"
                     android:layout_marginTop="56dp"
-                    android:layout_marginEnd="32dp"
                     android:text="Guardar"
-                    app:layout_constraintEnd_toStartOf="@+id/textView38"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.484"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/btn_guardar_solicitud" />
-
-                <TextView
-                    android:id="@+id/textView38"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="56dp"
-                    android:layout_marginEnd="36dp"
-                    android:text="Modificar"
-                    app:layout_constraintEnd_toStartOf="@+id/textView39"
-                    app:layout_constraintTop_toTopOf="@+id/btn_modificar_solicitud" />
 
                 <TextView
                     android:id="@+id/textView39"
@@ -341,6 +289,8 @@
                     android:layout_marginEnd="64dp"
                     android:text="Lista"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/textView37"
                     app:layout_constraintTop_toTopOf="@+id/btn_lista_solicitud" />
 
                 <Spinner
@@ -350,11 +300,23 @@
                     android:layout_marginTop="357dp"
                     android:layout_marginEnd="40dp"
                     android:layout_marginBottom="24dp"
+                    android:entries="@array/documentohabilitante"
                     app:layout_constraintBottom_toTopOf="@+id/Btn_fechaEntrega_solicitud"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView17"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:entries="@array/documentohabilitante"/>
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/txt_estado_solicitud"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp"
+                    android:ems="10"
+                    android:enabled="false"
+                    android:text="Solicitado"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/Txt_fechaMaximaDev_solicitud"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_guardar_solicitud" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
