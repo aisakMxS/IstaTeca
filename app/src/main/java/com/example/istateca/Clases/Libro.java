@@ -31,6 +31,10 @@ public class Libro {
     private String nombre_donante;
     private byte[] documento_donacion;
 
+    public Libro(int id_libro) {
+        this.id_libro=id_libro;
+    }
+
     public Libro(int id_libro, String codigo_dewey, String titulo, Tipo tipo, String adquisicion, int anio_publicacion, String editor, String ciudad, int num_paginas, String area, String cod_ISBN, String idioma, String descripcion, String indice_uno, String indice_dos, String indice_tres, String dimensiones, String estadoLibro, boolean activo, byte[] imagen, String url_digital, int idbibliotecario, String fecha_creacion, boolean disponibilidad, String nombre_donante, byte[] documento_donacion) {
         this.id_libro = id_libro;
         this.codigo_dewey = codigo_dewey;

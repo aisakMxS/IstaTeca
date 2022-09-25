@@ -1,5 +1,6 @@
 package com.example.istateca.Utils;
 
+import com.example.istateca.Clases.Bibliotecario;
 import com.example.istateca.Clases.Libro;
 import com.example.istateca.Clases.Prestamo;
 
@@ -21,4 +22,9 @@ public interface PrestamoService {
     @GET("listarprestamoxcedula/{cedula}")
     Call<List<Prestamo>>getBuscarCedula(@Path("cedula") String cedula);
 
+    @POST("editarprestamo/{id}")
+    Call<Prestamo>updatePersona(@Body Prestamo prestamo,@Path("id") int id);
+
+   /* @GET("bibliotecario/{id}")
+    Call<Bibliotecario> getBuscarDatos(@Path("id_bibliotecario") int id);*/
 }

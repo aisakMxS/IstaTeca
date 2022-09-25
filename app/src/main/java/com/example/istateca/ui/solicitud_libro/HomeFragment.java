@@ -1,5 +1,7 @@
 package com.example.istateca.ui.solicitud_libro;
 
+import static java.sql.Types.NULL;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -16,9 +19,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.istateca.Clases.Libro;
+import com.example.istateca.Clases.Prestamo;
+import com.example.istateca.Clases.Tipo;
 import com.example.istateca.R;
 import com.example.istateca.Utils.Apis;
 import com.example.istateca.Utils.LibroService;
+import com.example.istateca.Utils.PrestamoService;
 import com.example.istateca.databinding.FragmentSolicitudLBinding;
 
 import java.text.SimpleDateFormat;
@@ -37,8 +43,11 @@ public class HomeFragment extends Fragment {
     private FragmentSolicitudLBinding binding;
 
     LibroService libroService;
+    PrestamoService prestamoService;
     List<Libro> lista_libro= new ArrayList<>();
     int id_libro = 1;
+    int a =0;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -47,10 +56,27 @@ public class HomeFragment extends Fragment {
         binding = FragmentSolicitudLBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+
         binding.btnGuardarSolicitud.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                String codigoDewey=binding.TxtCodigoDEWEYSolicitud.getText().toString();
+                String fecha_entrega = binding.BtnFechaEntregaSolicitud.getText().toString();
+                String fecha_maxima = binding.TxtFechaMaximaDevSolicitud.getText().toString();
+                String cedula = binding.TxtCedulaEstudanteSolicitud.getText().toString();
+                String bibliotecario = binding.TxtBibliotecarioEntregaSolicitud.getText().toString();
+                String estadolibro=binding.TxtEstadoSolicitud.getText().toString();
+                Boolean activo=true;
+                String estado="Entregado";
+
+                String documentos= (String) binding.CbDocumentoHabilitanteSolicitud.getSelectedItem();
+                System.out.println(documentos);
+
+
+                //Prestamo p = new Prestamo(a,cedula,li,estadolibro,estado,fecha_entrega,bibliotecario,documentos,null,null,fecha_maxima,activo,NULL);
+
+                //create(p);
             }
         });
 
@@ -70,6 +96,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        listarLibros();
 
         return root;
 
@@ -80,6 +107,10 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+    Libro li= new Libro(id_libro);
+
+
 
     private void listarLibros(){
         Retrofit retrofit=new Retrofit.Builder()
@@ -97,6 +128,7 @@ public class HomeFragment extends Fragment {
                     return;
                 }
                 lista_libro=response.body();
+                cargar_datos(id_libro);
                 System.out.println(lista_libro.size() + " libros");
             }
 
@@ -106,4 +138,40 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+    public void cargar_datos(int id){
+        for (int i=0; i< lista_libro.size(); i++){
+                if((lista_libro.get(i).getId_libro()==id)){
+                    binding.TxtCodigoDEWEYSolicitud.setText(lista_libro.get(i).getCodigo_dewey());
+                    binding.TxtTituloSolicitud.setText(lista_libro.get(i).getTitulo());
+                    binding.TxtEstadoSolicitud.setText(lista_libro.get(i).getEstadoLibro());
+                }
+
+        }
+    }
+    private void create(Prestamo l){
+        Retrofit retrofit= new Retrofit.Builder().baseUrl(Apis.URL_001).addConverterFactory(GsonConverterFactory.create()).build();
+        prestamoService= retrofit.create(PrestamoService.class);
+        Call<Prestamo> call= prestamoService.addPrestamo(l);
+        call.enqueue(new Callback<Prestamo>() {
+            @Override
+            public void onResponse(Call<Prestamo> call, Response<Prestamo> response) {
+                if(!response.isSuccessful()){
+                    //Toast.makeText("Se agrego con exito", Toast.LENGTH_LONG).show();
+                    Log.e("Response erra", response.message());
+                    return;
+                }
+                Prestamo l=response.body();
+                // Toast.makeText(registro_librosFragment.this,l.getCodigoDewey()+" created!", Toast.LENGTH_LONG).show();
+                System.out.println("CREADO CON EXITO");
+            }
+
+            @Override
+            public void onFailure(Call<Prestamo> call, Throwable t) {
+                Log.e("Error:",t.getMessage());
+                System.out.println("error");
+            }
+        });
+    }
+
+
 }

@@ -274,10 +274,11 @@
 
                 <Button
                     android:id="@+id/btn_fecha"
-                    android:layout_width="170dp"
-                    android:layout_height="39dp"
+                    android:layout_width="124dp"
+                    android:layout_height="36dp"
                     android:layout_marginTop="12dp"
                     android:text="Cargar fecha"
+                    android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.346"
                     app:layout_constraintStart_toEndOf="@+id/textView6"
@@ -328,11 +329,16 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
-                <Spinner
-                    android:id="@+id/combo_estado_prestamo"
+                <EditText
+                    android:id="@+id/txt_estado_prestamo"
                     android:layout_width="230dp"
                     android:layout_height="34dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="12dp"
+                    android:ems="10"
+                    android:enabled="false"
+                    android:inputType="textPersonName"
+                    android:text="Recibido"
+                    android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.217"
                     app:layout_constraintStart_toEndOf="@+id/textView19"
@@ -378,7 +384,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.368"
                     app:layout_constraintStart_toEndOf="@+id/textView20"
-                    app:layout_constraintTop_toBottomOf="@+id/combo_estado_prestamo" />
+                    app:layout_constraintTop_toBottomOf="@+id/txt_estado_prestamo" />
 
                 <Button
                     android:id="@+id/btn_matriz"

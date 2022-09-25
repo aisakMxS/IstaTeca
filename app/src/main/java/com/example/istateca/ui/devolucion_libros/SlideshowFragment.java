@@ -8,8 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -42,13 +40,14 @@ public class SlideshowFragment extends Fragment {
     private FragmentDevolucionLBinding binding;
     PrestamoService prestamoService;
     LibroService libroService;
+    //BibliService bibliService;
     UsuarioService usuarioService;
     List<Prestamo> lista_prestamo= new ArrayList<>();
     List<Persona> lista_persona= new ArrayList<>();
     List<Usuario> lista_usuario = new ArrayList<>();
-    List<Bibliotecario> lista_bibliBibliotecarios = new ArrayList<>();
+    List<Bibliotecario> lista_bibliotecarios = new ArrayList<>();
     List<Libro> lista_libro= new ArrayList<>();
-
+    int id_prest=0;
 
 
 
@@ -62,7 +61,7 @@ public class SlideshowFragment extends Fragment {
         binding.btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                System.out.println(" id preswtamo " + id_prest );
             }
         });
 
@@ -93,35 +92,33 @@ public class SlideshowFragment extends Fragment {
         });
         binding.comboLibro.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
+
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println("posicion " + position + "es " + id );
-                if (position>0){
-                    for (int i=1; i<= lista_prestamo.size(); i++){
+                if (position > 0) {
+                    for (int i = 1; i <= lista_prestamo.size(); i++) {
 
-                        if (i==id){
+                        if (i == id) {
+                            String a = lista_prestamo.get(i - 1).getFecha_entrega();
+                            String fecha_entrega = a.substring(0, 10);
+                            String b = lista_prestamo.get(i - 1).getFecha_maxima();
+                            String fecha_maxima = b.substring(0, 10);
                             System.out.println("posicion: " + i + " lista " + position);
-                            binding.txtDocumento.setText(lista_prestamo.get(i-1).getDocumento_habilitante());
-                            binding.txtEstadoL.setText(lista_prestamo.get(i-1).getEstado_libro());
-                            binding.txtFechaEntrega.setText(lista_prestamo.get(i-1).getFecha_entrega());
-                            binding.txtFechaMaxima.setText(lista_prestamo.get(i-1).getFecha_maxima());
-
-                            String hola = String.valueOf(lista_prestamo.get(i-1).getBibliotecario_entrega());
-                            binding.txtBibliotecarioEntrega.setText(hola);
-
+                            binding.txtDocumento.setText(lista_prestamo.get(i - 1).getDocumento_habilitante());
+                            binding.txtEstadoL.setText(lista_prestamo.get(i - 1).getEstado_libro());
+                            binding.txtFechaEntrega.setText(fecha_entrega);
+                            binding.txtFechaMaxima.setText(fecha_maxima);
+                         //   cargarDatos(lista_prestamo.get(i - 1).getBibliotecario_entrega());
+                            id_prest=lista_prestamo.get(i-1).getId_prestamo();
                         }
                     }
                 }
-
-
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
 
             }
         });
-
-        //getUsuario();
         listarLibros();
         return root;
 
@@ -143,11 +140,7 @@ public class SlideshowFragment extends Fragment {
 
                 }
                 lista_prestamo =response.body();
-                //Prestamo prestamo=response.body();
-
                 System.out.println(lista_prestamo.size() + " prestamos cedula");
-               // Libro libros=response.body();
-                //cargarDatos(libros);
                 comboLibro();
             }
 
@@ -210,29 +203,34 @@ public class SlideshowFragment extends Fragment {
             }
         });
     }
-
-    /*private void getPrestamo(){
-        prestamoService= Apis.getPrestamoService();
-        Call<List<Prestamo>>call=prestamoService.getListarPrestamo();
-        call.enqueue(new Callback<List<Prestamo>>() {
+/*
+    private void getBuscarBibliotecario(int id) {
+        Retrofit retrofit= new Retrofit.Builder()
+                .baseUrl(Apis.URL_001)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        //bibliService =retrofit.create(BibliService.class);
+       // Call<Bibliotecario> call=bibliService.getBuscarDatos(id);
+        call.enqueue(new Callback<Bibliotecario>() {
             @Override
-            public void onResponse(Call<List<Prestamo>> call, Response<List<Prestamo>> response) {
-                if(response.isSuccessful()) {
-                    Log.e("Response err: ", response.message());
-                    lista_prestamo = response.body();
-                    System.out.println(lista_prestamo.size() + " prestamos");
-                    //comboLibro();
+            public void onResponse(Call<Bibliotecario> call, Response<Bibliotecario> response) {
+                if (!response.isSuccessful()){
+
+                    Log.e("Response err: ",response.message());
                     return;
                 }
-
+                Bibliotecario bibliotecario= response.body();
+                cargarDatos(bibliotecario);
             }
 
             @Override
-            public void onFailure(Call<List<Prestamo>> call, Throwable t) {
-                System.out.println("Error");
-                Log.e("Error:",t.getMessage());
+            public void onFailure(Call<Bibliotecario> call, Throwable t) {
+                System.out.println(t.getMessage());
             }
         });
+    }
+    public void cargarDatos(Bibliotecario bibliotecario){
+        binding.txtBibliotecarioEntrega.setText(bibliotecario.getPersona().getNombres());
 
     }*/
 
@@ -249,7 +247,6 @@ public class SlideshowFragment extends Fragment {
         binding.comboLibro.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, comboTiposList));
 
     }
-
 
 
     @Override

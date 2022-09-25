@@ -34,6 +34,7 @@ public class Prestamo {
         this.escaneo_matriz = escaneo_matriz;
     }
 
+
     public int getId_prestamo() {
         return id_prestamo;
     }
