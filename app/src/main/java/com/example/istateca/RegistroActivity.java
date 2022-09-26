@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,26 +38,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RegistroActivity extends AppCompatActivity {
 
     UsuarioService usuarioService;
-    /*private static final String url="http://192.168.18.14:4200/api/";*/
-    /*String Pced = txtcedula.getText().toString().trim();*/
-    /*private static final String url="http://192.168.18.14:4200/api/fenix_alumno?ced";*/
     private ActivityRegistroBinding binding;
     int us=0;
     int p=0;
     int cali = 5;
     String obs="";
-
     Context context;
-/*  StringRequest stringRequest;
-    RequestQueue requestQueue;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityRegistroBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        /*usuarioService = Apis.getUsuarioService();*/
-        /*requestQueue = Volley.newRequestQueue(this);*/
 
 /*        btnSearch=findViewById(R.id.btnBuscar);
         btnSearch.setOnClickListener(new View.OnClickListener() {
@@ -77,13 +71,26 @@ public class RegistroActivity extends AppCompatActivity {
                 String celu=binding.txtCelular.getText().toString();
                 Boolean act=true;
 
+                if(cedu.isEmpty()){
+                    Toast.makeText(RegistroActivity.this,"Ingrese cedula",Toast.LENGTH_SHORT).show();
+                }else if(nomb.isEmpty()){
+                    Toast.makeText(RegistroActivity.this,"Ingrese nombre",Toast.LENGTH_SHORT).show();
+                }else if(usua.isEmpty()){
+                    Toast.makeText(RegistroActivity.this,"Ingrese usuario",Toast.LENGTH_SHORT).show();
+                }else if(clav.isEmpty()){
+                    Toast.makeText(RegistroActivity.this,"Ingrese clave",Toast.LENGTH_SHORT).show();
+                }else if(!valEmail(corr)){
+                    Toast.makeText(RegistroActivity.this,"Correo incorrecto",Toast.LENGTH_SHORT).show();
+                }else if(corr.equals("")){
+                    Toast.makeText(RegistroActivity.this,"Ingrese correo",Toast.LENGTH_SHORT).show();
+                }
+
                 Persona person = new Persona(p,cedu,nomb,usua,clav,corr,celu,act);
                 Usuario u = new Usuario(us,cali,obs,person);
 
-
                 /*Toast.makeText(context, "access", Toast.LENGTH_SHORT).show();*/
                 create(u);
-                clean();
+                /*clean();*/
 
             }
         });
@@ -122,6 +129,11 @@ public class RegistroActivity extends AppCompatActivity {
         binding.txtClave.setText("");
         binding.txtCorreo.setText("");
         binding.txtCelular.setText("");
+    }
+
+    private boolean valEmail(String email) {
+        Pattern pattern = Patterns.EMAIL_ADDRESS;
+        return pattern.matcher(email).matches();
     }
 
 

@@ -13,7 +13,10 @@ public class Apis {
         return ClienteApi.getClient(URL_001).create(PrestamoService.class);
     }
     public static  UsuarioService getUsuarioService(){
-        return UsuarioApi.getUsu(URL_002).create(UsuarioService.class);
+        return UsuarioApi.getUsu(URL_001).create(UsuarioService.class);
+    }
+    public static  BibliotecarioService getBibliotecarioService(){
+        return BibliotecarioApi.getBiblio(URL_001).create(BibliotecarioService.class);
     }
 
 }
