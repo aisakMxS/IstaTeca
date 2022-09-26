@@ -9,12 +9,15 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.example.istateca.Clases.Libro;
 import com.example.istateca.R;
 import com.example.istateca.databinding.FragmentLLibrosBinding;
-import com.example.istateca.ui.registro_libros.DetalleLibroFragment;
+import com.example.istateca.ui.solicitud_libro.HomeFragment;
 
-import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,8 +30,10 @@ public class lista_librosAdapter extends BaseAdapter {
     FragmentLLibrosBinding binding;
     ImageView imagen;
     TextView txttitulo, txtnumpaginas,txtfechadecreacion;
-
-    public lista_librosAdapter(List<Libro> libros, Context context) {
+    listar_librosFragment lista;
+    DetalleLibroFragment detalles=new DetalleLibroFragment();
+ private listar_librosFragment mycontext;
+    public lista_librosAdapter(@NonNull List<Libro> libros, Context context) {
         this.libros = libros;
         this.context = context;
     }
@@ -81,19 +86,25 @@ public class lista_librosAdapter extends BaseAdapter {
         imagen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                detalleLibro(libros.get(position).getId_libro());
-
+                DetalleLibroFragment homeFragment=new DetalleLibroFragment();
+                FragmentTransaction fragmentTransaction;
+                FragmentManager fragmentManager;
+                fragmentManager=lista.getActivity().getSupportFragmentManager();
+                fragmentTransaction=fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.lista_libros,homeFragment).addToBackStack(null).commit();
             }
         });
 
         return view;
     }
 
-    private void detalleLibro(int id){
-        Intent intent =new Intent(context, DetalleLibroFragment.class);
-        intent.putExtra("id_libro",id);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
+    public void abrirdetalle(){
+        DetalleLibroFragment homeFragment=new DetalleLibroFragment();
+        FragmentTransaction fragmentTransaction;
+        FragmentManager fragmentManager;
+        fragmentManager=detalles.getActivity().getSupportFragmentManager();
+        fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.lista_libros,homeFragment).commit();
     }
 
 }

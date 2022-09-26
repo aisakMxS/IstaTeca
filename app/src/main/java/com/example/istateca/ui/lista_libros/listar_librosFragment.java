@@ -6,14 +6,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.istateca.Clases.Libro;
+import com.example.istateca.R;
 import com.example.istateca.Utils.Apis;
 import com.example.istateca.Utils.LibroService;
 import com.example.istateca.databinding.FragmentLLibrosBinding;
@@ -28,6 +30,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class listar_librosFragment extends Fragment {
     LibroService libroService;List<Libro> libros;ListView recyclerView ;
+    public static int id=0;
 
     private FragmentLLibrosBinding binding;
 
@@ -39,8 +42,22 @@ public class listar_librosFragment extends Fragment {
         View root = binding.getRoot();
         recyclerView= binding.listaLibros;
         listarLibros();
+        System.out.println("lista  librooooooooooooooooooooooooooos");
+        /*recyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                DetalleLibroFragment detalle= new DetalleLibroFragment();
+                FragmentTransaction fragmentTransaction= getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.lista_libros,detalle);
+                fragmentTransaction.commit();
+                id=libros.get(i).getId_libro();
+
+            }
+        });*/
         return root;
     }
+
+
 
     @Override
     public void onDestroyView() {

@@ -1,4 +1,4 @@
-package com.example.istateca.ui.registro_libros;
+package com.example.istateca.ui.lista_libros;
 
 import android.os.Bundle;
 
@@ -40,6 +40,7 @@ public class DetalleLibroFragment extends Fragment {
 
         binding = FragmentDetalleLibroBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        System.out.println("entroooooooooooooooooooooooooooooooo "+ listar_librosFragment.id);
 
         textitulo=binding.txtTituloLibro;
         textcodigodewey=binding.txtCodigodewey;
@@ -59,9 +60,8 @@ public class DetalleLibroFragment extends Fragment {
         indice2=binding.txtIndice2Libro;
         indice3=binding.txtIndice3Libro;
         dimesiones=binding.txtDiimensiones;
-        int id=getActivity().getIntent().getExtras().getInt("id_libro");
-        getBuscarDatos(id);
 
+        getBuscarDatos(listar_librosFragment.id);
 
         return root;
 
@@ -83,6 +83,7 @@ public class DetalleLibroFragment extends Fragment {
                     return;
                 }
                 Libro libros=response.body();
+                System.out.println("datos cargados");
                 cargarDatos(libros);
             }
 

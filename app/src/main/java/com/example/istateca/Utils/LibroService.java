@@ -19,7 +19,7 @@ public interface LibroService {
     Call<Libro>addlibro(@Body Libro libro);
 
     @GET("libro/{id}")
-    Call<Libro> getBuscarDatos(@Path("id_libro") int id);
+    Call<Libro> getBuscarDatos(@Path("id") int id);
 
 
 }
