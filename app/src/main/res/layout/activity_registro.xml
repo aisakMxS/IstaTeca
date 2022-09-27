@@ -43,10 +43,10 @@
 
         <EditText
             android:id="@+id/txt_cedula"
-            android:layout_width="264dp"
+            android:layout_width="312dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/Cedula"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="21dp"
             android:layout_marginTop="-20dp"
             android:layout_toEndOf="@+id/Cedula"
             android:inputType="text|number"
@@ -91,10 +91,10 @@
 
         <EditText
             android:id="@+id/txt_usuario"
-            android:layout_width="321dp"
+            android:layout_width="311dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_nombres"
-            android:layout_marginStart="6dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="5dp"
             android:layout_toEndOf="@+id/Usuario"
             android:inputType="textPersonName"
@@ -114,10 +114,10 @@
 
         <EditText
             android:id="@+id/txt_celular"
-            android:layout_width="326dp"
+            android:layout_width="312dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_usuario"
-            android:layout_marginStart="6dp"
+            android:layout_marginStart="21dp"
             android:layout_marginTop="7dp"
             android:layout_toEndOf="@+id/Celular"
             android:inputType="text|number"
@@ -138,10 +138,10 @@
 
         <EditText
             android:id="@+id/txt_correo"
-            android:layout_width="326dp"
+            android:layout_width="313dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_celular"
-            android:layout_marginStart="6dp"
+            android:layout_marginStart="22dp"
             android:layout_marginTop="7.5dp"
             android:layout_toEndOf="@+id/Correo"
             android:inputType="textEmailAddress"
@@ -161,10 +161,10 @@
 
         <EditText
             android:id="@+id/txt_clave"
-            android:layout_width="335dp"
+            android:layout_width="316dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_correo"
-            android:layout_marginStart="6dp"
+            android:layout_marginStart="28dp"
             android:layout_marginTop="7.5dp"
             android:layout_toEndOf="@+id/Clave"
             android:inputType="textPassword"
@@ -179,17 +179,6 @@
             android:layout_marginTop="76dp"
             android:text="Registrarse" />
 
-        <Button
-            android:id="@+id/btnBuscar"
-            android:layout_width="85dp"
-            android:layout_height="42dp"
-            android:layout_above="@+id/txt_nombres"
-            android:layout_below="@+id/Crear"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="-7dp"
-            android:layout_toEndOf="@+id/txt_cedula"
-            android:text="Buscar" />
 
     </RelativeLayout>
 </layout>

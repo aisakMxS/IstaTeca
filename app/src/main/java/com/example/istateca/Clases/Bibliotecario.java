@@ -6,11 +6,11 @@ public class Bibliotecario {
     private int id;
     private Persona persona;
     private int rol;
-    private Timestamp fecha_inicio;
-    private Timestamp fecha_fin;
+    private String fecha_inicio;
+    private String fecha_fin;
     private boolean activo_bibliotecario;
 
-    public Bibliotecario(int id, Persona persona, int rol, Timestamp fecha_inicio, Timestamp fecha_fin, boolean activo_bibliotecario) {
+    public Bibliotecario(int id, Persona persona, int rol, String fecha_inicio, String fecha_fin, boolean activo_bibliotecario) {
         this.id = id;
         this.persona = persona;
         this.rol = rol;
@@ -43,19 +43,19 @@ public class Bibliotecario {
         this.rol = rol;
     }
 
-    public Timestamp getFecha_inicio() {
+    public String getFecha_inicio() {
         return fecha_inicio;
     }
 
-    public void setFecha_inicio(Timestamp fecha_inicio) {
+    public void setFecha_inicio(String fecha_inicio) {
         this.fecha_inicio = fecha_inicio;
     }
 
-    public Timestamp getFecha_fin() {
+    public String getFecha_fin() {
         return fecha_fin;
     }
 
-    public void setFecha_fin(Timestamp fecha_fin) {
+    public void setFecha_fin(String fecha_fin) {
         this.fecha_fin = fecha_fin;
     }
 

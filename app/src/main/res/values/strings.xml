@@ -39,7 +39,7 @@
     <string-array name="biblioroles">
         <item>Seleccione</item>
         <item>Admnistrador</item>
-        <item>Usuario</item>
+        <item>Bibliotecario</item>
     </string-array>
 
 </resources>
