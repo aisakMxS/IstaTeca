@@ -1,5 +1,6 @@
 package com.example.istateca.ui.lista_libros;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+
 public class lista_librosAdapter extends BaseAdapter {
     List<Libro> libros;
     Context context;
@@ -32,7 +34,8 @@ public class lista_librosAdapter extends BaseAdapter {
     TextView txttitulo, txtnumpaginas,txtfechadecreacion;
     listar_librosFragment lista;
     DetalleLibroFragment detalles=new DetalleLibroFragment();
- private listar_librosFragment mycontext;
+ //private listar_librosFragment mycontext;
+    Dialog dialogo;
     public lista_librosAdapter(@NonNull List<Libro> libros, Context context) {
         this.libros = libros;
         this.context = context;
@@ -82,29 +85,21 @@ public class lista_librosAdapter extends BaseAdapter {
         txttitulo.setText(libros.get(position).getTitulo());
         txtfechadecreacion.setText(newDateString);
         txtnumpaginas.setText(String.valueOf(libros.get(position).getNum_paginas()));
-        imagen=view.findViewById(R.id.img_flecha);
-        imagen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DetalleLibroFragment homeFragment=new DetalleLibroFragment();
-                FragmentTransaction fragmentTransaction;
-                FragmentManager fragmentManager;
-                fragmentManager=lista.getActivity().getSupportFragmentManager();
-                fragmentTransaction=fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.lista_libros,homeFragment).addToBackStack(null).commit();
-            }
-        });
 
         return view;
     }
+    /*
 
     public void abrirdetalle(){
+        System.out.println("imagennnnnn"+mycontext);
         DetalleLibroFragment homeFragment=new DetalleLibroFragment();
         FragmentTransaction fragmentTransaction;
         FragmentManager fragmentManager;
-        fragmentManager=detalles.getActivity().getSupportFragmentManager();
+       // fragmentManager= mycontext.getChildFragmentManager();
         fragmentTransaction=fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.lista_libros,homeFragment).commit();
+        fragmentTransaction.replace(R.id.lista_libros,homeFragment).addToBackStack(null).commit();
     }
+
+     */
 
 }

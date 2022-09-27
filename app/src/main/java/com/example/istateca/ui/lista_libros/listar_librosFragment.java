@@ -1,5 +1,8 @@
 package com.example.istateca.ui.lista_libros;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,11 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.istateca.Clases.Libro;
@@ -19,6 +25,7 @@ import com.example.istateca.R;
 import com.example.istateca.Utils.Apis;
 import com.example.istateca.Utils.LibroService;
 import com.example.istateca.databinding.FragmentLLibrosBinding;
+import com.example.istateca.ui.registro_libros.registro_librosFragment;
 
 import java.util.List;
 
@@ -29,11 +36,13 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class listar_librosFragment extends Fragment {
-    LibroService libroService;List<Libro> libros;ListView recyclerView ;
+    LibroService libroService;
+    List<Libro> libros;
+    ListView recyclerView ;
     public static int id=0;
-
     private FragmentLLibrosBinding binding;
-
+    Dialog dialogo;Button editar;
+    TextView textitulo,textcodigodewey,textdescripcion,tipo,editor,ciudad,area,codigoisbn,estadolibro, urldigital,idioma,donante,num_paginas,anio_publicacion,indice1,indice2,indice3,dimesiones;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -42,19 +51,39 @@ public class listar_librosFragment extends Fragment {
         View root = binding.getRoot();
         recyclerView= binding.listaLibros;
         listarLibros();
-        System.out.println("lista  librooooooooooooooooooooooooooos");
-        /*recyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        dialogo=new Dialog(getActivity());
+        recyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                DetalleLibroFragment detalle= new DetalleLibroFragment();
-                FragmentTransaction fragmentTransaction= getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.lista_libros,detalle);
-                fragmentTransaction.commit();
-                id=libros.get(i).getId_libro();
-
+                dialogo.setContentView(R.layout.dialogo_detalle_libro);
+                editar=(Button) dialogo.findViewById(R.id.btn_editar);
+                editar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                    abrirEditar();
+                    }
+                });
+                datos(dialogo,i);
+                dialogo.show();
             }
-        });*/
+        });
         return root;
+    }
+
+    public void abrirEditar(){
+        getActivity().onBackPressed();
+        registro_librosFragment homeFragment = new registro_librosFragment();
+        FragmentTransaction fragmentTransaction= getActivity().getSupportFragmentManager().beginTransaction();
+
+        fragmentTransaction.replace(R.id.listarlibroos,homeFragment);
+        fragmentTransaction.commit();
+
+
+        getActivity().getFragmentManager().popBackStack();
+        dialogo.setContentView(R.layout.dialogo_detalle_libro);
+        dialogo.dismiss();
+
+
     }
 
 
@@ -90,5 +119,45 @@ public class listar_librosFragment extends Fragment {
                 System.out.println(t.getMessage());
             }
         });
+    }
+    public void datos(Dialog dialog,int i){
+        textitulo=dialog.findViewById(R.id.text_tituloLibro);
+        textcodigodewey=dialog.findViewById(R.id.text_codigodewey);
+        textdescripcion=dialog.findViewById(R.id.text_descripcion);
+        tipo=dialog.findViewById(R.id.text_tipo);
+        editor=dialog.findViewById(R.id.text_editorlibro);
+        ciudad=dialog.findViewById(R.id.text_ciudadlibro);
+        area=dialog.findViewById(R.id.text_arealibro);
+        codigoisbn=dialog.findViewById(R.id.text_codigo_isbn_libro);
+        estadolibro=dialog.findViewById(R.id.text_estado_libro_l);
+        urldigital=dialog.findViewById(R.id.text_url_digital);
+        idioma=dialog.findViewById(R.id.text_idiomaLibro);
+        donante=dialog.findViewById(R.id.text_nombreDonanteLibro);
+        num_paginas=dialog.findViewById(R.id.text_numPaginas);
+        anio_publicacion=dialog.findViewById(R.id.text_fecha_publicacion);
+        indice1=dialog.findViewById(R.id.text_indice1Libro);
+        indice2=dialog.findViewById(R.id.text_indice2Libro);
+        indice3=dialog.findViewById(R.id.text_indice3Libro);
+        dimesiones=dialog.findViewById(R.id.text_diimensiones);
+
+        textitulo.setText(libros.get(i).getTitulo());
+        textcodigodewey.setText(libros.get(i).getCodigo_dewey());
+        textdescripcion.setText(libros.get(i).getDescripcion());
+        tipo.setText(String.valueOf(libros.get(i).getTipo()));
+        editor.setText(libros.get(i).getEditor());
+        ciudad.setText(libros.get(i).getEditor());
+        area.setText(libros.get(i).getArea());
+        codigoisbn.setText(libros.get(i).getCod_ISBN());
+        estadolibro.setText(libros.get(i).getEstadoLibro());
+        urldigital.setText(libros.get(i).getUrl_digital());
+        idioma.setText(libros.get(i).getIdioma());
+        donante.setText(libros.get(i).getNombre_donante());
+        num_paginas.setText(String.valueOf(libros.get(i).getNum_paginas()));
+        anio_publicacion.setText(String.valueOf(libros.get(i).getAnio_publicacion()));
+        indice1.setText(libros.get(i).getIndice_uno());
+        indice2.setText(libros.get(i).getIndice_dos());
+        indice3.setText(libros.get(i).getIndice_tres());
+        dimesiones.setText(libros.get(i).getDimensiones());
+
     }
 }
