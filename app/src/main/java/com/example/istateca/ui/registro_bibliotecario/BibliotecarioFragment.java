@@ -53,8 +53,8 @@ public class BibliotecarioFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 int bib=0, p=0, ro=0;
-                Boolean act1=true,act2=true;
-                Date d1,d2;
+                Boolean act2;
+                //Date d1,d2;/*
                 String cedu=binding.txtNombre.getText().toString();
                 String usua=binding.txtUsuario.getText().toString();
                 String celu=binding.txtCelu.getText().toString();
@@ -62,6 +62,9 @@ public class BibliotecarioFragment extends Fragment {
                 String contr=binding.txtContra.getText().toString();
                 String roll=(String)binding.comboRol.getSelectedItem();
                 System.out.println(roll);
+
+                String d1=binding.btnFecha.getText().toString();
+                String d2=binding.btnFecha.getText().toString();
 
                 if(cedu.isEmpty()){
                     Toast.makeText(getContext(),"Ingrese cedula",Toast.LENGTH_SHORT).show();
@@ -79,12 +82,27 @@ public class BibliotecarioFragment extends Fragment {
                     Toast.makeText(getContext(),"Seleccione rol",Toast.LENGTH_SHORT).show();
                 }
 
-                Persona person = new Persona(p,cedu,usua,celu,emai,contr,roll,act1);
-                Bibliotecario bibliot= new Bibliotecario(bib,person,ro,null,null,act2);
+                int rol2=9;
+                if(roll.equalsIgnoreCase("Administrador")){
+                    rol2=0;
+                }else if(roll.equalsIgnoreCase("Bibliotecario")){
+                    rol2=1;
+                }
+                System.out.println("Rol: "+rol2);
+
+                if(binding.activo.isChecked()==true){
+                    act2=true;
+                }else{
+                    act2=false;
+                }
+                String nombre="";
+
+                Persona person = new Persona(p,cedu,usua,contr,nombre,rol2,emai,celu,act2);
+                Bibliotecario bibliot= new Bibliotecario(bib,person,rol2,d1,d2,act2);
 
                 create(bibliot);
                 /*roles();*/
-                /*clean();*/
+            /*clean();*/
 
 
             }
@@ -98,21 +116,22 @@ public class BibliotecarioFragment extends Fragment {
             }
         });
 
-        binding.radioGroup.setOnKeyListener(new View.OnKeyListener() {
+        binding.radioGroupTipoLugar.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
-                RadioButton activoo = binding.radioActivo;
-                RadioButton inactivoo = binding.radioInactivo;
+                RadioButton activoo = binding.activo;
+                RadioButton inactivoo = binding.inactivo;
+                    if (activoo.isChecked() == true) {
+                        activoo.setVisibility(View.VISIBLE);
+                        //System.out.println(ACTIVO);
+                    } else if (inactivoo.isChecked() == true) {
+                        inactivoo.setVisibility(View.VISIBLE);
+                    } else if (activoo.isChecked() == false) {
+                        activoo.setVisibility(View.GONE);
+                    } else if (inactivoo.isChecked() == false) {
+                        inactivoo.setVisibility(View.GONE);
+                    }
 
-                if(activoo.isChecked()==true){
-                    activoo.setVisibility(View.VISIBLE);
-                }else if(inactivoo.isChecked()==true){
-                    inactivoo.setVisibility(View.VISIBLE);
-                } else if(activoo.isChecked()==false){
-                    activoo.setVisibility(View.GONE);
-                }else if(inactivoo.isChecked()==false){
-                    inactivoo.setVisibility(View.GONE);
-                }
                 return false;
             }
         });

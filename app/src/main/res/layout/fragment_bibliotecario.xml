@@ -117,10 +117,11 @@
                 android:id="@+id/textView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="40dp"
                 android:text="Fecha de inicio:"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/textView7"
+                app:layout_constraintHorizontal_bias="0.8"
                 app:layout_constraintStart_toEndOf="@+id/textView7"
                 app:layout_constraintTop_toBottomOf="@+id/textView5"
                 tools:ignore="MissingConstraints" />
@@ -129,7 +130,7 @@
                 android:id="@+id/textView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="48dp"
+                android:layout_marginTop="40dp"
                 android:layout_marginEnd="20dp"
                 android:text="Usuario:"
                 android:textSize="16sp"
@@ -157,11 +158,11 @@
                 android:id="@+id/textView11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="44dp"
                 android:text="Correo:"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@+id/txt_email"
-                app:layout_constraintHorizontal_bias="0.404"
+                app:layout_constraintHorizontal_bias="0.595"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView10"
                 tools:ignore="MissingConstraints" />
@@ -173,8 +174,8 @@
                 android:layout_marginTop="40dp"
                 android:text="Estado:"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toStartOf="@+id/radio_activo"
-                app:layout_constraintHorizontal_bias="0.538"
+                app:layout_constraintEnd_toStartOf="@+id/radioGroupTipoLugar"
+                app:layout_constraintHorizontal_bias="0.512"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView11"
                 tools:ignore="MissingConstraints" />
@@ -216,38 +217,35 @@
                 app:layout_constraintTop_toBottomOf="@+id/txt_celu"
                 tools:ignore="MissingConstraints" />
 
-            <RadioButton
-                android:id="@+id/radio_activo"
+
+
+
+
+            <RadioGroup
+                android:id="@+id/radioGroupTipoLugar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="Activo"
+                android:checkedButton="@id/activo"
+                android:orientation="horizontal"
                 app:layout_constraintStart_toStartOf="@+id/txt_email"
                 app:layout_constraintTop_toBottomOf="@+id/txt_email"
-                tools:ignore="MissingConstraints" />
+                tools:ignore="MissingConstraints">
 
-            <RadioButton
-                android:id="@+id/radio_inactivo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="64dp"
-                android:layout_marginTop="16dp"
-                android:text="Inactivo"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/radio_activo"
-                app:layout_constraintTop_toBottomOf="@+id/txt_email"
-                tools:ignore="MissingConstraints" />
+                <RadioButton
+                    android:id="@+id/activo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Activo" />
 
-            <RadioGroup
-                android:id="@+id/radioGroup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="26dp"
-                android:layout_marginBottom="19dp"
-                app:layout_constraintBottom_toBottomOf="@+id/radio_inactivo"
-                app:layout_constraintEnd_toStartOf="@+id/radio_inactivo"
-                tools:ignore="MissingConstraints" />
+                <RadioButton
+                    android:id="@+id/inactivo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Inactivo" />
+            </RadioGroup>
 
             <TextView
                 android:id="@+id/textView13"
@@ -257,8 +255,10 @@
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/txt_contra"
+                app:layout_constraintHorizontal_bias="0.403"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView12"
+                app:layout_constraintVertical_bias="0.627"
                 tools:ignore="MissingConstraints" />
 
             <EditText
@@ -271,7 +271,7 @@
                 android:minHeight="48dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/radio_inactivo"
+                app:layout_constraintTop_toBottomOf="@+id/radioGroupTipoLugar"
                 app:layout_constraintVertical_bias="0.6"
                 tools:ignore="MissingConstraints" />
 
@@ -280,7 +280,7 @@
                 android:layout_width="168dp"
                 android:layout_height="39dp"
                 android:layout_marginStart="36dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="16dp"
                 android:text="Cargar fecha"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"

@@ -77,6 +77,8 @@ public class RegistroActivity extends AppCompatActivity {
                     Toast.makeText(RegistroActivity.this,"Ingrese nombre",Toast.LENGTH_SHORT).show();
                 }else if(usua.isEmpty()){
                     Toast.makeText(RegistroActivity.this,"Ingrese usuario",Toast.LENGTH_SHORT).show();
+                }else if(celu.isEmpty()){
+                    Toast.makeText(RegistroActivity.this,"Ingrese celular",Toast.LENGTH_SHORT).show();
                 }else if(clav.isEmpty()){
                     Toast.makeText(RegistroActivity.this,"Ingrese clave",Toast.LENGTH_SHORT).show();
                 }else if(!valEmail(corr)){
@@ -84,13 +86,14 @@ public class RegistroActivity extends AppCompatActivity {
                 }else if(corr.equals("")){
                     Toast.makeText(RegistroActivity.this,"Ingrese correo",Toast.LENGTH_SHORT).show();
                 }
+                int rol=2;
 
-                Persona person = new Persona(p,cedu,nomb,usua,clav,corr,celu,act);
+                Persona person = new Persona(p,cedu,usua,clav,nomb,rol,corr,celu,act);
                 Usuario u = new Usuario(us,cali,obs,person);
 
                 /*Toast.makeText(context, "access", Toast.LENGTH_SHORT).show();*/
                 create(u);
-                /*clean();*/
+                clean();
 
             }
         });
@@ -100,7 +103,7 @@ public class RegistroActivity extends AppCompatActivity {
 
     private void create(Usuario usu){
         Retrofit retrofit= new Retrofit.Builder().
-                baseUrl(Apis.URL_002).
+                baseUrl(Apis.URL_001).
                 addConverterFactory(GsonConverterFactory.create()).build();
         usuarioService= retrofit.create(UsuarioService.class);
         Call<Usuario> call= usuarioService.addUsuario(usu);

@@ -6,20 +6,29 @@ public class Persona {
     private String usuario;
     private String clave;
     private String nombres;
+    private int rol;
     private String correo;
-    private String cedular;
+    private String celular;
     private boolean activo;
 
-
-    public Persona(int id, String cedula, String usuario, String clave, String nombres, String correo, String cedular, boolean activo) {
+    public Persona(int id, String cedula, String usuario, String clave, String nombres, int rol, String correo, String celular, boolean activo) {
         this.id = id;
         this.cedula = cedula;
         this.usuario = usuario;
         this.clave = clave;
         this.nombres = nombres;
+        this.rol = rol;
         this.correo = correo;
-        this.cedular = cedular;
+        this.celular = celular;
         this.activo = activo;
+    }
+
+    public int getRol() {
+        return rol;
+    }
+
+    public void setRol(int rol) {
+        this.rol = rol;
     }
 
     public int getId() {
@@ -70,12 +79,12 @@ public class Persona {
         this.correo = correo;
     }
 
-    public String getCedular() {
-        return cedular;
+    public String getCelular() {
+        return celular;
     }
 
-    public void setCedular(String cedular) {
-        this.cedular = cedular;
+    public void setCelular(String celular) {
+        this.celular = celular;
     }
 
     public boolean isActivo() {
