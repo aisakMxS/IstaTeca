@@ -64,6 +64,14 @@ public class Libro {
         this.documento_donacion = documento_donacion;
     }
 
+    public String getEstado_libro() {
+        return estado_libro;
+    }
+
+    public void setEstado_libro(String estado_libro) {
+        this.estado_libro = estado_libro;
+    }
+
     public int getId_libro() {
         return id_libro;
     }
@@ -248,7 +256,7 @@ public class Libro {
         this.fecha_creacion = fecha_creacion;
     }
 
-    public boolean isDisponibilidad() {
+    public boolean getDisponibilidad() {
         return disponibilidad;
     }
 
