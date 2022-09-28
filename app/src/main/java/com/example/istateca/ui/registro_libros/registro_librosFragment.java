@@ -293,7 +293,7 @@ public class registro_librosFragment extends Fragment {
                 CrearAutores();
                 getAutor();
                 limpiarcampos();
-                crearautor_libro(3);
+                crearautor_libro(1);
 
 
 
