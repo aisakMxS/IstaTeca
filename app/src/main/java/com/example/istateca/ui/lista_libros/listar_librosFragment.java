@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -41,7 +42,8 @@ public class listar_librosFragment extends Fragment {
     ListView recyclerView ;
     public static int id=0;
     private FragmentLLibrosBinding binding;
-    Dialog dialogo;Button editar;
+    Dialog dialogo;
+    ImageView editar;
     TextView textitulo,textcodigodewey,textdescripcion,tipo,editor,ciudad,area,codigoisbn,estadolibro, urldigital,idioma,donante,num_paginas,anio_publicacion,indice1,indice2,indice3,dimesiones;
     public static int validar=0;
     public static int idlibro=0;
@@ -58,7 +60,7 @@ public class listar_librosFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 dialogo.setContentView(R.layout.dialogo_detalle_libro);
-                editar=(Button) dialogo.findViewById(R.id.btn_editar);
+                editar=(ImageView) dialogo.findViewById(R.id.img_editar);
                 editar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
