@@ -57,6 +57,10 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.example.istateca.ui.lista_libros.listar_librosFragment.validar;
+import static com.example.istateca.ui.lista_libros.listar_librosFragment.idlibro;
+import static com.example.istateca.ui.lista_libros.listar_librosFragment.libros;
+
 public class registro_librosFragment extends Fragment {
     LibroService libroService;
     TipoService tipoService;
@@ -81,7 +85,59 @@ public class registro_librosFragment extends Fragment {
         binding = FragmentRegistroLibrosBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        combotipo();
+
+        if(validar==1){
+            System.out.println("Abriendo modificar");
+            ventanamodificar();
+
+            validar=0;
+        }else{
+            System.out.println("Abriendo Crear");
+            ventanacrear();
+        }
+
+
+
+        return root;
+    }
+
+    private void ventanamodificar(){
+        getTipo();
+        combotipo();
+        for(int i=0; i<libros.size();i++){
+            if(libros.get(i).getId_libro()== idlibro){
+                System.out.println("Cargandooooooooo");
+                binding.txtTituloLlibro.setText(libros.get(i).getTitulo());
+                binding.txtCodigodewey.setText(libros.get(i).getCodigo_dewey());
+                binding.txtAdquisicionLibro.setText(libros.get(i).getAdquisicion());
+                binding.txtDescripcion.setText(libros.get(i).getDescripcion());
+                binding.txtDimensiones.setText(libros.get(i).getDimensiones());
+                binding.txtEditor.setText(libros.get(i).getEditor());
+              // binding.comboTipo.setSelection(1);
+                binding.txtCiudad.setText(libros.get(i).getCiudad());
+                binding.txtArea.setText(libros.get(i).getArea());
+                binding.txtCodigoIsbn.setText(libros.get(i).getCod_ISBN());
+                binding.txtEstadoLibro.setText(libros.get(i).getEstadoLibro());
+                binding.txtUrl.setText(libros.get(i).getUrl_digital());
+                binding.txtIdioma.setText(libros.get(i).getIdioma());
+                binding.txtNombreDonante.setText(libros.get(i).getNombre_donante());
+                binding.txtNumeroPaginas.setText(libros.get(i).getNum_paginas()+"");
+                binding.txtAnioPublicacion.setText(libros.get(i).getAnio_publicacion()+"");
+                binding.txtIndice1.setText(libros.get(i).getIndice_uno());
+                binding.txtIndice2.setText(libros.get(i).getIndice_dos());
+                binding.txtIndice3.setText(libros.get(i).getIndice_tres());
+
+
+
+            }
+        }
+    }
+
+    private void ventanacrear(){
         activitylauncher();
+
+
         getAutor();
 
 
@@ -139,13 +195,13 @@ public class registro_librosFragment extends Fragment {
 
 
 
-               //Libro li = new Libro(1,"Deweys","El chemas",objetotipo(tipo),"adquisicionqwe",1980,"Editort","Cuenca", 90, "Area", "Isbn123"
-                 //     , "Español", "Descripcion aasfa", "IUno", "IDos","Itres","Dimensiones", "Estado", true,byteArray,"asfasdURL",
-                   //    1,d,true,"Christian",null);
+                //Libro li = new Libro(1,"Deweys","El chemas",objetotipo(tipo),"adquisicionqwe",1980,"Editort","Cuenca", 90, "Area", "Isbn123"
+                //     , "Español", "Descripcion aasfa", "IUno", "IDos","Itres","Dimensiones", "Estado", true,byteArray,"asfasdURL",
+                //    1,d,true,"Christian",null);
 
 
                 Libro l = new Libro(a,codigoDewey,titulo,objetotipo(tipo),adquisicion,anio,editor,ciudad,numpaginas,area,codisbn,idioma,descripcion,
-                    in1,in2,in3,dimensiones,estadolibro,activo,byteArray,url,0,d,disponibilidad,donante,documentodonacion);
+                        in1,in2,in3,dimensiones,estadolibro,activo,byteArray,url,0,d,disponibilidad,donante,documentodonacion);
 
 
                 create(l);
@@ -175,8 +231,6 @@ public class registro_librosFragment extends Fragment {
         });
         getTipo();
         combotipo();
-
-        return root;
     }
 
     private void limpiarcampos(){
@@ -270,7 +324,6 @@ public class registro_librosFragment extends Fragment {
     }
 
     private void combotipo(){
-
         ArrayList<String> comboTiposList = new ArrayList<String>();
         comboTiposList.add("Seleccione: ");
         for (int i=0; i< lista_tipos.size(); i++){

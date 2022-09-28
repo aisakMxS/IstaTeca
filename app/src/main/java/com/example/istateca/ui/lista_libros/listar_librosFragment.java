@@ -37,12 +37,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class listar_librosFragment extends Fragment {
     LibroService libroService;
-    List<Libro> libros;
+    public static List<Libro> libros;
     ListView recyclerView ;
     public static int id=0;
     private FragmentLLibrosBinding binding;
     Dialog dialogo;Button editar;
     TextView textitulo,textcodigodewey,textdescripcion,tipo,editor,ciudad,area,codigoisbn,estadolibro, urldigital,idioma,donante,num_paginas,anio_publicacion,indice1,indice2,indice3,dimesiones;
+    public static int validar=0;
+    public static int idlibro=0;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -60,7 +62,8 @@ public class listar_librosFragment extends Fragment {
                 editar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                    abrirEditar();
+                        idlibro=libros.get(i).getId_libro();
+                        abrirEditar();
                     }
                 });
                 datos(dialogo,i);
@@ -71,7 +74,6 @@ public class listar_librosFragment extends Fragment {
     }
 
     public void abrirEditar(){
-        getActivity().onBackPressed();
         registro_librosFragment homeFragment = new registro_librosFragment();
         FragmentTransaction fragmentTransaction= getActivity().getSupportFragmentManager().beginTransaction();
 
@@ -79,9 +81,9 @@ public class listar_librosFragment extends Fragment {
         fragmentTransaction.commit();
 
 
-        getActivity().getFragmentManager().popBackStack();
-        dialogo.setContentView(R.layout.dialogo_detalle_libro);
         dialogo.dismiss();
+        validar =1;
+
 
 
     }
@@ -93,7 +95,7 @@ public class listar_librosFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-    private void listarLibros(){
+    public void listarLibros(){
         Retrofit retrofit=new Retrofit.Builder()
                 .baseUrl(Apis.URL_001)
                 .addConverterFactory(GsonConverterFactory.create())
