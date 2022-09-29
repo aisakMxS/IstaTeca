@@ -86,6 +86,7 @@ public class registro_librosFragment extends Fragment {
         View root = binding.getRoot();
 
         combotipo();
+        combodisponibilidad();
 
         if(validar==1){
             System.out.println("Abriendo modificar");
@@ -102,12 +103,31 @@ public class registro_librosFragment extends Fragment {
         return root;
     }
 
+    private Boolean disponibilidad(){
+        if(binding.comboDisponibilidad.getSelectedItem().toString().equalsIgnoreCase("si")){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    private void combodisponibilidad(){
+        ArrayList<String> comboDispoList = new ArrayList<String>();
+        comboDispoList.add("Si");
+        comboDispoList.add("No");
+
+        binding.comboDisponibilidad.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, comboDispoList));
+    }
+
+    private void traerautores(){
+
+    }
+
     private void ventanamodificar(){
         getTipo();
         combotipo();
         for(int i=0; i<libros.size();i++){
             if(libros.get(i).getId_libro()== idlibro){
-                System.out.println("Cargandooooooooo");
                 binding.txtTituloLlibro.setText(libros.get(i).getTitulo());
                 binding.txtCodigodewey.setText(libros.get(i).getCodigo_dewey());
                 binding.txtAdquisicionLibro.setText(libros.get(i).getAdquisicion());
@@ -127,6 +147,65 @@ public class registro_librosFragment extends Fragment {
                 binding.txtIndice1.setText(libros.get(i).getIndice_uno());
                 binding.txtIndice2.setText(libros.get(i).getIndice_dos());
                 binding.txtIndice3.setText(libros.get(i).getIndice_tres());
+                if(libros.get(i).getDisponibilidad()==true){
+                    binding.comboDisponibilidad.setSelection(0);
+                }else{
+                    binding.comboDisponibilidad.setSelection(1);
+                }
+
+
+                binding.imgGuardar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        String codigoDewey=binding.txtCodigodewey.getText().toString();
+                        String titulo=binding.txtTituloLlibro.getText().toString();
+                        String adquisicion= binding.txtAdquisicionLibro.getText().toString();
+                        int anio=0;
+                        if(binding.txtAnioPublicacion.getText().toString().equalsIgnoreCase("")){
+                            anio=0;
+                        }else{
+                            anio= Integer.parseInt(binding.txtAnioPublicacion.getText().toString());
+                        }
+
+                        String editor=binding.txtEditor.getText().toString();
+                        String ciudad= binding.txtCiudad.getText().toString();
+
+                        int numpaginas=0;
+                        if(binding.txtNumeroPaginas.getText().toString().equalsIgnoreCase("")) {
+                            numpaginas=0;
+                        }else{
+                            numpaginas = Integer.parseInt(binding.txtNumeroPaginas.getText().toString());
+                        }
+                        String area= binding.txtArea.getText().toString();
+                        String codisbn= binding.txtCodigoIsbn.getText().toString();
+                        String idioma=binding.txtIdioma.getText().toString();
+                        String descripcion= binding.txtDescripcion.getText().toString();
+                        String in1= binding.txtIndice1.getText().toString();
+                        String in2= binding.txtIndice2.getText().toString();
+                        String in3= binding.txtIndice3.getText().toString();
+                        String donante= binding.txtNombreDonante.getText().toString();
+                        String dimensiones=binding.txtDimensiones.getText().toString();
+                        String estadolibro=binding.txtEstadoLibro.getText().toString();
+                        Boolean activo=true;
+                        String url=  binding.txtUrl.getText().toString();
+                        byte[] documentodonacion= null;
+                        String d = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").format(new Date());
+
+                        String tipo= (String) binding.comboTipo.getSelectedItem();
+                        System.out.println(tipo);
+
+
+
+                        Libro l = new Libro(idlibro,codigoDewey,titulo,objetotipo(tipo),adquisicion,anio,editor,ciudad,numpaginas,area,codisbn,idioma,descripcion,
+                                in1,in2,in3,dimensiones,estadolibro,activo,null,url,0,d,disponibilidad(),donante,documentodonacion);
+
+
+                        create(l,1);
+
+
+                    }
+                });
 
 
 
@@ -136,12 +215,7 @@ public class registro_librosFragment extends Fragment {
 
     private void ventanacrear(){
         activitylauncher();
-
-
         getAutor();
-
-
-
         binding.imgFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,10 +244,22 @@ public class registro_librosFragment extends Fragment {
                 String codigoDewey=binding.txtCodigodewey.getText().toString();
                 String titulo=binding.txtTituloLlibro.getText().toString();
                 String adquisicion= binding.txtAdquisicionLibro.getText().toString();
-                int anio= Integer.parseInt(binding.txtAnioPublicacion.getText().toString());
+                int anio=0;
+                if(binding.txtAnioPublicacion.getText().toString().equalsIgnoreCase("")){
+                    anio=0;
+                }else{
+                    anio= Integer.parseInt(binding.txtAnioPublicacion.getText().toString());
+                }
+
                 String editor=binding.txtEditor.getText().toString();
                 String ciudad= binding.txtCiudad.getText().toString();
-                int numpaginas=Integer.parseInt(binding.txtNumeroPaginas.getText().toString());
+
+                int numpaginas=0;
+                if(binding.txtNumeroPaginas.getText().toString().equalsIgnoreCase("")) {
+                    numpaginas=0;
+                }else{
+                    numpaginas = Integer.parseInt(binding.txtNumeroPaginas.getText().toString());
+                }
                 String area= binding.txtArea.getText().toString();
                 String codisbn= binding.txtCodigoIsbn.getText().toString();
                 String idioma=binding.txtIdioma.getText().toString();
@@ -186,7 +272,6 @@ public class registro_librosFragment extends Fragment {
                 String estadolibro=binding.txtEstadoLibro.getText().toString();
                 Boolean activo=true;
                 String url=  binding.txtUrl.getText().toString();
-                boolean disponibilidad= false;
                 byte[] documentodonacion= null;
 
                 String tipo= (String) binding.comboTipo.getSelectedItem();
@@ -201,14 +286,14 @@ public class registro_librosFragment extends Fragment {
 
 
                 Libro l = new Libro(a,codigoDewey,titulo,objetotipo(tipo),adquisicion,anio,editor,ciudad,numpaginas,area,codisbn,idioma,descripcion,
-                        in1,in2,in3,dimensiones,estadolibro,activo,byteArray,url,0,d,disponibilidad,donante,documentodonacion);
+                        in1,in2,in3,dimensiones,estadolibro,activo,byteArray,url,0,d,disponibilidad(),donante,documentodonacion);
 
 
-                create(l);
+                create(l,0);
                 CrearAutores();
                 getAutor();
                 limpiarcampos();
-                crearautor_libro(3);
+                crearautor_libro(1);
 
 
 
@@ -274,7 +359,7 @@ public class registro_librosFragment extends Fragment {
             }
             if(con!=1){
                 //CrearAutor(au);
-                CrearAutorSincrono(au);
+                CrearAutor(au);
                 getAutor();
 
             }
@@ -332,6 +417,8 @@ public class registro_librosFragment extends Fragment {
         binding.comboTipo.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, comboTiposList));
 
     }
+
+
 
     private void getTipo(){
         Retrofit retrofit= new Retrofit.Builder()
@@ -477,7 +564,7 @@ public class registro_librosFragment extends Fragment {
 
 
 
-    private void create(Libro l){
+    private void create(Libro l, int v){
         Retrofit retrofit= new Retrofit.Builder().baseUrl(Apis.URL_001).addConverterFactory(GsonConverterFactory.create()).build();
         libroService= retrofit.create(LibroService.class);
         Call<Libro> call= libroService.addlibro(l);
@@ -491,7 +578,12 @@ public class registro_librosFragment extends Fragment {
                 }
                 Libro l=response.body();
                // Toast.makeText(registro_librosFragment.this,l.getCodigoDewey()+" created!", Toast.LENGTH_LONG).show();
-                Toast.makeText(getActivity(), l.getTitulo()+" Creado", Toast.LENGTH_LONG).show();
+                if(v==0) {
+                    Toast.makeText(getActivity(), l.getTitulo() + " Creado", Toast.LENGTH_LONG).show();
+                }else
+                {
+                    Toast.makeText(getActivity(), l.getTitulo() + " Modificado", Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override

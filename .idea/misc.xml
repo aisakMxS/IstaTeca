@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/HP/Documents/Instituto/CUARTO CICLO/Nueva carpeta/IstaTeca/app/src/main/res/layout/dialogo_detalle_libro.xml" value="0.16032608695652173" />
+        <entry key="..\:/Users/HP/Documents/Instituto/CUARTO CICLO/Nueva carpeta/IstaTeca/app/src/main/res/layout/dialogo_tipo.xml" value="0.16032608695652173" />
         <entry key="..\:/Users/HP/Documents/Instituto/CUARTO CICLO/Nueva carpeta/IstaTeca/app/src/main/res/layout/fragment_l_libros.xml" value="0.16032608695652173" />
         <entry key="..\:/Users/HP/Documents/Instituto/CUARTO CICLO/Nueva carpeta/IstaTeca/app/src/main/res/layout/fragment_registro_libros.xml" value="0.1234375" />
         <entry key="..\:/Users/HP/Documents/Instituto/CUARTO CICLO/Nueva carpeta/IstaTeca/app/src/main/res/layout/lista_item_libros.xml" value="0.16032608695652173" />
@@ -22,7 +24,7 @@
         <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/layout/fragment_l_libros.xml" value="0.1" />
         <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/layout/fragment_listado_l_.xml" value="0.22282608695652173" />
         <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/layout/fragment_registro_libros.xml" value="0.4" />
-        <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/layout/lista_item_libros.xml" value="0.3792172739541161" />
+        <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/layout/lista_item_libros.xml" value="0.1" />
         <entry key="..\:/Users/Public/Documents/Biblioteca/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/Public/Documents/Biblioteca/app/src/main/res/layout/activity_registro.xml" value="0.11307420494699646" />
         <entry key="..\:/Users/Public/Documents/ista/app/src/main/res/layout/activity_lista_item_bibliotecario.xml" value="0.22447916666666667" />

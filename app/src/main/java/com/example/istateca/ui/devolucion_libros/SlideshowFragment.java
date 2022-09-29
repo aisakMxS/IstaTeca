@@ -1,5 +1,7 @@
 package com.example.istateca.ui.devolucion_libros;
 
+import static com.example.istateca.V_principal.bibliotecario_ingresado;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,9 +21,11 @@ import com.example.istateca.Clases.Persona;
 import com.example.istateca.Clases.Prestamo;
 import com.example.istateca.Clases.Usuario;
 import com.example.istateca.Utils.Apis;
+import com.example.istateca.Utils.BibliotecarioService;
 import com.example.istateca.Utils.LibroService;
 import com.example.istateca.Utils.PrestamoService;
 import com.example.istateca.Utils.UsuarioService;
+import com.example.istateca.V_principal;
 import com.example.istateca.databinding.FragmentDevolucionLBinding;
 
 import java.text.SimpleDateFormat;
@@ -40,7 +44,7 @@ public class SlideshowFragment extends Fragment {
     private FragmentDevolucionLBinding binding;
     PrestamoService prestamoService;
     LibroService libroService;
-    //BibliService bibliService;
+    BibliotecarioService bibliotecarioService;
     UsuarioService usuarioService;
     List<Prestamo> lista_prestamo= new ArrayList<>();
     List<Persona> lista_persona= new ArrayList<>();
@@ -49,7 +53,7 @@ public class SlideshowFragment extends Fragment {
     List<Libro> lista_libro= new ArrayList<>();
     int id_prest=0;
 
-
+   // V_principal.
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -108,8 +112,9 @@ public class SlideshowFragment extends Fragment {
                             binding.txtEstadoL.setText(lista_prestamo.get(i - 1).getEstado_libro());
                             binding.txtFechaEntrega.setText(fecha_entrega);
                             binding.txtFechaMaxima.setText(fecha_maxima);
-                         //   cargarDatos(lista_prestamo.get(i - 1).getBibliotecario_entrega());
+                            cargarDatos(lista_prestamo.get(i - 1).getBibliotecario_entrega());
                             id_prest=lista_prestamo.get(i-1).getId_prestamo();
+                            binding.txtBibliotecarioRecibe.setText(bibliotecario_ingresado.getPersona().getNombres());
                         }
                     }
                 }
@@ -203,14 +208,14 @@ public class SlideshowFragment extends Fragment {
             }
         });
     }
-/*
+
     private void getBuscarBibliotecario(int id) {
         Retrofit retrofit= new Retrofit.Builder()
                 .baseUrl(Apis.URL_001)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        //bibliService =retrofit.create(BibliService.class);
-       // Call<Bibliotecario> call=bibliService.getBuscarDatos(id);
+        bibliotecarioService =retrofit.create(BibliotecarioService.class);
+        Call<Bibliotecario> call=bibliotecarioService.getBuscarDatos(id);
         call.enqueue(new Callback<Bibliotecario>() {
             @Override
             public void onResponse(Call<Bibliotecario> call, Response<Bibliotecario> response) {
@@ -232,7 +237,7 @@ public class SlideshowFragment extends Fragment {
     public void cargarDatos(Bibliotecario bibliotecario){
         binding.txtBibliotecarioEntrega.setText(bibliotecario.getPersona().getNombres());
 
-    }*/
+    }
 
     private void comboLibro() {
         ArrayList<String> comboTiposList = new ArrayList<String>();

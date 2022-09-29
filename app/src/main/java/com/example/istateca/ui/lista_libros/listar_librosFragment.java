@@ -69,6 +69,15 @@ public class listar_librosFragment extends Fragment {
                     }
                 });
                 datos(dialogo,i);
+                TextView txtcerrar=(TextView) dialogo.findViewById(R.id.txt_cerrar_detalle);
+
+                txtcerrar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialogo.dismiss();
+                    }
+                });
+
                 dialogo.show();
             }
         });
@@ -147,9 +156,9 @@ public class listar_librosFragment extends Fragment {
         textitulo.setText(libros.get(i).getTitulo());
         textcodigodewey.setText(libros.get(i).getCodigo_dewey());
         textdescripcion.setText(libros.get(i).getDescripcion());
-        tipo.setText(String.valueOf(libros.get(i).getTipo()));
+        tipo.setText(libros.get(i).getTipo().getNombre());
         editor.setText(libros.get(i).getEditor());
-        ciudad.setText(libros.get(i).getEditor());
+        ciudad.setText(libros.get(i).getCiudad());
         area.setText(libros.get(i).getArea());
         codigoisbn.setText(libros.get(i).getCod_ISBN());
         estadolibro.setText(libros.get(i).getEstadoLibro());
