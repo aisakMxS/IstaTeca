@@ -98,7 +98,7 @@ public class BibliotecarioFragment extends Fragment {
                 String nombre="";
 
                 Persona person = new Persona(p,cedu,usua,contr,nombre,rol2,emai,celu,act2);
-                Bibliotecario bibliot= new Bibliotecario(bib,person,rol2,d1,d2,act2);
+                Bibliotecario bibliot= new Bibliotecario(bib,person,d1,d2,act2);
 
                 create(bibliot);
                 /*roles();*/

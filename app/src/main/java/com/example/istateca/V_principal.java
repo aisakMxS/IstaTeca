@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
 
+import com.example.istateca.Clases.Bibliotecario;
+import com.example.istateca.Clases.Usuario;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -18,17 +20,30 @@ import com.example.istateca.databinding.ActivityVprincipalBinding;
 
 public class V_principal extends AppCompatActivity {
 
+    public static String key_usu="";
+    public static String key_bib="";
+
+    public static Usuario usuario_ingresado;
+    public static Bibliotecario bibliotecario_ingresado;
+
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityVprincipalBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityVprincipalBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        Bundle extras = getIntent().getExtras();
+        usuario_ingresado=extras.getParcelable(key_usu);
+        bibliotecario_ingresado=extras.getParcelable(key_bib);
+        System.out.println("largo : "+key_usu.length());
+        //System.out.println(usuario_ingresado.getPersona().getNombres());
+
         setSupportActionBar(binding.appBarVprincipal.toolbar);
+
+
         binding.appBarVprincipal.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

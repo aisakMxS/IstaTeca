@@ -1,7 +1,10 @@
 package com.example.istateca.Clases;
 
-public class Persona {
-    private int id;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Persona implements Parcelable {
+    private int id_persona;
     private String cedula;
     private String usuario;
     private String clave;
@@ -12,7 +15,7 @@ public class Persona {
     private boolean activo;
 
     public Persona(int id, String cedula, String usuario, String clave, String nombres, int rol, String correo, String celular, boolean activo) {
-        this.id = id;
+        this.id_persona = id;
         this.cedula = cedula;
         this.usuario = usuario;
         this.clave = clave;
@@ -23,6 +26,30 @@ public class Persona {
         this.activo = activo;
     }
 
+    protected Persona(Parcel in) {
+        id_persona = in.readInt();
+        cedula = in.readString();
+        usuario = in.readString();
+        clave = in.readString();
+        nombres = in.readString();
+        rol = in.readInt();
+        correo = in.readString();
+        celular = in.readString();
+        activo = in.readByte() != 0;
+    }
+
+    public static final Creator<Persona> CREATOR = new Creator<Persona>() {
+        @Override
+        public Persona createFromParcel(Parcel in) {
+            return new Persona(in);
+        }
+
+        @Override
+        public Persona[] newArray(int size) {
+            return new Persona[size];
+        }
+    };
+
     public int getRol() {
         return rol;
     }
@@ -32,11 +59,11 @@ public class Persona {
     }
 
     public int getId() {
-        return id;
+        return id_persona;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.id_persona = id;
     }
 
     public String getCedula() {
@@ -93,5 +120,23 @@ public class Persona {
 
     public void setActivo(boolean activo) {
         this.activo = activo;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id_persona);
+        parcel.writeString(cedula);
+        parcel.writeString(usuario);
+        parcel.writeString(clave);
+        parcel.writeString(nombres);
+        parcel.writeInt(rol);
+        parcel.writeString(correo);
+        parcel.writeString(celular);
+        parcel.writeByte((byte) (activo ? 1 : 0));
     }
 }
