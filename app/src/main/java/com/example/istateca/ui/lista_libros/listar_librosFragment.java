@@ -27,10 +27,12 @@ import com.example.istateca.Clases.Autor;
 import com.example.istateca.Clases.Bibliotecario;
 import com.example.istateca.Clases.Libro;
 import com.example.istateca.Clases.Persona;
+import com.example.istateca.Clases.Prestamo;
 import com.example.istateca.Clases.Usuario;
 import com.example.istateca.R;
 import com.example.istateca.Utils.Apis;
 import com.example.istateca.Utils.LibroService;
+import com.example.istateca.Utils.PrestamoService;
 import com.example.istateca.databinding.FragmentLLibrosBinding;
 import com.example.istateca.ui.registro_libros.registro_librosFragment;
 
@@ -42,9 +44,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import static com.example.istateca.V_principal.usuario_ingresado;
+import static com.example.istateca.V_principal.bibliotecario_ingresado;
 
 public class listar_librosFragment extends Fragment implements SearchView.OnQueryTextListener {
     LibroService libroService;
+    PrestamoService prestamoService;
     public static List<Libro> libros;
     ListView recyclerView ;
     public static int id=0;
@@ -73,22 +78,29 @@ public class listar_librosFragment extends Fragment implements SearchView.OnQuer
                 dialogo.setContentView(R.layout.dialogo_detalle_libro);
                 editar=(ImageView) dialogo.findViewById(R.id.img_editar);
                 btn_solicitar=(Button) dialogo.findViewById(R.id.btn_solicitar);
-                editar.setVisibility(View.VISIBLE);
+                editar.setVisibility(View.GONE);
 
                 btn_solicitar.setVisibility(View.GONE);
 
-                /*if(bibliotecario==null){
+                if(bibliotecario_ingresado==null){
                     btn_solicitar.setVisibility(View.VISIBLE);
-                    System.out.println("Bibliotecario");
+                    System.out.println("USUARIO");
 
-                }else{
+                }else {
                     editar.setVisibility(View.VISIBLE);
-                    System.out.println("Usuariooooo");
-                }*/
+                    System.out.println("BIBLIOTECARIO");
+                }
+
                 btn_solicitar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        Libro l = new Libro(libros.get(i).getId_libro());
+                        System.out.println("Solicitar libro "+ libros.get(i).getTitulo());
+                        Prestamo prestamo=new Prestamo(0,usuario_ingresado,l,
+                                null,"Solicitado",null,null,
+                                null,null,null,null,
+                                true,null);
+                        crearprestamo(prestamo);
                     }
                 });
                 editar.setOnClickListener(new View.OnClickListener() {
@@ -110,6 +122,31 @@ public class listar_librosFragment extends Fragment implements SearchView.OnQuer
             }
         });
         return root;
+    }
+
+    private void crearprestamo(Prestamo l){
+        Retrofit retrofit= new Retrofit.Builder().baseUrl(Apis.URL_001).addConverterFactory(GsonConverterFactory.create()).build();
+        prestamoService= retrofit.create(PrestamoService.class);
+        Call<Prestamo> call= prestamoService.addPrestamo(l);
+        call.enqueue(new Callback<Prestamo>() {
+            @Override
+            public void onResponse(Call<Prestamo> call, Response<Prestamo> response) {
+                if(!response.isSuccessful()){
+                    //Toast.makeText("Se agrego con exito", Toast.LENGTH_LONG).show();
+                    Log.e("Response erra", response.message());
+                    return;
+                }
+                Prestamo l=response.body();
+                // Toast.makeText(registro_librosFragment.this,l.getCodigoDewey()+" created!", Toast.LENGTH_LONG).show();
+                System.out.println("CREADO CON EXITO");
+            }
+
+            @Override
+            public void onFailure(Call<Prestamo> call, Throwable t) {
+                Log.e("Error:",t.getMessage());
+                System.out.println("error");
+            }
+        });
     }
 
     public void abrirEditar(){

@@ -13,12 +13,12 @@ public class Prestamo {
     private Bibliotecario bibliotecario_recibido;
     private String fecha_maxima;
     private boolean activo;
-    private byte escaneo_matriz;
+    private byte [] escaneo_matriz;
 
     public Prestamo() {
     }
 
-    public Prestamo(int id_prestamo, Usuario usuario, Libro libro, String estado_libro, String estado_prestamo, String fecha_entrega, Bibliotecario bibliotecario_entrega, String documento_habilitante, String fecha_recibo, Bibliotecario bibliotecario_recibido, String fecha_maxima, boolean activo, byte escaneo_matriz) {
+    public Prestamo(int id_prestamo, Usuario usuario, Libro libro, String estado_libro, String estado_prestamo, String fecha_entrega, Bibliotecario bibliotecario_entrega, String documento_habilitante, String fecha_recibo, Bibliotecario bibliotecario_recibido, String fecha_maxima, boolean activo, byte[] escaneo_matriz) {
         this.id_prestamo = id_prestamo;
         this.usuario = usuario;
         this.libro = libro;
@@ -131,11 +131,11 @@ public class Prestamo {
         this.activo = activo;
     }
 
-    public byte getEscaneo_matriz() {
+    public byte [] getEscaneo_matriz() {
         return escaneo_matriz;
     }
 
-    public void setEscaneo_matriz(byte escaneo_matriz) {
+    public void setEscaneo_matriz(byte[] escaneo_matriz) {
         this.escaneo_matriz = escaneo_matriz;
     }
 }
