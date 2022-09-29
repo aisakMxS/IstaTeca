@@ -29,13 +29,7 @@ import java.util.List;
 public class lista_librosAdapter extends BaseAdapter {
     List<Libro> libros;
     Context context;
-    FragmentLLibrosBinding binding;
-    ImageView imagen;
     TextView txttitulo, txtnumpaginas,txtfechadecreacion;
-    listar_librosFragment lista;
-    DetalleLibroFragment detalles=new DetalleLibroFragment();
- //private listar_librosFragment mycontext;
-    Dialog dialogo;
     public lista_librosAdapter(@NonNull List<Libro> libros, Context context) {
         this.libros = libros;
         this.context = context;
@@ -80,26 +74,10 @@ public class lista_librosAdapter extends BaseAdapter {
         ((SimpleDateFormat) formatter).applyPattern(NEW_FORMAT);
         newDateString = formatter.format(d);
 
-
-
         txttitulo.setText(libros.get(position).getTitulo());
         txtfechadecreacion.setText(newDateString);
         txtnumpaginas.setText(String.valueOf(libros.get(position).getNum_paginas()));
 
         return view;
     }
-    /*
-
-    public void abrirdetalle(){
-        System.out.println("imagennnnnn"+mycontext);
-        DetalleLibroFragment homeFragment=new DetalleLibroFragment();
-        FragmentTransaction fragmentTransaction;
-        FragmentManager fragmentManager;
-       // fragmentManager= mycontext.getChildFragmentManager();
-        fragmentTransaction=fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.lista_libros,homeFragment).addToBackStack(null).commit();
-    }
-
-     */
-
 }

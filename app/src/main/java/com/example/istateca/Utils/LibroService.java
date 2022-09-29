@@ -21,5 +21,8 @@ public interface LibroService {
     @GET("libro/{id}")
     Call<Libro> getBuscarDatos(@Path("id") int id);
 
+    @GET("listarlibrosxnombre/{titulo}")
+    Call<List<Libro>> getBuscarLibrosNombre(@Path("titulo") String titulo);
+
 
 }

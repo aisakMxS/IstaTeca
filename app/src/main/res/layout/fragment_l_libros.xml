@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
     </data>
+
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -12,11 +14,26 @@
         android:id="@+id/listarlibroos"
         tools:context=".ui.lista_libros.listar_librosFragment">
 
+        <SearchView
+            android:id="@+id/txtbuscar"
+            android:layout_width="399dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="2dp"
+            android:hint="Buscar libro"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
         <ListView
             android:id="@+id/lista_libros"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/lista_item_libros" />
+            android:layout_marginTop="50dp"
+            tools:listitem="@layout/lista_item_libros">
+
+
+        </ListView>
+
         <TextView
             android:id="@+id/empty"
             android:layout_width="match_parent"
@@ -28,5 +45,6 @@
             android:text="NO SE ENCUENTRA DATOS"
             android:visibility="gone"
             />
+
     </FrameLayout>
 </layout>

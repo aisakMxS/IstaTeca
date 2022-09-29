@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,13 +23,18 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.istateca.Clases.Autor;
+import com.example.istateca.Clases.Bibliotecario;
 import com.example.istateca.Clases.Libro;
+import com.example.istateca.Clases.Persona;
+import com.example.istateca.Clases.Usuario;
 import com.example.istateca.R;
 import com.example.istateca.Utils.Apis;
 import com.example.istateca.Utils.LibroService;
 import com.example.istateca.databinding.FragmentLLibrosBinding;
 import com.example.istateca.ui.registro_libros.registro_librosFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -36,31 +43,54 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class listar_librosFragment extends Fragment {
+public class listar_librosFragment extends Fragment implements SearchView.OnQueryTextListener {
     LibroService libroService;
     public static List<Libro> libros;
     ListView recyclerView ;
     public static int id=0;
     private FragmentLLibrosBinding binding;
     Dialog dialogo;
-    ImageView editar;
+    ImageView editar;Button btn_solicitar;
     TextView textitulo,textcodigodewey,textdescripcion,tipo,editor,ciudad,area,codigoisbn,estadolibro, urldigital,idioma,donante,num_paginas,anio_publicacion,indice1,indice2,indice3,dimesiones;
     public static int validar=0;
     public static int idlibro=0;
+    List<Libro> lista_librosbuscar= new ArrayList<>();
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
 
         binding = FragmentLLibrosBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         recyclerView= binding.listaLibros;
         listarLibros();
+        //buscar libro
+        binding.txtbuscar.setOnQueryTextListener(this);
+
+        //Dialogo del detalle del libro
         dialogo=new Dialog(getActivity());
         recyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 dialogo.setContentView(R.layout.dialogo_detalle_libro);
                 editar=(ImageView) dialogo.findViewById(R.id.img_editar);
+                btn_solicitar=(Button) dialogo.findViewById(R.id.btn_solicitar);
+                editar.setVisibility(View.VISIBLE);
+
+                btn_solicitar.setVisibility(View.GONE);
+
+                /*if(bibliotecario==null){
+                    btn_solicitar.setVisibility(View.VISIBLE);
+                    System.out.println("Bibliotecario");
+
+                }else{
+                    editar.setVisibility(View.VISIBLE);
+                    System.out.println("Usuariooooo");
+                }*/
+                btn_solicitar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
                 editar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -70,14 +100,12 @@ public class listar_librosFragment extends Fragment {
                 });
                 datos(dialogo,i);
                 TextView txtcerrar=(TextView) dialogo.findViewById(R.id.txt_cerrar_detalle);
-
                 txtcerrar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         dialogo.dismiss();
                     }
                 });
-
                 dialogo.show();
             }
         });
@@ -87,16 +115,11 @@ public class listar_librosFragment extends Fragment {
     public void abrirEditar(){
         registro_librosFragment homeFragment = new registro_librosFragment();
         FragmentTransaction fragmentTransaction= getActivity().getSupportFragmentManager().beginTransaction();
-
         fragmentTransaction.replace(R.id.listarlibroos,homeFragment);
         fragmentTransaction.commit();
-
-
+        getActivity().onAttachFragment(homeFragment);
         dialogo.dismiss();
         validar =1;
-
-
-
     }
 
 
@@ -106,6 +129,7 @@ public class listar_librosFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
     public void listarLibros(){
         Retrofit retrofit=new Retrofit.Builder()
                 .baseUrl(Apis.URL_001)
@@ -172,5 +196,51 @@ public class listar_librosFragment extends Fragment {
         indice3.setText(libros.get(i).getIndice_tres());
         dimesiones.setText(libros.get(i).getDimensiones());
 
+    }
+
+    public void buscarLibroxnombre(String titulo) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Apis.URL_001)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        libroService = retrofit.create(LibroService.class);
+        Call<List<Libro>> call = libroService.getBuscarLibrosNombre(titulo);
+        call.enqueue(new Callback<List<Libro>>() {
+            @Override
+            public void onResponse(Call<List<Libro>> call, Response<List<Libro>> response) {
+                if (!response.isSuccessful()) {
+                    Log.e("Response err: ", response.message());
+                    return;
+                }
+                lista_librosbuscar= response.body();
+                lista_librosAdapter lista_librosAdapter= new lista_librosAdapter(lista_librosbuscar,getActivity());
+                recyclerView.setAdapter(lista_librosAdapter);
+                System.out.println("Actualizando Autores" + lista_librosbuscar.size());
+            }
+
+            @Override
+            public void onFailure(Call<List<Libro>> call, Throwable t) {
+                Log.e("Error:",t.getMessage());
+                System.out.println("error");
+            }
+        });
+
+    }
+
+
+    //Eventos del teclado(Buscar libro-filtro)
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+        if(binding.txtbuscar.getQuery().toString().length()==0){
+            listarLibros();
+        }else{
+            buscarLibroxnombre(binding.txtbuscar.getQuery().toString());
+        }
+        return false;
     }
 }
