@@ -1,8 +1,10 @@
 package com.example.istateca.ui.registro_bibliotecario;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,15 +21,19 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.example.istateca.Clases.Bibliotecario;
+import com.example.istateca.Clases.Libro;
 import com.example.istateca.Clases.Persona;
 import com.example.istateca.R;
 import com.example.istateca.RegistroActivity;
 import com.example.istateca.Utils.Apis;
 import com.example.istateca.Utils.BibliotecarioService;
+import com.example.istateca.Utils.LibroService;
 import com.example.istateca.databinding.FragmentBibliotecarioBinding;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import retrofit2.Call;
@@ -40,6 +46,7 @@ public class BibliotecarioFragment extends Fragment {
 
     private FragmentBibliotecarioBinding binding;
     BibliotecarioService bibliotecarioService;
+    List<Bibliotecario> lista_bibliotecarios = new ArrayList<>();
     /*String chekk="";*/
 
     @Override
@@ -136,6 +143,13 @@ public class BibliotecarioFragment extends Fragment {
             }
         });
 
+        binding.btnListar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("Btn listar");
+            }
+        });
+
 
         return root;
     }
@@ -159,6 +173,31 @@ public class BibliotecarioFragment extends Fragment {
             @Override
             public void onFailure(Call<Bibliotecario> call, Throwable t) {
                 Log.e("response","fail");
+            }
+        });
+    }
+
+    private void listarbibliotecario(){
+        Retrofit retrofit=new Retrofit.Builder()
+                .baseUrl(Apis.URL_001)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        bibliotecarioService=retrofit.create(BibliotecarioService.class);
+        Call<List<Bibliotecario>> call= bibliotecarioService.getBibliotecario();
+        call.enqueue(new Callback<List<Bibliotecario>>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onResponse(Call<List<Bibliotecario>> call, Response<List<Bibliotecario>> response) {
+                if (!response.isSuccessful()){
+                    Log.e("Response err: ",response.message());
+                    return;
+                }
+                lista_bibliotecarios=response.body();
+                System.out.println(lista_bibliotecarios.size() + " biliotecarios");
+            }
+            @Override
+            public void onFailure(Call<List<Bibliotecario>> call, Throwable t) {
+                System.out.println(t.getMessage());
             }
         });
     }

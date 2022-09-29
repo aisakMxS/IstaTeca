@@ -1,6 +1,10 @@
 package com.example.istateca.Utils;
 
+import com.example.istateca.Clases.Autor;
 import com.example.istateca.Clases.Bibliotecario;
+import com.example.istateca.Clases.Libro;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -13,4 +17,6 @@ public interface BibliotecarioService {
     Call<Bibliotecario> addBibliotecario(@Body Bibliotecario bibliotecario);
     @GET("bibliotecario/{id}")
     Call<Bibliotecario> getBuscarDatos(@Path("id_bibliotecario") int id);
+    @GET("listarbibliotecario")
+    Call<List<Bibliotecario>> getBibliotecario();
 }

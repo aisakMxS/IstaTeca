@@ -25,6 +25,21 @@
         <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/layout/lista_item_libros.xml" value="0.3792172739541161" />
         <entry key="..\:/Users/Public/Documents/Biblioteca/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/Public/Documents/Biblioteca/app/src/main/res/layout/activity_registro.xml" value="0.11307420494699646" />
+        <entry key="..\:/Users/Public/Documents/ista/app/src/main/res/layout/activity_lista_item_bibliotecario.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Public/Documents/ista/app/src/main/res/layout/activity_main.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Public/Documents/ista/app/src/main/res/layout/dialogo_bibliotecario.xml" value="0.25" />
+        <entry key="..\:/Users/Public/Documents/ista/app/src/main/res/layout/dialogo_detalle_libro.xml" value="0.33" />
+        <entry key="..\:/Users/Public/Documents/ista/app/src/main/res/layout/fragment_bibliotecario.xml" value="0.25" />
+        <entry key="..\:/Users/Public/Documents/ista/app/src/main/res/layout/fragment_detalle_libro.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Public/Documents/ista/app/src/main/res/layout/fragment_devolucion_l.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Public/Documents/ista/app/src/main/res/layout/fragment_l_libros.xml" value="0.1" />
+        <entry key="..\:/Users/Public/Documents/ista/app/src/main/res/layout/fragment_lisatdo_prestamos.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Public/Documents/ista/app/src/main/res/layout/fragment_listado_bibliotecario.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Public/Documents/ista/app/src/main/res/layout/fragment_listado_l_.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Public/Documents/ista/app/src/main/res/layout/fragment_listas.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Public/Documents/ista/app/src/main/res/layout/fragment_registro_libros.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Public/Documents/ista/app/src/main/res/layout/lista_item_bibliotecario.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Public/Documents/ista/app/src/main/res/layout/lista_item_libros.xml" value="0.22447916666666667" />
       </map>
     </option>
   </component>
