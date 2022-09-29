@@ -308,41 +308,15 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
                 <TextView
-                    android:id="@+id/textView19"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="12dp"
-                    android:text="Estado Prestamo:"
-                    android:textSize="16sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView17" />
-
-                <TextView
                     android:id="@+id/textView20"
                     android:layout_width="114dp"
                     android:layout_height="39dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="12dp"
                     android:text="Documento Habilitado:"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView19" />
-
-                <EditText
-                    android:id="@+id/txt_estado_prestamo"
-                    android:layout_width="230dp"
-                    android:layout_height="34dp"
-                    android:layout_marginTop="12dp"
-                    android:ems="10"
-                    android:enabled="false"
-                    android:inputType="textPersonName"
-                    android:text="Recibido"
-                    android:textSize="12sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.217"
-                    app:layout_constraintStart_toEndOf="@+id/textView19"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_bibliotecario_recibe" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
                 <EditText
                     android:id="@+id/txt_bibliotecario_entrega"
@@ -382,9 +356,9 @@
                     android:inputType="textPersonName"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.368"
+                    app:layout_constraintHorizontal_bias="0.406"
                     app:layout_constraintStart_toEndOf="@+id/textView20"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_estado_prestamo" />
+                    app:layout_constraintTop_toBottomOf="@+id/txt_bibliotecario_recibe" />
 
                 <Button
                     android:id="@+id/btn_matriz"

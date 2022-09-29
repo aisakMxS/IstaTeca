@@ -25,6 +25,4 @@ public interface PrestamoService {
     @POST("editarprestamo/{id}")
     Call<Prestamo>updatePersona(@Body Prestamo prestamo,@Path("id") int id);
 
-   /* @GET("bibliotecario/{id}")
-    Call<Bibliotecario> getBuscarDatos(@Path("id_bibliotecario") int id);*/
 }

@@ -36,7 +36,7 @@ public class V_principal extends AppCompatActivity {
         usuario_ingresado=MainActivity.viewModel.getUsuario_Ingrtesado().getValue();
         bibliotecario_ingresado=MainActivity.viewModel.getBibliotecario_Ingrtesado().getValue();
 
-        System.out.println(usuario_ingresado.getPersona().getNombres());
+        //System.out.println(usuario_ingresado.getPersona().getNombres());
 
         setSupportActionBar(binding.appBarVprincipal.toolbar);
 
