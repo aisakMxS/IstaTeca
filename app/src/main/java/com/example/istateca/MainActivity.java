@@ -16,7 +16,7 @@ import com.example.istateca.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static ViewModelMain viewModel;
+    public static ViewModelMain viewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         //usuario
         viewModel.getUsuario_Ingrtesado().observe(this,usuario -> {
             if (viewModel.getUsuario_Ingrtesado()!=null){
-                System.out.println(viewModel.getPersona().getValue().getNombres());
+                System.out.println(viewModel.getUsuario_Ingrtesado().getValue().getPersona().getNombres());
                 openActivity();
             }
         });
@@ -56,8 +56,6 @@ public class MainActivity extends AppCompatActivity {
     private void openActivity(){
         Intent intent = new Intent(this,V_principal.class);
         Usuario u=viewModel.getUsuario_Ingrtesado().getValue();
-        intent.putExtra(V_principal.key_usu,u);
-        intent.putExtra(V_principal.key_bib,viewModel.getBibliotecario_Ingrtesado().getValue());
         startActivity(intent);
     }
     private void openRegistro(){

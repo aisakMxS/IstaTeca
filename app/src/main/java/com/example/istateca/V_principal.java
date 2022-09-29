@@ -20,11 +20,8 @@ import com.example.istateca.databinding.ActivityVprincipalBinding;
 
 public class V_principal extends AppCompatActivity {
 
-    public static String key_usu="";
-    public static String key_bib="";
-
-    public static Usuario usuario_ingresado;
-    public static Bibliotecario bibliotecario_ingresado;
+    public static  Usuario usuario_ingresado=new Usuario();
+    public static  Bibliotecario bibliotecario_ingresado=new Bibliotecario();
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityVprincipalBinding binding;
@@ -36,10 +33,10 @@ public class V_principal extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         Bundle extras = getIntent().getExtras();
-        usuario_ingresado=extras.getParcelable(key_usu);
-        bibliotecario_ingresado=extras.getParcelable(key_bib);
-        System.out.println("largo : "+key_usu.length());
-        //System.out.println(usuario_ingresado.getPersona().getNombres());
+        usuario_ingresado=MainActivity.viewModel.getUsuario_Ingrtesado().getValue();
+        bibliotecario_ingresado=MainActivity.viewModel.getBibliotecario_Ingrtesado().getValue();
+
+        System.out.println(usuario_ingresado.getPersona().getNombres());
 
         setSupportActionBar(binding.appBarVprincipal.toolbar);
 

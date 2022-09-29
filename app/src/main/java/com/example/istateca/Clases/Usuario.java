@@ -9,6 +9,8 @@ public class Usuario implements Parcelable {
     private String observacion;
     private Persona persona;
 
+    public Usuario() {
+    }
 
     public Usuario(int id, int calificacion, String observacion, Persona persona) {
         this.id_usuario = id;
