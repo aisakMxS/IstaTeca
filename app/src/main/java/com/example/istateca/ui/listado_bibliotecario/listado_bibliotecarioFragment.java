@@ -19,16 +19,21 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.istateca.Clases.Bibliotecario;
+import com.example.istateca.Clases.Libro;
 import com.example.istateca.R;
 import com.example.istateca.Utils.Apis;
 import com.example.istateca.Utils.BibliotecarioService;
+import com.example.istateca.Utils.LibroService;
 import com.example.istateca.databinding.FragmentBibliotecarioBinding;
 import com.example.istateca.databinding.FragmentListadoBibliotecarioBinding;
+import com.example.istateca.ui.lista_libros.lista_librosAdapter;
 import com.example.istateca.ui.registro_bibliotecario.BibliotecarioFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -37,7 +42,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class listado_bibliotecarioFragment extends Fragment {
+public class listado_bibliotecarioFragment extends Fragment implements SearchView.OnQueryTextListener {
 
 
     BibliotecarioService bibliotecarioService;
@@ -50,6 +55,7 @@ public class listado_bibliotecarioFragment extends Fragment {
     ImageView editar;
     public static int validar=0;
     public static int idbibliotecario=0;
+    List<Bibliotecario> lista_bibliotecarioxced= new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -59,6 +65,7 @@ public class listado_bibliotecarioFragment extends Fragment {
         recyclerView= binding.listaBibliotecarios;
         listarBibliotecario();
         dialogo=new Dialog(getActivity());
+        binding.txtbuscarB.setOnQueryTextListener(this);
         recyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -115,6 +122,36 @@ public class listado_bibliotecarioFragment extends Fragment {
             }
         });
     }
+    public void buscarbibliotecarioxnombre(String ced) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Apis.URL_001)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        bibliotecarioService=retrofit.create(BibliotecarioService.class);
+        Call<List<Bibliotecario>> call= bibliotecarioService.getBuscarBliotecario(ced);
+        call.enqueue(new Callback<List<Bibliotecario>>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onResponse(Call<List<Bibliotecario>> call, Response<List<Bibliotecario>> response) {
+                if (!response.isSuccessful()) {
+                    Log.e("Response err: ", response.message());
+                    return;
+                }
+                lista_bibliotecarioxced=response.body();
+                lista_bibliotecariosAdapter lista_bibliotecariosAdapter= new lista_bibliotecariosAdapter(lista_bibliotecarioxced,getActivity());
+                recyclerView.setAdapter(lista_bibliotecariosAdapter);
+                System.out.println("ingreso a buscar");
+                bibliotecarios.forEach(p-> System.out.println(bibliotecarios.toString()));
+            }
+
+            @Override
+            public void onFailure(Call<List<Bibliotecario>> call, Throwable t) {
+                Log.e("Error:",t.getMessage());
+                System.out.println("error");
+            }
+        });
+
+    }
 
 
 
@@ -140,4 +177,20 @@ public class listado_bibliotecarioFragment extends Fragment {
     }
 
 
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        if(binding.txtbuscarB.getQuery().toString().length()==0){
+            listarBibliotecario();
+            System.out.println("aqui si entra");
+        }else{
+            System.out.println("buscar.ser");
+            buscarbibliotecarioxnombre(binding.txtbuscarB.getQuery().toString());
+        }
+        return false;
+    }
 }

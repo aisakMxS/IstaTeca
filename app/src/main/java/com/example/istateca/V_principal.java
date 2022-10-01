@@ -52,6 +52,13 @@ public class V_principal extends AppCompatActivity {
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
+        if (usuario_ingresado== null){
+            if (bibliotecario_ingresado.getPersona().getRol()==0){
+                //administrador acceso
+            }else{
+                //
+            }
+        }
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_lista_l, R.id.nav_solicitud_l, R.id.nav_devolucion_l,R.id.nav_registro_b,R.id.nav_listado_p,R.id.nav_listado_b,R.id.nav_listado_l,
                 R.id.nav_listas,R.id.nav_registro_l,R.id.nav_solicitud_l_pen)

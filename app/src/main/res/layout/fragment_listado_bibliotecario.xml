@@ -10,12 +10,25 @@
         android:layout_height="match_parent"
         android:id="@+id/listarbilbiotecarioss"
         tools:context=".ui.listado_bibliotecario.listado.bibliotecarioFragment">
+        <SearchView
+            android:id="@+id/txtbuscar_b"
+            android:layout_width="399dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="2dp"
+            android:hint="Buscar libro"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
 
         <ListView
             android:id="@+id/lista_bibliotecarios"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/lista_item_bibliotecario" />
+            android:layout_marginTop="50dp"
+            tools:listitem="@layout/lista_item_bibliotecario" >
+
+
+        </ListView>
         <TextView
             android:id="@+id/empty"
             android:layout_width="match_parent"
