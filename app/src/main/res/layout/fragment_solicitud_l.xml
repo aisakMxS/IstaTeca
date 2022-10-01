@@ -20,8 +20,10 @@
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -32,50 +34,17 @@
                 tools:layout_editor_absoluteX="67dp"
                 tools:layout_editor_absoluteY="90dp">
 
-                <Button
-                    android:id="@+id/btn_imprimir_solicitud"
-                    android:layout_width="65dp"
-                    android:layout_height="59dp"
-                    android:layout_marginStart="36dp"
-                    android:layout_marginTop="4dp"
-                    android:text="Button"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <Button
-                    android:id="@+id/btn_guardar_solicitud"
-                    android:layout_width="65dp"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="64dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="539dp"
-                    android:text="Button"
-                    app:layout_constraintBottom_toTopOf="@+id/txt_estado_solicitud"
-                    app:layout_constraintStart_toEndOf="@+id/btn_imprimir_solicitud"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <Button
-                    android:id="@+id/btn_lista_solicitud"
-                    android:layout_width="65dp"
-                    android:layout_height="59dp"
-                    android:layout_marginTop="4dp"
-                    android:text="Button"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.596"
-                    app:layout_constraintStart_toEndOf="@+id/btn_guardar_solicitud"
-                    app:layout_constraintTop_toTopOf="parent" />
-
                 <EditText
                     android:id="@+id/Txt_cedula_estudante_solicitud"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="28dp"
+                    android:layout_marginTop="16dp"
                     android:ems="10"
                     android:inputType="number"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.8"
+                    app:layout_constraintHorizontal_bias="0.771"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView37" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
                     android:id="@+id/Txt_titulo_solicitud"
@@ -116,6 +85,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="40dp"
                     android:ems="10"
+                    android:enabled="false"
                     android:inputType="textPersonName"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/Btn_fechaEntrega_solicitud" />
@@ -150,20 +120,19 @@
                     android:layout_marginEnd="219dp"
                     android:layout_marginBottom="33dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView25" />
+                    app:layout_constraintEnd_toEndOf="parent" />
 
                 <TextView
                     android:id="@+id/textView8"
                     android:layout_width="101dp"
                     android:layout_height="43dp"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="16dp"
                     android:text="Cedula del Estudiante:"
                     app:layout_constraintEnd_toStartOf="@+id/Txt_cedula_estudante_solicitud"
-                    app:layout_constraintHorizontal_bias="0.244"
+                    app:layout_constraintHorizontal_bias="0.177"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btn_imprimir_solicitud" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/textView9"
@@ -196,8 +165,6 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="48dp"
                     android:text="Estado del libro:"
-                    app:layout_constraintEnd_toStartOf="@+id/Txt_estado_solicitud"
-                    app:layout_constraintHorizontal_bias="0.244"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
@@ -246,58 +213,11 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
-                <TextView
-                    android:id="@+id/textView25"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginEnd="75dp"
-                    android:text="Estado del prestamo:"
-                    app:layout_constraintEnd_toStartOf="@+id/radioGroup2"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView23" />
-
-                <TextView
-                    android:id="@+id/textView36"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginTop="56dp"
-                    android:text="Imprimir"
-                    app:layout_constraintEnd_toStartOf="@+id/textView37"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/btn_imprimir_solicitud" />
-
-                <TextView
-                    android:id="@+id/textView37"
-                    android:layout_width="60dp"
-                    android:layout_height="18dp"
-                    android:layout_marginTop="56dp"
-                    android:text="Guardar"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.484"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/btn_guardar_solicitud" />
-
-                <TextView
-                    android:id="@+id/textView39"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="56dp"
-                    android:layout_marginEnd="64dp"
-                    android:text="Lista"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/textView37"
-                    app:layout_constraintTop_toTopOf="@+id/btn_lista_solicitud" />
-
                 <Spinner
                     android:id="@+id/Cb_documentoHabilitante_solicitud"
                     android:layout_width="203dp"
                     android:layout_height="43dp"
-                    android:layout_marginTop="357dp"
+                    android:layout_marginTop="280dp"
                     android:layout_marginEnd="40dp"
                     android:layout_marginBottom="24dp"
                     android:entries="@array/documentohabilitante"
@@ -306,17 +226,15 @@
                     app:layout_constraintStart_toEndOf="@+id/textView17"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <EditText
-                    android:id="@+id/txt_estado_solicitud"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="6dp"
-                    android:ems="10"
-                    android:enabled="false"
-                    android:text="Solicitado"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/Txt_fechaMaximaDev_solicitud"
-                    app:layout_constraintTop_toBottomOf="@+id/btn_guardar_solicitud" />
+                <Button
+                    android:id="@+id/btnGuardarSolicitud"
+                    android:layout_width="284dp"
+                    android:layout_height="46dp"
+                    android:layout_marginTop="95dp"
+                    android:text="GUARDAR"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/Txt_fechaMaximaDev_solicitud" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
