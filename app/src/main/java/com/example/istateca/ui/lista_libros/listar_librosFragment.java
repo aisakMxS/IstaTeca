@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -28,6 +29,7 @@ import com.example.istateca.Clases.Bibliotecario;
 import com.example.istateca.Clases.Libro;
 import com.example.istateca.Clases.Persona;
 import com.example.istateca.Clases.Prestamo;
+import com.example.istateca.Clases.Tipo;
 import com.example.istateca.Clases.Usuario;
 import com.example.istateca.R;
 import com.example.istateca.Utils.Apis;
@@ -54,9 +56,9 @@ public class listar_librosFragment extends Fragment implements SearchView.OnQuer
     ListView recyclerView ;
     public static int id=0;
     private FragmentLLibrosBinding binding;
-    Dialog dialogo;
-    ImageView editar;Button btn_solicitar;
-    TextView textitulo,textcodigodewey,textdescripcion,tipo,editor,ciudad,area,codigoisbn,estadolibro, urldigital,idioma,donante,num_paginas,anio_publicacion,indice1,indice2,indice3,dimesiones;
+    Dialog dialogo, dialogoSolicitud;
+    ImageView editar;Button btn_solicitar,btn_aceptar;
+    TextView textitulo,txt_titulo_soli,textcodigodewey,textdescripcion,tipo,editor,ciudad,area,codigoisbn,estadolibro, urldigital,idioma,donante,num_paginas,anio_publicacion,indice1,indice2,indice3,dimesiones;
     public static int validar=0;
     public static int idlibro=0;
     List<Libro> lista_librosbuscar= new ArrayList<>();
@@ -71,6 +73,7 @@ public class listar_librosFragment extends Fragment implements SearchView.OnQuer
         binding.txtbuscar.setOnQueryTextListener(this);
 
         //Dialogo del detalle del libro
+
         dialogo=new Dialog(getActivity());
         recyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -79,37 +82,25 @@ public class listar_librosFragment extends Fragment implements SearchView.OnQuer
                 editar=(ImageView) dialogo.findViewById(R.id.img_editar);
                 btn_solicitar=(Button) dialogo.findViewById(R.id.btn_solicitar);
                 editar.setVisibility(View.GONE);
-
                 btn_solicitar.setVisibility(View.GONE);
-
+                //Validar bibliotecario-Usuario
                 if(bibliotecario_ingresado==null){
-                    btn_solicitar.setVisibility(View.VISIBLE);
+                    if(libros.get(i).getDisponibilidad()==true){
+                        btn_solicitar.setVisibility(View.VISIBLE);
+                    }
                     System.out.println("USUARIO");
-
                 }else {
                     editar.setVisibility(View.VISIBLE);
                     System.out.println("BIBLIOTECARIO");
                 }
-
+                //Solicitar
                 btn_solicitar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Libro l = new Libro(libros.get(i).getId_libro());
-                        System.out.println("Solicitar libro "+ libros.get(i).getTitulo());
-                        Prestamo prestamo=new Prestamo(0,usuario_ingresado,l,
-                                null,"Solicitado",null,null,
-                                null,null,null,null,
-                                true,null);
-                        crearprestamo(prestamo);
+                        solicitar_libro(i);
                     }
                 });
-                editar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        idlibro=libros.get(i).getId_libro();
-                        abrirEditar();
-                    }
-                });
+                editarLibro(i);
                 datos(dialogo,i);
                 TextView txtcerrar=(TextView) dialogo.findViewById(R.id.txt_cerrar_detalle);
                 txtcerrar.setOnClickListener(new View.OnClickListener() {
@@ -122,8 +113,79 @@ public class listar_librosFragment extends Fragment implements SearchView.OnQuer
             }
         });
         return root;
+
+
+    }
+    public void editarLibro(int i){
+        editar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                idlibro=libros.get(i).getId_libro();
+                abrirEditar();
+            }
+        });
+    }
+    public void solicitar_libro(int i){
+        dialogoSolicitud= new Dialog(getActivity());
+        dialogoSolicitud.setContentView(R.layout.dialogo_solicitud_libro);
+        txt_titulo_soli=(TextView) dialogoSolicitud.findViewById(R.id.txt_titulo_libro_solicitud);
+        btn_aceptar=(Button) dialogoSolicitud.findViewById(R.id.btn_ace_solicitud);
+        txt_titulo_soli.setText(libros.get(i).getTitulo());
+        dialogoSolicitud.show();
+
+        Libro l = new Libro(libros.get(i).getId_libro(),libros.get(i).getCodigo_dewey(),libros.get(i).getTitulo(), libros.get(i).getTipo()
+                , libros.get(i).getAdquisicion(), libros.get(i).getAnio_publicacion(),libros.get(i).getEditor(),libros.get(i).getCiudad(),libros.get(i).getNum_paginas(),
+                libros.get(i).getArea(), libros.get(i).getCod_ISBN(), libros.get(i).getIdioma(),libros.get(i).getDescripcion(), libros.get(i).getIndice_uno(), libros.get(i).getIndice_dos(),libros.get(i).getIndice_tres(),
+                libros.get(i).getDimensiones(),libros.get(i).getEstadoLibro(),true,null,libros.get(i).getUrl_digital(),libros.get(i).getIdbibliotecario(),libros.get(i).getFecha_creacion(),false,libros.get(i).getNombre_donante(),null);
+        System.out.println("Solicitar libro "+ libros.get(i).getTitulo());
+        Prestamo prestamo=new Prestamo(0,usuario_ingresado,l,
+                null,"Solicitado",null,null,
+                null,null,null,null,
+                true,null);
+        crearprestamo(prestamo);
+
+        create(l,1);
+        btn_aceptar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogoSolicitud.dismiss();
+                dialogo.dismiss();
+                listarLibros();
+            }
+        });
     }
 
+
+
+    private void create(Libro l, int v){
+        Retrofit retrofit= new Retrofit.Builder().baseUrl(Apis.URL_001).addConverterFactory(GsonConverterFactory.create()).build();
+        libroService= retrofit.create(LibroService.class);
+        Call<Libro> call= libroService.addlibro(l);
+        call.enqueue(new Callback<Libro>() {
+            @Override
+            public void onResponse(Call<Libro> call, Response<Libro> response) {
+                if(!response.isSuccessful()){
+                    //Toast.makeText("Se agrego con exito", Toast.LENGTH_LONG).show();
+                    Log.e("Response erra", response.message());
+                    return;
+                }
+                Libro l=response.body();
+                // Toast.makeText(registro_librosFragment.this,l.getCodigoDewey()+" created!", Toast.LENGTH_LONG).show();
+                if(v==0) {
+                    Toast.makeText(getActivity(), l.getTitulo() + " Creado", Toast.LENGTH_LONG).show();
+                }else
+                {
+                    Toast.makeText(getActivity(), l.getTitulo() + " Modificado", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Libro> call, Throwable t) {
+                Log.e("Error:",t.getMessage());
+                System.out.println("error");
+            }
+        });
+    }
     private void crearprestamo(Prestamo l){
         Retrofit retrofit= new Retrofit.Builder().baseUrl(Apis.URL_001).addConverterFactory(GsonConverterFactory.create()).build();
         prestamoService= retrofit.create(PrestamoService.class);
@@ -263,7 +325,6 @@ public class listar_librosFragment extends Fragment implements SearchView.OnQuer
         });
 
     }
-
 
     //Eventos del teclado(Buscar libro-filtro)
     @Override

@@ -3,6 +3,7 @@ package com.example.istateca.ui.lista_libros;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,7 @@ import java.util.List;
 public class lista_librosAdapter extends BaseAdapter {
     List<Libro> libros;
     Context context;
-    TextView txttitulo, txtnumpaginas,txtfechadecreacion;
+    TextView txttitulo, txtnumpaginas,txtfechadecreacion,txt_disponibilidad;
     public lista_librosAdapter(@NonNull List<Libro> libros, Context context) {
         this.libros = libros;
         this.context = context;
@@ -58,7 +59,7 @@ public class lista_librosAdapter extends BaseAdapter {
         txttitulo=view.findViewById(R.id.txt_titulo);
         txtfechadecreacion=view.findViewById(R.id.txt_fecha_creacion);
         txtnumpaginas=view.findViewById(R.id.txt_num_paginas);
-
+        txt_disponibilidad=view.findViewById(R.id.txt_disponibilidad);
         final String OLD_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS";
         final String NEW_FORMAT = "yyyy-MM-dd";
         String oldDateString = libros.get(position).getFecha_creacion();
@@ -73,6 +74,14 @@ public class lista_librosAdapter extends BaseAdapter {
         }
         ((SimpleDateFormat) formatter).applyPattern(NEW_FORMAT);
         newDateString = formatter.format(d);
+
+        if(libros.get(position).getDisponibilidad()== true){
+            txt_disponibilidad.setText("Disponible");
+            txt_disponibilidad.setTextColor(Color.GREEN);
+        }else{
+            txt_disponibilidad.setText("No disponible");
+            txt_disponibilidad.setTextColor(Color.RED);
+        }
 
         txttitulo.setText(libros.get(position).getTitulo());
         txtfechadecreacion.setText(newDateString);
