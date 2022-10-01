@@ -88,13 +88,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        binding.btnListaSolicitud.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("entrp al boton listar");
 
-            }
-        });
 
         listarLibros();
 
