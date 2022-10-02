@@ -3,6 +3,7 @@ package com.example.istateca.ui.listado_prestamos;
 
 import static com.example.istateca.V_principal.bibliotecario_ingresado;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -31,6 +33,7 @@ import com.example.istateca.databinding.FragmentLisatdoPrestamosBinding;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -132,12 +135,14 @@ public class lisatdo_prestamosFragment extends Fragment implements SearchView.On
         TextView txtcodigo =dialog.findViewById(R.id.text_codigo);
         TextView txttitulo = dialog.findViewById(R.id.text_libro);
         TextView txtbibliotecario = dialog.findViewById(R.id.text_bibliotecario_entrega);
-        TextView txtfechaMaxima = dialog.findViewById(R.id.Txt_fechaMaximaDev_solicitud);
+        TextView txtestado = dialog.findViewById(R.id.text_estado);
         Button btnfecha =dialog.findViewById(R.id.btn_capturaf);
-
+        TextView txt_devolucionfecha=dialog.findViewById(R.id.txt_fechaMaximaDev_solicitud5);
+        Button btnguardad = dialog.findViewById(R.id.btnGuardarSolicitud6);
         txtcedula.setText(prestamo.get(i).getUsuario().getPersona().getCedula() + "-" + prestamo.get(i).getUsuario().getPersona().getNombres());
         txtcodigo.setText(prestamo.get(i).getLibro().getCodigo_dewey());
         txttitulo.setText(prestamo.get(i).getLibro().getTitulo());
+        txtestado.setText(prestamo.get(i).getLibro().getEstado_libro());
         txtbibliotecario.setText(bibliotecario_ingresado.getPersona().getNombres());
 
         btnfecha.setOnClickListener(new View.OnClickListener() {
@@ -147,6 +152,33 @@ public class lisatdo_prestamosFragment extends Fragment implements SearchView.On
                 btnfecha.setText(d);
             }
         });
+
+        txt_devolucionfecha.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                final Calendar c = Calendar.getInstance();
+                int dia=c.get(Calendar.DAY_OF_MONTH);
+                int  mes=c.get(Calendar.MONTH);
+                int ano=c.get(Calendar.YEAR);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(btnguardad.getContext(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
+                        txt_devolucionfecha.setText(dayOfMonth+"/"+(monthOfYear+1)+"/"+year);
+                    }
+                }
+                        ,dia,mes,ano);
+                datePickerDialog.show();
+            }
+        });
+
+        btnguardad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
 
 
 
