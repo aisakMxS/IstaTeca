@@ -1,5 +1,6 @@
 package com.example.istateca.ui.solicitud_libro;
 
+import static com.example.istateca.V_principal.bibliotecario_ingresado;
 import static java.sql.Types.NULL;
 
 import android.os.Build;
@@ -45,8 +46,10 @@ public class HomeFragment extends Fragment {
     LibroService libroService;
     PrestamoService prestamoService;
     List<Libro> lista_libro= new ArrayList<>();
+    List<Prestamo> lista_prestamo = new ArrayList<>();
     int id_libro = 1;
     int a =0;
+    int id_entrega=0;
 
 
     @Override
@@ -56,7 +59,9 @@ public class HomeFragment extends Fragment {
         binding = FragmentSolicitudLBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-
+        binding.TxtBibliotecarioEntregaSolicitud.setText(bibliotecario_ingresado.getPersona().getNombres());
+        id_entrega=bibliotecario_ingresado.getId();
+        System.out.println(id_entrega + "ID BIBLIOTECARIO");
         binding.btnGuardarSolicitud.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +79,7 @@ public class HomeFragment extends Fragment {
                 System.out.println(documentos);
 
 
-                //Prestamo p = new Prestamo(a,cedula,li,estadolibro,estado,fecha_entrega,bibliotecario,documentos,null,null,fecha_maxima,activo,NULL);
+                //Prestamo p = new Prestamo(a,cedula,li,estadolibro,estado,fecha_entrega,bi_entrega,documentos,null,null,fecha_maxima,activo,NULL);
 
                 //create(p);
             }
@@ -132,6 +137,41 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+    private void listarprestamo(){
+        Retrofit retrofit=new Retrofit.Builder()
+                .baseUrl(Apis.URL_001)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        prestamoService=retrofit.create(PrestamoService.class);
+        Call<List<Prestamo>> call= prestamoService.getListarPrestamo();
+        call.enqueue(new Callback<List<Prestamo>>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onResponse(Call<List<Prestamo>> call, Response<List<Prestamo>> response) {
+                if (!response.isSuccessful()){
+                    Log.e("Response err: ",response.message());
+                    return;
+                }
+                lista_prestamo=response.body();
+                System.out.println(lista_prestamo.size() + " libros");
+            }
+
+            @Override
+            public void onFailure(Call<List<Prestamo>> call, Throwable t) {
+                System.out.println(t.getMessage());
+            }
+        });
+    }
+
+    public void datos(){
+        for (int i=0; i< lista_prestamo.size(); i++){
+            if (lista_prestamo.get(i).getEstado_prestamo().equalsIgnoreCase("solicitado")){
+
+            }
+        }
+    }
+
+
     public void cargar_datos(int id){
         for (int i=0; i< lista_libro.size(); i++){
                 if((lista_libro.get(i).getId_libro()==id)){
