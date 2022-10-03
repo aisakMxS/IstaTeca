@@ -105,7 +105,6 @@ public class listar_librosFragment extends Fragment implements SearchView.OnQuer
                     @Override
                     public void onClick(View view) {
                         solicitar_libro(i);
-                        generarQR(dialogoSolicitud,libros.get(i).getId_libro());
                     }
                 });
                 TextView txtcerrar=(TextView) dialogo.findViewById(R.id.txt_cerrar_detalle);
@@ -222,6 +221,8 @@ public class listar_librosFragment extends Fragment implements SearchView.OnQuer
                 Prestamo l=response.body();
                 // Toast.makeText(registro_librosFragment.this,l.getCodigoDewey()+" created!", Toast.LENGTH_LONG).show();
                 System.out.println("CREADO CON EXITO");
+                generarQR(dialogoSolicitud,l.getId_prestamo());
+
             }
 
             @Override
