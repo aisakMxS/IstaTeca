@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -52,7 +53,8 @@ public class SlideshowFragment extends Fragment {
     List<Bibliotecario> lista_bibliotecarios = new ArrayList<>();
     List<Libro> lista_libro= new ArrayList<>();
     int id_prest=0;
-
+    int id_recibe=0;
+    int a=0;
    // V_principal.
 
     @Override
@@ -65,7 +67,9 @@ public class SlideshowFragment extends Fragment {
         binding.btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 System.out.println(" id preswtamo " + id_prest );
+                System.out.println("id bibliotecario" + id_recibe);
             }
         });
 
@@ -92,6 +96,8 @@ public class SlideshowFragment extends Fragment {
                 System.out.println(cedula);
                 getBuscarCedula(cedula);
 
+
+
             }
         });
         binding.comboLibro.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -115,6 +121,7 @@ public class SlideshowFragment extends Fragment {
                             cargarDatos(lista_prestamo.get(i - 1).getBibliotecario_entrega());
                             id_prest=lista_prestamo.get(i-1).getId_prestamo();
                             binding.txtBibliotecarioRecibe.setText(bibliotecario_ingresado.getPersona().getNombres());
+                            id_recibe= bibliotecario_ingresado.getId();
                         }
                     }
                 }
@@ -129,6 +136,7 @@ public class SlideshowFragment extends Fragment {
 
     }
     private void getBuscarCedula(String id) {
+
         Retrofit retrofit= new Retrofit.Builder()
                 .baseUrl(Apis.URL_001)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -138,12 +146,13 @@ public class SlideshowFragment extends Fragment {
         call.enqueue(new Callback<List<Prestamo>>() {
             @Override
             public void onResponse(Call<List<Prestamo>> call, Response <List<Prestamo>> response) {
-                if (!response.isSuccessful()){
 
+                if (!response.isSuccessful()){
                     Log.e("Response err: ",response.message());
                     return;
 
                 }
+                a=1;
                 lista_prestamo =response.body();
                 System.out.println(lista_prestamo.size() + " prestamos cedula");
                 comboLibro();
@@ -154,6 +163,13 @@ public class SlideshowFragment extends Fragment {
                 System.out.println(t.getMessage());
             }
         });
+        if (a==0){
+            Toast.makeText(getActivity(), "Esta cedula no tiene prestamos ", Toast.LENGTH_SHORT).show();
+            System.out.println("Esta cedula no tiene prestamo");
+            binding.txtCedulaEstudiante.setText("");
+        }else{
+            binding.txtCedulaEstudiante.getText().toString();
+        }
 
     }
 

@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/dialogolistar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="@+id/textView91"
+        app:layout_constraintTop_toBottomOf="@+id/textView91"
+        tools:context=".ui.lista_libros.DetalleLibroFragment"
+        tools:layout_editor_absoluteX="-8dp"
+        tools:layout_editor_absoluteY="-68dp">
+
+
+        <EditText
+            android:id="@+id/text_bibliotecario_entrega"
+            android:layout_width="224dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="72dp"
+            android:layout_marginEnd="16dp"
+            android:ems="10"
+            android:enabled="false"
+            android:inputType="textPersonName"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView90"
+            app:layout_constraintTop_toBottomOf="@+id/btn_capturaf" />
+
+        <TextView
+            android:id="@+id/textView90"
+            android:layout_width="116dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="107dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="103dp"
+            android:text="Bibliotecario:"
+            app:layout_constraintBottom_toBottomOf="@+id/textView84"
+            app:layout_constraintEnd_toStartOf="@+id/text_bibliotecario_entrega"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView91" />
+
+        <Button
+            android:id="@+id/btn_capturaf"
+            android:layout_width="125dp"
+            android:layout_height="38dp"
+            android:layout_marginEnd="56dp"
+            android:layout_marginBottom="79dp"
+            android:text="Capturar fecha"
+            app:layout_constraintBottom_toTopOf="@+id/text_bibliotecario_entrega"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView91"
+            app:layout_constraintTop_toBottomOf="@+id/textView88" />
+
+        <TextView
+            android:id="@+id/textView85"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="48dp"
+            android:layout_marginBottom="42dp"
+            android:text="Estado del libro:"
+            app:layout_constraintBottom_toTopOf="@+id/textView88"
+            app:layout_constraintEnd_toStartOf="@+id/text_estado"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView89" />
+
+        <TextView
+            android:id="@+id/textView84"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="112dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="112dp"
+            android:text="Fecha maxima de devolucion:"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/txt_fechaMaximaDev_solicitud5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_bibliotecario_entrega" />
+
+        <EditText
+            android:id="@+id/text_libro"
+            android:layout_width="0dp"
+            android:layout_height="34dp"
+            android:layout_marginTop="65dp"
+            android:layout_marginEnd="23dp"
+            android:layout_marginBottom="62dp"
+            android:ems="10"
+            android:enabled="false"
+            android:inputType="textPersonName"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_estado"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView89"
+            app:layout_constraintTop_toTopOf="@+id/textView86" />
+
+        <Button
+            android:id="@+id/btnGuardarSolicitud6"
+            android:layout_width="252dp"
+            android:layout_height="51dp"
+            android:layout_marginStart="56dp"
+            android:layout_marginEnd="56dp"
+            android:layout_marginBottom="41dp"
+            android:text="GUARDAR"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.553"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textView89"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="72dp"
+            android:layout_marginBottom="43dp"
+            android:text="Titulo Libro:"
+            app:layout_constraintBottom_toTopOf="@+id/textView85"
+            app:layout_constraintEnd_toStartOf="@+id/text_libro"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView86" />
+
+        <TextView
+            android:id="@+id/textView91"
+            android:layout_width="0dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="206dp"
+            android:layout_marginEnd="96dp"
+            android:text="Fecha de entrega:"
+            app:layout_constraintEnd_toStartOf="@+id/btn_capturaf"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView89" />
+
+        <EditText
+            android:id="@+id/text_codigo"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="56dp"
+            android:layout_marginEnd="19dp"
+            android:layout_marginBottom="53dp"
+            android:ems="10"
+            android:enabled="false"
+            android:inputType="number"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/textView89"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView86"
+            app:layout_constraintTop_toTopOf="@+id/txt_cerrar_detalle" />
+
+
+        <EditText
+            android:id="@+id/text_estado"
+            android:layout_width="0dp"
+            android:layout_height="34dp"
+            android:layout_marginTop="135dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="133dp"
+            android:ems="10"
+            android:enabled="false"
+            android:inputType="textPersonName"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_capturaf"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView85"
+            app:layout_constraintTop_toTopOf="@+id/text_codigo" />
+
+        <TextView
+            android:id="@+id/textView88"
+            android:layout_width="107dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="38dp"
+            android:layout_marginBottom="44dp"
+            android:text="Documento habilitante"
+            app:layout_constraintBottom_toTopOf="@+id/btn_capturaf"
+            app:layout_constraintEnd_toStartOf="@+id/cb_documentoHabilitante_solicitud5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView85" />
+
+        <Spinner
+            android:id="@+id/cb_documentoHabilitante_solicitud5"
+            android:layout_width="0dp"
+            android:layout_height="43dp"
+            android:layout_marginTop="203dp"
+            android:layout_marginEnd="23dp"
+            android:layout_marginBottom="203dp"
+            android:entries="@array/documentohabilitante"
+            app:layout_constraintBottom_toBottomOf="@+id/textView90"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView88"
+            app:layout_constraintTop_toTopOf="@+id/textView86" />
+
+        <TextView
+            android:id="@+id/text_cedulaestudiante"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginBottom="536dp"
+            android:background="#3A59B7"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/txt_fechaMaximaDev_solicitud5"
+            app:layout_constraintEnd_toStartOf="@+id/txt_cerrar_detalle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView86"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="47dp"
+            android:layout_marginBottom="61dp"
+            android:text="Codigo DEWEY:"
+            app:layout_constraintBottom_toTopOf="@+id/textView89"
+            app:layout_constraintEnd_toStartOf="@+id/text_codigo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_cedulaestudiante" />
+
+        <TextView
+            android:id="@+id/txt_cerrar_detalle"
+            android:layout_width="60dp"
+            android:layout_height="41dp"
+            android:background="#3A59B7"
+            android:text="X"
+            android:textAlignment="center"
+            android:textColor="#FA0404"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_cedulaestudiante"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_fechaMaximaDev_solicitud5"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="114dp"
+            android:shadowColor="#B3A9A9"
+            android:text="CLICK PARA INGRESAR FECHA"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView84"
+            app:layout_constraintTop_toBottomOf="@+id/text_cedulaestudiante" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

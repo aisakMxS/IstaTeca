@@ -3,6 +3,7 @@ package com.example.istateca.ui.lista_libros;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,9 +38,12 @@ import com.example.istateca.Utils.LibroService;
 import com.example.istateca.Utils.PrestamoService;
 import com.example.istateca.databinding.FragmentLLibrosBinding;
 import com.example.istateca.ui.registro_libros.registro_librosFragment;
+import com.google.zxing.BarcodeFormat;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -57,7 +61,7 @@ public class listar_librosFragment extends Fragment implements SearchView.OnQuer
     public static int id=0;
     private FragmentLLibrosBinding binding;
     Dialog dialogo, dialogoSolicitud;
-    ImageView editar;Button btn_solicitar,btn_aceptar;
+    ImageView editar,img_qr;Button btn_solicitar,btn_aceptar;
     TextView textitulo,txt_titulo_soli,textcodigodewey,textdescripcion,tipo,editor,ciudad,area,codigoisbn,estadolibro, urldigital,idioma,donante,num_paginas,anio_publicacion,indice1,indice2,indice3,dimesiones;
     public static int validar=0;
     public static int idlibro=0;
@@ -94,14 +98,16 @@ public class listar_librosFragment extends Fragment implements SearchView.OnQuer
                     System.out.println("BIBLIOTECARIO");
                 }
                 //Solicitar
+
+                editarLibro(i);
+                datos(dialogo,i);
                 btn_solicitar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         solicitar_libro(i);
+                        generarQR(dialogoSolicitud,libros.get(i).getId_libro());
                     }
                 });
-                editarLibro(i);
-                datos(dialogo,i);
                 TextView txtcerrar=(TextView) dialogo.findViewById(R.id.txt_cerrar_detalle);
                 txtcerrar.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -115,6 +121,21 @@ public class listar_librosFragment extends Fragment implements SearchView.OnQuer
         return root;
 
 
+    }
+    public void generarQR(Dialog dialog, int id){
+        img_qr=dialog.findViewById(R.id.img_codigo_qr);
+        try {
+            BarcodeEncoder barcodeEncoder=new BarcodeEncoder();
+            Bitmap bitmap=barcodeEncoder.encodeBitmap(
+                    id+"",
+                    BarcodeFormat.QR_CODE,
+                    350,
+                    350
+            );
+            img_qr.setImageBitmap(bitmap);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
     public void editarLibro(int i){
         editar.setOnClickListener(new View.OnClickListener() {
@@ -216,7 +237,6 @@ public class listar_librosFragment extends Fragment implements SearchView.OnQuer
         FragmentTransaction fragmentTransaction= getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.listarlibroos,homeFragment);
         fragmentTransaction.commit();
-        getActivity().onAttachFragment(homeFragment);
         dialogo.dismiss();
         validar =1;
     }

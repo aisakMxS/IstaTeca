@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:id="@+id/lista_item_prestamos">
+
+        <TextView
+            android:id="@+id/text_cedulaEs"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            tools:text="Alumno 1" />
+
+        <TextView
+            android:id="@+id/txt_estado_libro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="9dp"
+            android:layout_toEndOf="@+id/text_cedulaEs"
+            android:paddingLeft="10dp"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            tools:text="Solicitado" />
+
+        <TextView
+            android:id="@+id/txt_titulo_libro_solicitud"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_estado_libro"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="46dp"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            tools:text="La odisea" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/text_cedulaEs"
+            android:layout_marginTop="23dp"
+            android:background="?android:attr/listDivider" />
+
+        <ImageView
+            android:id="@+id/img_flecha"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_alignBottom="@+id/txt_titulo_libro_solicitud"
+            android:layout_marginStart="24dp"
+            android:layout_marginBottom="-5dp"
+            android:layout_toEndOf="@+id/txt_estado_libro"
+            app:srcCompat="@drawable/fecha_derecha" />
+
+    </RelativeLayout>
+</layout>
