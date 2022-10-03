@@ -24,6 +24,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -87,6 +88,7 @@ public class registro_librosFragment extends Fragment {
 
         combotipo();
         combodisponibilidad();
+        getAutor();
 
         if(validar==1){
             System.out.println("Abriendo modificar");
@@ -534,12 +536,17 @@ public class registro_librosFragment extends Fragment {
     }
     public void dialogoautor(){
 
-
+        AutoCompleteTextView txtautor_autocomplete;
         TextView txtcerrar;
         EditText nombre;
         Button agregar;
         String agregar_tipo;
         dialogo.setContentView(R.layout.dialogo_autor);
+        txtautor_autocomplete= (AutoCompleteTextView)dialogo.findViewById(R.id.txt_autor_autocomplete) ;
+        ArrayAdapter adapter = new ArrayAdapter<Autor >(getActivity(), android.R.layout.simple_dropdown_item_1line, lista_autores);
+        txtautor_autocomplete.setThreshold(3);
+        txtautor_autocomplete.setAdapter(adapter);
+
         txtcerrar=(TextView) dialogo.findViewById(R.id.txt_cerrar);
         nombre=(EditText) dialogo.findViewById(R.id.txt_agregar);
         agregar=(Button) dialogo.findViewById(R.id.btn_agregar);
@@ -553,7 +560,7 @@ public class registro_librosFragment extends Fragment {
         agregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                comboAutorList.add(nombre.getText().toString());
+                comboAutorList.add(txtautor_autocomplete.getText().toString());
                 binding.comboAutores.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, comboAutorList));
                 dialogo.dismiss();
 
