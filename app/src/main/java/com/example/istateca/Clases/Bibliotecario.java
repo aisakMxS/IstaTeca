@@ -22,6 +22,10 @@ public class Bibliotecario implements Parcelable {
     public Bibliotecario() {
     }
 
+    public Bibliotecario(int id_bibliotecario) {
+        this.id_bibliotecario = id_bibliotecario;
+    }
+
     protected Bibliotecario(Parcel in) {
         id_bibliotecario = in.readInt();
         persona = in.readParcelable(Persona.class.getClassLoader());

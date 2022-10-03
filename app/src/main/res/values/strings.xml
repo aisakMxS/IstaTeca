@@ -28,11 +28,10 @@
         <item>Licencia de conducir</item>
     </string-array>
 
-    <string-array name="estadosolicitud">
+    <string-array name="estadodevolucion">
         <item>Seleccione</item>
-        <item>Solicitado</item>
-        <item>Entregado</item>
-        <item>Recibido</item>
+        <item>Disponible</item>
+        <item>Extraviado</item>
 
     </string-array>
 

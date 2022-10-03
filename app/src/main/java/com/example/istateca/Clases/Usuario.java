@@ -12,6 +12,10 @@ public class Usuario implements Parcelable {
     public Usuario() {
     }
 
+    public Usuario(int id_usuario) {
+        this.id_usuario = id_usuario;
+    }
+
     public Usuario(int id, int calificacion, String observacion, Persona persona) {
         this.id_usuario = id;
         this.calificacion = calificacion;
