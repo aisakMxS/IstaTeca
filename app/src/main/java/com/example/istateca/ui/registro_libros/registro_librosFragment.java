@@ -291,11 +291,13 @@ public class registro_librosFragment extends Fragment {
                         in1,in2,in3,dimensiones,estadolibro,activo,byteArray,url,0,d,disponibilidad(),donante,documentodonacion);
 
 
-                create(l,0);
+
                 CrearAutores();
                 getAutor();
+                create(l,0);
                 limpiarcampos();
-                crearautor_libro(1);
+
+
 
 
 
@@ -352,7 +354,8 @@ public class registro_librosFragment extends Fragment {
     private void CrearAutores(){
         for(int i=0; i<comboAutorList.size(); i++){
             int con=0;
-            Autor au= new Autor(lista_autores.size()+1,comboAutorList.get(i));
+            String nombre= comboAutorList.get(i);
+            Autor au= new Autor(0,nombre);
             for(int j=0; j<lista_autores.size(); j++){
                 if(lista_autores.get(j).getNombre().equalsIgnoreCase(au.getNombre())){
                     System.out.println("Autor Existente");
@@ -382,7 +385,6 @@ public class registro_librosFragment extends Fragment {
             nombreautor= comboAutorList.get(i);
 
             for (int j=0; j<lista_autores.size(); j++){
-
                 if(lista_autores.get(j).getNombre().equalsIgnoreCase(nombreautor)){
                     Autor au1= new Autor(lista_autores.get(j).getId(),nombreautor);
                     Libro li = new Libro(idlibro,"Deweys","El chemas",null,"adquisicionqwe",1980,"Editort","Cuenca", 90, "Area", "Isbn123"
@@ -587,6 +589,7 @@ public class registro_librosFragment extends Fragment {
                // Toast.makeText(registro_librosFragment.this,l.getCodigoDewey()+" created!", Toast.LENGTH_LONG).show();
                 if(v==0) {
                     Toast.makeText(getActivity(), l.getTitulo() + " Creado", Toast.LENGTH_LONG).show();
+                    crearautor_libro(l.getId_libro());
                 }else
                 {
                     Toast.makeText(getActivity(), l.getTitulo() + " Modificado", Toast.LENGTH_LONG).show();
@@ -647,27 +650,14 @@ public class registro_librosFragment extends Fragment {
         });
     }
 
-    private void CrearAutorSincrono(Autor A)  {
-        Retrofit retrofit= new Retrofit.Builder().baseUrl(Apis.URL_001).addConverterFactory(GsonConverterFactory.create()).build();
-        autorService= retrofit.create(AutorService.class);
-        Call<Autor> call= autorService.addAutor(A);
 
-
-        try {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-
-            StrictMode.setThreadPolicy(policy);
-            Response <Autor> result= call.execute();
-        }catch (IOException e){
-            System.out.println("Error "+e.getMessage());
-        }
 
 
 
        // Intent intent = new Intent(this, BackgroundService.class);
 
 
-    }
+
 
     private void CrearAutor(Autor A){
         Retrofit retrofit= new Retrofit.Builder().baseUrl(Apis.URL_001).addConverterFactory(GsonConverterFactory.create()).build();
@@ -698,8 +688,6 @@ public class registro_librosFragment extends Fragment {
         Retrofit retrofit= new Retrofit.Builder().baseUrl(Apis.URL_001).addConverterFactory(GsonConverterFactory.create()).build();
         autor_libroService= retrofit.create(Autor_LibroService.class);
         Call<AutorLibro> call= autor_libroService.addAutor(al);
-        System.out.println(al.getLibro().getId_libro());
-        System.out.println(al.getAutor().getId());
         call.enqueue(new Callback<AutorLibro>() {
             @Override
             public void onResponse(Call<AutorLibro> call, Response<AutorLibro> response) {
