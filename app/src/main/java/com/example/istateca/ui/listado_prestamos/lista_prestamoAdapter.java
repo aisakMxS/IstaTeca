@@ -18,7 +18,7 @@ import java.util.List;
 public class lista_prestamoAdapter extends BaseAdapter {
     List<Prestamo> prestamo;
     Context context;
-    TextView txtcedula, txtestado,txttitulo;
+    TextView txtnombre, txtestado,txttitulo, txtcedula;
     public lista_prestamoAdapter(@NonNull List<Prestamo> prestamo, Context context) {
         this.prestamo = prestamo;
         this.context = context;
@@ -44,14 +44,16 @@ public class lista_prestamoAdapter extends BaseAdapter {
         if (view==null){
             view= LayoutInflater.from(context).inflate(R.layout.lista_item_prestamos,viewGroup,false);
         }
-        txtcedula=view.findViewById(R.id.text_cedulaEs);
+        txtnombre=view.findViewById(R.id.txt_nombreEs);
         txttitulo=view.findViewById(R.id.txt_titulo_libro_solicitud);
         txtestado=view.findViewById(R.id.txt_estado_libro);
+        txtcedula=view.findViewById(R.id.txt_cedulaEs);
 
 
-        txtcedula.setText(prestamo.get(position).getUsuario().getPersona().getNombres());
+        txtnombre.setText(prestamo.get(position).getUsuario().getPersona().getNombres());
         txtestado.setText(prestamo.get(position).getEstado_prestamo());
         txttitulo.setText(prestamo.get(position).getLibro().getTitulo());
+        txtcedula.setText(prestamo.get(position).getUsuario().getPersona().getCedula());
 
         return view;
     }
