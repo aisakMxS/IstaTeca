@@ -14,18 +14,13 @@
 
         <SearchView
             android:id="@+id/txtbuscar"
-            android:layout_width="212dp"
+            android:layout_width="411dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="2dp"
             android:hint="Buscar Solicitud"
             android:textColor="@color/black"
             android:textSize="20dp" />
-
-        <Spinner
-            android:id="@+id/spinner2"
-            android:layout_width="174dp"
-            android:layout_height="35dp" />
 
         <ListView
             android:id="@+id/lista_prestamo"

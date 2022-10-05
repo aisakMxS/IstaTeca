@@ -51,7 +51,7 @@ public class lisatdo_prestamosFragment extends Fragment implements SearchView.On
     ListView recyclerView ;
     public static int idPrestamo=0;
     int id_entrega=0;
-
+    String fec ="";
     private LisatdoPrestamosViewModel mViewModel;
     private FragmentLisatdoPrestamosBinding binding;
     Dialog dialogo;
@@ -70,7 +70,7 @@ public class lisatdo_prestamosFragment extends Fragment implements SearchView.On
         id_entrega=bibliotecario_ingresado.getId();
         View root = binding.getRoot();
         recyclerView= binding.listaPrestamo;
-        listarPrestamo();
+        listarPrestamoSolicitud("solicitado");
 
         //buscar prestamo
         binding.txtbuscar.setOnQueryTextListener(this);
@@ -98,13 +98,40 @@ public class lisatdo_prestamosFragment extends Fragment implements SearchView.On
     }
 
 
-    public void listarPrestamo(){
+    /*public void listarPrestamo(){
         Retrofit retrofit=new Retrofit.Builder()
                 .baseUrl(Apis.URL_001)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         prestamoService=retrofit.create(PrestamoService.class);
         Call<List<Prestamo>> call= prestamoService.getListarPrestamo();
+        call.enqueue(new Callback<List<Prestamo>>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onResponse(Call<List<Prestamo>> call, Response<List<Prestamo>> response) {
+                if (!response.isSuccessful()){
+                    Log.e("Response err: ",response.message());
+                    return;
+                }
+                prestamo=response.body();
+                lista_prestamoAdapter lista_prestamoAdapter= new lista_prestamoAdapter(prestamo,getActivity());
+                recyclerView.setAdapter(lista_prestamoAdapter);
+                prestamo.forEach(p-> System.out.println(prestamo.toString()));
+            }
+
+            @Override
+            public void onFailure(Call<List<Prestamo>> call, Throwable t) {
+                System.out.println(t.getMessage());
+            }
+        });
+    }*/
+    public void listarPrestamoSolicitud(String Solicitado){
+        Retrofit retrofit=new Retrofit.Builder()
+                .baseUrl(Apis.URL_001)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        prestamoService=retrofit.create(PrestamoService.class);
+        Call<List<Prestamo>> call= prestamoService.getBuscarestado(Solicitado);
         call.enqueue(new Callback<List<Prestamo>>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -165,11 +192,16 @@ public class lisatdo_prestamosFragment extends Fragment implements SearchView.On
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
                         txt_devolucionfecha.setText(dayOfMonth+"/"+(monthOfYear+1)+"/"+year);
+                         fec= String.valueOf(txt_devolucionfecha);
+                        System.out.println("fecha"+ txt_devolucionfecha);
                     }
                 }
-                        ,dia,mes,ano);
+                        ,ano,mes,dia);
+
                 datePickerDialog.show();
+                System.out.println("fecha"+ txt_devolucionfecha);
             }
+
         });
 
         btnguardad.setOnClickListener(new View.OnClickListener() {
@@ -178,10 +210,36 @@ public class lisatdo_prestamosFragment extends Fragment implements SearchView.On
 
             }
         });
+    }
+    public int buscarLibroxnombre(int id) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Apis.URL_001)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        prestamoService = retrofit.create(PrestamoService.class);
+        Call<Prestamo> call = prestamoService.updatePersona(id);
+        call.enqueue(new Callback<Prestamo>() {
+            @Override
+            public void onResponse(Call<Prestamo> call, Response<Prestamo> response) {
+                if (!response.isSuccessful()) {
+                    Log.e("Response err: ", response.message());
+                    return;
+                }
+               // lista_prestamobuscar= response.body();
+                lista_prestamoAdapter lista_prestamoAdapter= new lista_prestamoAdapter(lista_prestamobuscar,getActivity());
+                recyclerView.setAdapter(lista_prestamoAdapter);
 
 
+            }
 
+            @Override
+            public void onFailure(Call<Prestamo> call, Throwable t) {
+                Log.e("Error:",t.getMessage());
+                System.out.println("error");
+            }
+        });
 
+        return id;
     }
     private void prestamoSolicitud(){
         Response<List<Prestamo>> response = null;
@@ -190,6 +248,8 @@ public class lisatdo_prestamosFragment extends Fragment implements SearchView.On
 
                 lista_prestamo= response.body();
                 System.out.println("Prestamo" + lista_prestamo.size());
+                lista_prestamoAdapter lista_prestamoAdapter= new lista_prestamoAdapter(lista_prestamo,getActivity());
+                recyclerView.setAdapter(lista_prestamoAdapter);
             }
         }
     }
