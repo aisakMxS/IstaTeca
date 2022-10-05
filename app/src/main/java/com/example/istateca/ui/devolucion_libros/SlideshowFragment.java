@@ -48,23 +48,12 @@ public class SlideshowFragment extends Fragment {
     private FragmentDevolucionLBinding binding;
     PrestamoService prestamoService;
     LibroService libroService;
-    BibliotecarioService bibliotecarioService;
-    UsuarioService usuarioService;
     List<Prestamo> lista_prestamo= new ArrayList<>();
-    List<Persona> lista_persona= new ArrayList<>();
-    List<Usuario> lista_usuario = new ArrayList<>();
-    List<Bibliotecario> lista_bibliotecarios = new ArrayList<>();
     List<Libro> lista_libro= new ArrayList<>();
-    public static int id_prest=0;
-    public static int id_recibe=0;
-    public static int id_usuario=0;
-    public static int id_libro=0;
-    public static int id_entrega=0;
-    String fecha_entrega, fecha_maxima,fecha_entre, fecha_max;
-    int a=0;
-    int pre=0;
+    ArrayList<Integer> combo_getID = new ArrayList<Integer>();
     int b=0;
-   // V_principal.
+
+    public Prestamo prestamo_actualizado;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -93,7 +82,7 @@ public class SlideshowFragment extends Fragment {
                 String fecha= binding.btnFecha.getText().toString();
                 String documento=binding.txtDocumento.getText().toString();
 
-
+                System.out.println(fecha + " fecha");
                 if(ced.isEmpty()) {
                     Toast.makeText(getActivity(),  " Ingrese la cedula", Toast.LENGTH_LONG).show();
                 }else if (binding.comboLibro.getSelectedItem().toString().equals("Seleccione: ") ){
@@ -104,41 +93,27 @@ public class SlideshowFragment extends Fragment {
                     Toast.makeText(getActivity(),  " Seleccione si tiene penalizacion", Toast.LENGTH_LONG).show();
                 }else if(binding.comboEstado.getSelectedItem().toString().equals("Seleccione")){
                     Toast.makeText(getActivity(),  " Seleccione el estado", Toast.LENGTH_LONG).show();
-                }else if(observacion.isEmpty()){
-                    Toast.makeText(getActivity(),  " Flata completar la observacion", Toast.LENGTH_LONG).show();
-                }else{
-                    //Prestamo p =new Prestamo(estadolibro,fecha,b_recibe,rad,matriz);
-                    /*p.setBibliotecario_recibido(b_recibe);
-                    p.setEstado_libro(estadolibro);
-                    p.setEstado_prestamo(estadoprestamo);
-                    p.setFecha_recibo(fecha);
-                    p.setActivo(rad);*/
-                    Libro li= new Libro(id_libro);
-                    Bibliotecario b_recibe=new Bibliotecario(id_recibe);
-                    Bibliotecario b_entrega=new Bibliotecario(id_entrega);
-                    Usuario usu= new Usuario(id_usuario);
-                    System.out.println(" id preswtamo " + id_prest );
-                    System.out.println(" Usuario " + usu.getId());
-                    System.out.println(" Libro " + li.id_libro);
-                    System.out.println("estado libro " + estadolibro);
-                    System.out.println("estado prestamo " + estadoprestamo);
-                    System.out.println("fecha entrega " + fecha_entre);
-                    System.out.println("bibiliotecario entrega " + b_entrega.getId());
-                    System.out.println("documento " + documento);
-                    System.out.println("fecha " + fecha);
-                    System.out.println("Bibliotecario recibe " + b_recibe.getId());
-                    System.out.println("fecha maxima " + fecha_max);
-                    System.out.println(" penalizacion " + rad);
-                    System.out.println("matriz  " + matriz);
+                }else {
 
-                    System.out.println("id bibliotecario " + id_recibe);
-                    System.out.println(" id libro " +id_libro);
+                   if(!observacion.isEmpty()){
+                       Usuario u =prestamo_actualizado.getUsuario();
+                       u.setObservacion(observacion);
+                       if(rad=true){
+                           u.setCalificacion(u.getCalificacion()-1);
+                       }
+                   }
+                    prestamo_actualizado.setEstado_prestamo(estadoprestamo);
+                    prestamo_actualizado.setEstado_libro(estadolibro);
+                    prestamo_actualizado.setFecha_recibo(binding.btnFecha.getText().toString());
+                    prestamo_actualizado.setBibliotecario_recibido(bibliotecario_ingresado);
+                    create(prestamo_actualizado);
+                    limpiar();
 
-                    System.out.println("observacion " + observacion);
-                    //actualizar(p,id_prest);
-                    Prestamo pres = new Prestamo(id_prest,usu,li,estadolibro,estadoprestamo,fecha_entre,b_entrega,documento,
-                            fecha,b_recibe,fecha_max,rad,matriz);
-                    create(pres,1);
+
+                    Libro l= prestamo_actualizado.getLibro();
+                    l.setDisponibilidad(true);
+                    createLibro(l);
+
                 }
             }
         });
@@ -165,36 +140,32 @@ public class SlideshowFragment extends Fragment {
             }
         });
         binding.comboLibro.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position > 0) {
-                    for (int i = 1; i <= lista_prestamo.size(); i++) {
+                    for (int x=0; x<combo_getID.size();x++){
+                        if (x == id){
+                            int idC =combo_getID.get(x);
+                            for (int i = 0; i < lista_prestamo.size(); i++) {
+                                if (idC == lista_prestamo.get(i).getId_prestamo()) {
+                                    System.out.println("ID PRESTAMO: " + lista_prestamo.get(i).getId_prestamo() + " ID COMbo " + idC);
+                                    String a = lista_prestamo.get(i).getFecha_entrega();
+                                    String fecha_entrega = a.substring(0, 10);
+                                    String b = lista_prestamo.get(i).getFecha_maxima();
+                                    String fecha_maxima = b.substring(0, 10);
+                                    binding.txtDocumento.setText(lista_prestamo.get(i).getDocumento_habilitante());
+                                    binding.txtEstadoL.setText(lista_prestamo.get(i).getEstado_libro());
+                                    binding.txtFechaEntrega.setText(fecha_entrega);
+                                    binding.txtFechaMaxima.setText(fecha_maxima);
+                                    binding.txtBibliotecarioEntrega.setText(lista_prestamo.get(i).getBibliotecario_entrega().getPersona().getNombres());
+                                    binding.txtBibliotecarioRecibe.setText(bibliotecario_ingresado.getPersona().getNombres());
 
-                        if (i == id) {
-                            String a = lista_prestamo.get(i - 1).getFecha_entrega();
-                            String fecha_entrega = a.substring(0, 10);
-                            String b = lista_prestamo.get(i - 1).getFecha_maxima();
-                            String fecha_maxima = b.substring(0, 10);
-                            System.out.println("posicion: " + i + " lista " + position);
-                            binding.txtDocumento.setText(lista_prestamo.get(i - 1).getDocumento_habilitante());
-                            binding.txtEstadoL.setText(lista_prestamo.get(i - 1).getEstado_libro());
-                            binding.txtFechaEntrega.setText(fecha_entrega);
-                            binding.txtFechaMaxima.setText(fecha_maxima);
-                            binding.txtBibliotecarioEntrega.setText(lista_prestamo.get(i-1).getBibliotecario_entrega().getPersona().getNombres());
-                            fecha_entre=lista_prestamo.get(i-1).getFecha_entrega();
-                            fecha_max=lista_prestamo.get(i-1).getFecha_maxima();
-                            binding.txtBibliotecarioRecibe.setText(bibliotecario_ingresado.getPersona().getNombres());
+                                    prestamo_actualizado=lista_prestamo.get(i);
+                                }
+                            }
 
-                            id_entrega=lista_prestamo.get(i-1).getBibliotecario_entrega().getId();
-                            id_libro=lista_prestamo.get(i-1).getLibro().getId_libro();
-                            id_prest=lista_prestamo.get(i-1).getId_prestamo();
-                            id_recibe= bibliotecario_ingresado.getId();
-                            id_usuario=lista_prestamo.get(i-1).getUsuario().getId();
                         }
+
                     }
-                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
@@ -205,10 +176,44 @@ public class SlideshowFragment extends Fragment {
         return root;
 
     }
+    public void limpiar(){
+        binding.txtCedulaEstudiante.setText("");
+        binding.txtBibliotecarioEntrega.setText("");
+        binding.txtBibliotecarioRecibe.setText("");
+        binding.txtEstadoL.setText("");
+        binding.txtDocumento.setText("");
+        binding.txtFechaMaxima.setText("");
+        binding.btnFecha.setText("Cargar");
+        binding.txtFechaEntrega.setText("");
+        binding.txtObservacciones.setText("");
+        binding.comboLibro.setSelected(false);
+        binding.comboEstado.setSelected(false);
+        binding.radioNo.setChecked(false);
+        binding.radioSi.setChecked(false);
+    }
+    private void createLibro(Libro l){
+        Retrofit retrofit= new Retrofit.Builder().baseUrl(Apis.URL_001).addConverterFactory(GsonConverterFactory.create()).build();
+        libroService= retrofit.create(LibroService.class);
+        Call<Libro> call= libroService.addlibro(l);
+        call.enqueue(new Callback<Libro>() {
+            @Override
+            public void onResponse(Call<Libro> call, Response<Libro> response) {
+                if(!response.isSuccessful()){
+                    //Toast.makeText("Se agrego con exito", Toast.LENGTH_LONG).show();
+                    Log.e("Response erra", response.message());
+                    return;
+                }
+                Libro l=response.body();
+            }
+            @Override
+            public void onFailure(Call<Libro> call, Throwable t) {
+                Log.e("Error:",t.getMessage());
+                System.out.println("error");
+            }
+        });
+    }
 
-
-
-    private void create(Prestamo pres, int v){
+    private void create(Prestamo pres){
         Retrofit retrofit= new Retrofit.Builder().baseUrl(Apis.URL_001).addConverterFactory(GsonConverterFactory.create()).build();
         prestamoService= retrofit.create(PrestamoService.class);
         Call<Prestamo> call= prestamoService.addPrestamo(pres);
@@ -221,13 +226,7 @@ public class SlideshowFragment extends Fragment {
                     return;
                 }
                 Prestamo pres=response.body();
-                // Toast.makeText(registro_librosFragment.this,l.getCodigoDewey()+" created!", Toast.LENGTH_LONG).show();
-                if(v==0) {
-                    Toast.makeText(getActivity(), " Creado", Toast.LENGTH_LONG).show();
-                }else
-                {
-                    Toast.makeText(getActivity()," Modificado", Toast.LENGTH_LONG).show();
-                }
+                Toast.makeText(getActivity()," Modificado", Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -253,76 +252,20 @@ public class SlideshowFragment extends Fragment {
                 if (!response.isSuccessful()){
                     Log.e("Response err: ",response.message());
                     return;
-
                 }
-                a=1;
                 lista_prestamo =response.body();
                 System.out.println(lista_prestamo.size() + " prestamos cedula");
                 comboLibro();
-
             }
 
             @Override
             public void onFailure(Call<List<Prestamo>> call, Throwable t) {
                 System.out.println(t.getMessage());
             }
-
         });
 
     }
 
-    public void getUsuario(){
-        Retrofit retrofit=new Retrofit.Builder()
-                .baseUrl(Apis.URL_001)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        usuarioService=retrofit.create(UsuarioService.class);
-        Call<List<Usuario>> call= usuarioService.getListarUsuarios();
-        call.enqueue(new Callback<List<Usuario>>() {
-            @Override
-            public void onResponse(Call<List<Usuario>> call, Response<List<Usuario>> response) {
-                if (!response.isSuccessful()){
-                    Log.e("Response err: ",response.message());
-                    return;
-                }
-                lista_usuario=response.body();
-                System.out.println(lista_usuario.size() + " usuarios");
-            }
-
-            @Override
-            public void onFailure(Call<List<Usuario>> call, Throwable t) {
-                System.out.println(t.getMessage());
-            }
-        });
-    }
-
-    public void actualizar(Prestamo pres,int id){
-        Retrofit retrofit=new Retrofit.Builder()
-                .baseUrl(Apis.URL_001)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        prestamoService=retrofit.create(PrestamoService.class);
-        Call<Prestamo> call= prestamoService.updatePersona(pres,id);
-        System.out.println("id " + id);
-        System.out.println(pres.getEstado_libro() + " recordando java");
-
-        call.enqueue(new Callback<Prestamo>() {
-            @Override
-            public void onResponse(Call<Prestamo> call, Response<Prestamo> response) {
-                if (!response.isSuccessful()){
-                    Log.e("Response err: ",response.message());
-                    return;
-                }
-                Toast.makeText(getActivity(),  "Actualizado", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onFailure(Call<Prestamo> call, Throwable t) {
-                System.out.println(t.getMessage());
-            }
-        });
-
-    }
     private void listarLibros(){
         Retrofit retrofit=new Retrofit.Builder()
                 .baseUrl(Apis.URL_001)
@@ -350,19 +293,14 @@ public class SlideshowFragment extends Fragment {
     }
 
     private void comboLibro() {
-        if (a==0){
-            Toast.makeText(getActivity(), "Esta cedula no tiene prestamos ", Toast.LENGTH_SHORT).show();
-            System.out.println("Esta cedula no tiene prestamo");
-            binding.txtCedulaEstudiante.setText("");
-        }else{
-            binding.txtCedulaEstudiante.getText().toString();
-        }
+        combo_getID.add(0);
         ArrayList<String> comboTiposList = new ArrayList<String>();
         comboTiposList.add("Seleccione: ");
         for (int i=0; i< lista_prestamo.size(); i++){
             for (int y=0; y< lista_libro.size(); y++){
                     if((lista_prestamo.get(i).getLibro().getId_libro()==lista_libro.get(y).getId_libro())&&lista_prestamo.get(i).getEstado_prestamo().equalsIgnoreCase("Solicitado")){
                         comboTiposList.add(lista_libro.get(y).getTitulo());
+                        combo_getID.add(lista_prestamo.get(i).getId_prestamo());
                     }
             }
         }
