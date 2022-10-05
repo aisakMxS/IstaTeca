@@ -9,7 +9,7 @@ public class Prestamo {
     private String fecha_entrega;
     private Bibliotecario bibliotecario_entrega;
     private String documento_habilitante;
-    private String fecha_recibo;
+    private String fecha_recibido;
     private Bibliotecario bibliotecario_recibido;
     private String fecha_maxima;
     private boolean activo;
@@ -27,7 +27,7 @@ public class Prestamo {
         this.fecha_entrega = fecha_entrega;
         this.bibliotecario_entrega = bibliotecario_entrega;
         this.documento_habilitante = documento_habilitante;
-        this.fecha_recibo = fecha_recibo;
+        this.fecha_recibido = fecha_recibo;
         this.bibliotecario_recibido = bibliotecario_recibido;
         this.fecha_maxima = fecha_maxima;
         this.activo = activo;
@@ -100,11 +100,11 @@ public class Prestamo {
     }
 
     public String getFecha_recibo() {
-        return fecha_recibo;
+        return fecha_recibido;
     }
 
     public void setFecha_recibo(String fecha_recibo) {
-        this.fecha_recibo = fecha_recibo;
+        this.fecha_recibido = fecha_recibo;
     }
 
     public Bibliotecario getBibliotecario_recibido() {

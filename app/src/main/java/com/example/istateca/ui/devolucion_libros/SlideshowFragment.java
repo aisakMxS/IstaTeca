@@ -104,7 +104,7 @@ public class SlideshowFragment extends Fragment {
                    }
                     prestamo_actualizado.setEstado_prestamo(estadoprestamo);
                     prestamo_actualizado.setEstado_libro(estadolibro);
-                    prestamo_actualizado.setFecha_recibo(binding.btnFecha.getText().toString());
+                    prestamo_actualizado.setFecha_recibo(fecha);
                     prestamo_actualizado.setBibliotecario_recibido(bibliotecario_ingresado);
                     create(prestamo_actualizado);
                     limpiar();
@@ -186,8 +186,8 @@ public class SlideshowFragment extends Fragment {
         binding.btnFecha.setText("Cargar");
         binding.txtFechaEntrega.setText("");
         binding.txtObservacciones.setText("");
-        binding.comboLibro.setSelected(false);
-        binding.comboEstado.setSelected(false);
+        binding.comboLibro.setAdapter(null);
+        binding.comboEstado.setSelection(0);
         binding.radioNo.setChecked(false);
         binding.radioSi.setChecked(false);
     }
