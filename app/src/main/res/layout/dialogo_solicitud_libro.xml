@@ -60,12 +60,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_titulo_libro_solicitud"
+        app:layout_constraintTop_toBottomOf="@+id/txt_titulo_librosoli"
         app:layout_constraintVertical_bias="0.09"
         app:srcCompat="@drawable/codigo_qr" />
 
     <TextView
-        android:id="@+id/txt_titulo_libro_solicitud"
+        android:id="@+id/txt_titulo_librosoli"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
