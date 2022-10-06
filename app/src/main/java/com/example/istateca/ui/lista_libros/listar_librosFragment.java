@@ -59,8 +59,9 @@ public class listar_librosFragment extends Fragment implements SearchView.OnQuer
     public static List<Libro> libros;
     ListView recyclerView ;
     public static int id=0;
+    Fragment fragment;
     private FragmentLLibrosBinding binding;
-    Dialog dialogo, dialogoSolicitud;
+    Dialog dialogo, dialogoSolicitud, dialogo_libro;
     ImageView editar,img_qr;Button btn_solicitar,btn_aceptar;
     TextView textitulo,txt_titulo_soli,textcodigodewey,textdescripcion,tipo,editor,ciudad,area,codigoisbn,estadolibro, urldigital,idioma,donante,num_paginas,anio_publicacion,indice1,indice2,indice3,dimesiones;
     public static int validar=0;
@@ -79,6 +80,7 @@ public class listar_librosFragment extends Fragment implements SearchView.OnQuer
         //Dialogo del detalle del libro
 
         dialogo=new Dialog(getActivity());
+        dialogo_libro=new Dialog(getActivity());
         recyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -234,12 +236,9 @@ public class listar_librosFragment extends Fragment implements SearchView.OnQuer
     }
 
     public void abrirEditar(){
-        registro_librosFragment homeFragment = new registro_librosFragment();
-        FragmentTransaction fragmentTransaction= getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.listarlibroos,homeFragment);
-        fragmentTransaction.commit();
+        dialogo_libro.setContentView(R.layout.fragment_registro_libros);
+        dialogo_libro.show();
         dialogo.dismiss();
-        validar =1;
     }
 
 
