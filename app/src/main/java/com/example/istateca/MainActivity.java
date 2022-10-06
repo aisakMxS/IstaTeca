@@ -34,14 +34,13 @@ public class MainActivity extends AppCompatActivity {
         viewModel.getUsuario_Ingrtesado().observe(this,usuario -> {
             if (viewModel.getUsuario_Ingrtesado()!=null){
                 V_principal.revalidar_ingreso();
-                System.out.println(viewModel.getUsuario_Ingrtesado().getValue().getPersona().getNombres());
                 openActivity();
             }
         });
         //bibliotecario
         viewModel.getBibliotecario_Ingrtesado().observe(this,bibliotecario -> {
             if (viewModel.getBibliotecario_Ingrtesado()!=null){
-                System.out.println(viewModel.getBibliotecario_Ingrtesado().getValue().getId()+"");
+                V_principal.revalidar_ingreso();
                 openActivity();
             }
         });

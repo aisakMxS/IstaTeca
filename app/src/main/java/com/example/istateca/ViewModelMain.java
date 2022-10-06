@@ -79,7 +79,7 @@ public class ViewModelMain extends ViewModel {
                         return;
                     }
                     usuario_ingresado.setValue(response.body());
-                    System.out.println(response.body().getPersona().getNombres());
+                    bibliotecario_ingresado.setValue(null);
                 }
 
                 @Override
@@ -97,6 +97,7 @@ public class ViewModelMain extends ViewModel {
                         return;
                     } else {
                         bibliotecario_ingresado.setValue(response.body());
+                        usuario_ingresado.setValue(null);
                     }
                 }
 

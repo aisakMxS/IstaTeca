@@ -35,8 +35,6 @@ public class V_principal extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         Bundle extras = getIntent().getExtras();
-
-        revalidar_ingreso();
         //System.out.println(usuario_ingresado.getPersona().getNombres());
 
         setSupportActionBar(binding.appBarVprincipal.toolbar);
@@ -53,13 +51,13 @@ public class V_principal extends AppCompatActivity {
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        if (usuario_ingresado == null) {
+        /*if (usuario_ingresado == null) {
             if (bibliotecario_ingresado.getPersona().getRol() == 0) {
                 //administrador acceso
             } else {
                 //
             }
-        }
+        }*/
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_lista_l, R.id.nav_solicitud_l, R.id.nav_devolucion_l, R.id.nav_registro_b, R.id.nav_listado_p, R.id.nav_listado_b, R.id.nav_listado_l,
                 R.id.nav_listas, R.id.nav_registro_l, R.id.nav_solicitud_l_pen, R.id.nav_editar_usuario)
@@ -87,8 +85,16 @@ public class V_principal extends AppCompatActivity {
     public static void revalidar_ingreso() {
         usuario_ingresado = null;
         bibliotecario_ingresado = null;
-        usuario_ingresado = MainActivity.viewModel.getUsuario_Ingrtesado().getValue();
-        bibliotecario_ingresado = MainActivity.viewModel.getBibliotecario_Ingrtesado().getValue();
+        try {
+            usuario_ingresado = MainActivity.viewModel.getUsuario_Ingrtesado().getValue();
+        }catch (Exception e){
+            System.out.println("nulo usuario");
+        };
+        try {
+            bibliotecario_ingresado = MainActivity.viewModel.getBibliotecario_Ingrtesado().getValue();
+        }catch (Exception e){
+            System.out.println("nulo bibliotecario");
+        };
     }
 
 }
