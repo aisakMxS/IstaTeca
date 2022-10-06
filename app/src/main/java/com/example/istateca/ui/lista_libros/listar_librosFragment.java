@@ -12,10 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,12 +40,15 @@ import com.example.istateca.R;
 import com.example.istateca.Utils.Apis;
 import com.example.istateca.Utils.LibroService;
 import com.example.istateca.Utils.PrestamoService;
+import com.example.istateca.Utils.TipoService;
 import com.example.istateca.databinding.FragmentLLibrosBinding;
 import com.example.istateca.ui.registro_libros.registro_librosFragment;
 import com.google.zxing.BarcodeFormat;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -61,18 +68,32 @@ public class listar_librosFragment extends Fragment implements SearchView.OnQuer
     public static int id=0;
     Fragment fragment;
     private FragmentLLibrosBinding binding;
-    Dialog dialogo, dialogoSolicitud, dialogo_libro;
+    Dialog dialogo, dialogoSolicitud,dialogo_libro,dialogotipo;
     ImageView editar,img_qr;Button btn_solicitar,btn_aceptar;
     TextView textitulo,txt_titulo_soli,textcodigodewey,textdescripcion,tipo,editor,ciudad,area,codigoisbn,estadolibro, urldigital,idioma,donante,num_paginas,anio_publicacion,indice1,indice2,indice3,dimesiones;
     public static int validar=0;
     public static int idlibro=0;
     List<Libro> lista_librosbuscar= new ArrayList<>();
+
+    Spinner comboTipo;
+    List<Tipo> lista_tipos= new ArrayList<>();
+    Spinner comboDisponibilidad;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         binding = FragmentLLibrosBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         recyclerView= binding.listaLibros;
+        dialogo_libro=new Dialog(getActivity());
+        dialogo_libro.setContentView(R.layout.fragment_registro_libros);
+        comboTipo=(Spinner)dialogo_libro.findViewById(R.id.combo_tipo);
+        comboDisponibilidad=(Spinner) dialogo_libro.findViewById(R.id.combo_disponibilidad);
+
+
+
+        getTipo();
+
         listarLibros();
         //buscar libro
         binding.txtbuscar.setOnQueryTextListener(this);
@@ -80,7 +101,7 @@ public class listar_librosFragment extends Fragment implements SearchView.OnQuer
         //Dialogo del detalle del libro
 
         dialogo=new Dialog(getActivity());
-        dialogo_libro=new Dialog(getActivity());
+
         recyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -123,6 +144,36 @@ public class listar_librosFragment extends Fragment implements SearchView.OnQuer
 
 
     }
+    private void getTipo(){
+        TipoService tipoService;
+        Retrofit retrofit= new Retrofit.Builder()
+                .baseUrl(Apis.URL_001).addConverterFactory(GsonConverterFactory.create()).build();
+        tipoService= retrofit.create(TipoService.class);
+
+
+
+        Call<List<Tipo>> call= tipoService.getTipos();
+
+        call.enqueue(new Callback<List<Tipo>>() {
+            @Override
+            public void onResponse(Call<List<Tipo>> call, Response<List<Tipo>> response) {
+                if(response.isSuccessful()){
+                    Log.e("Response err: ", response.message());
+                    lista_tipos = response.body();
+                    System.out.println(lista_tipos.size());
+                    combotipo();
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Tipo>> call, Throwable t) {
+                Log.e("Response err: ", t.getMessage());
+            }
+        });
+
+
+    }
     public void generarQR(Dialog dialog, int id){
         img_qr=dialog.findViewById(R.id.img_codigo_qr);
         try {
@@ -150,8 +201,8 @@ public class listar_librosFragment extends Fragment implements SearchView.OnQuer
     public void solicitar_libro(int i){
         dialogoSolicitud= new Dialog(getActivity());
         dialogoSolicitud.setContentView(R.layout.dialogo_solicitud_libro);
-        txt_titulo_soli=(TextView) dialogoSolicitud.findViewById(R.id.txt_titulo_libro_solicitud);
-        btn_aceptar=(Button) dialogoSolicitud.findViewById(R.id.btn_ace_solicitud);
+        TextView txt_titulo_soli=(TextView) dialogoSolicitud.findViewById(R.id.txt_titulo_librosoli);
+        Button btn_aceptar=(Button) dialogoSolicitud.findViewById(R.id.btn_ace_solicitud);
         txt_titulo_soli.setText(libros.get(i).getTitulo());
         dialogoSolicitud.show();
 
@@ -165,6 +216,8 @@ public class listar_librosFragment extends Fragment implements SearchView.OnQuer
                 null,null,null,null,
                 true,null);
         crearprestamo(prestamo);
+
+
 
         create(l,1);
         btn_aceptar.setOnClickListener(new View.OnClickListener() {
@@ -198,6 +251,8 @@ public class listar_librosFragment extends Fragment implements SearchView.OnQuer
                 }else
                 {
                     Toast.makeText(getActivity(), l.getTitulo() + " Modificado", Toast.LENGTH_LONG).show();
+                    dialogo_libro.dismiss();
+                    listarLibros();
                 }
             }
 
@@ -234,11 +289,213 @@ public class listar_librosFragment extends Fragment implements SearchView.OnQuer
             }
         });
     }
+    public void combotipo(){
+        ArrayList<String> comboTiposList = new ArrayList<String>();
+        comboTiposList.add("Seleccione: ");
+        for (int i=0; i< lista_tipos.size(); i++){
+            comboTiposList.add(lista_tipos.get(i).getNombre());
+        }
+        comboTipo.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, comboTiposList));
+
+    }
+    private Tipo objetotipo(String nombre){
+        Tipo t=null;
+        for(int i=0; i<lista_tipos.size(); i++){
+            if(lista_tipos.get(i).getNombre().equals(nombre)){
+                t = new Tipo(lista_tipos.get(i).getId(), nombre);
+
+            }
+        }
+        return t;
+    }
 
     public void abrirEditar(){
-        dialogo_libro.setContentView(R.layout.fragment_registro_libros);
+        combotipo();
+        combodisponibilidad();
         dialogo_libro.show();
         dialogo.dismiss();
+        EditText txtTituloLlibro=(EditText)dialogo_libro.findViewById(R.id.txt_titulo_llibro);
+        EditText txtCodigodewey=(EditText) dialogo_libro.findViewById(R.id.txt_codigodewey);
+        EditText txtAdquisicionLibro=(EditText) dialogo_libro.findViewById(R.id.txt_adquisicion_libro);
+        EditText txtDescripcion=(EditText) dialogo_libro.findViewById(R.id.txt_descripcion);
+        EditText txtDimensiones=(EditText) dialogo_libro.findViewById(R.id.txt_dimensiones);
+        EditText txtEditor=(EditText) dialogo_libro.findViewById(R.id.txt_editor);
+        EditText txtCiudad=(EditText) dialogo_libro.findViewById(R.id.txt_ciudad);
+        EditText txtArea=(EditText) dialogo_libro.findViewById(R.id.txt_area);
+        EditText txtCodigoIsbn=(EditText) dialogo_libro.findViewById(R.id.txt_codigo_isbn);
+        EditText txtEstadoLibro=(EditText) dialogo_libro.findViewById(R.id.txt_estado_libro);
+        EditText txtUrl=(EditText) dialogo_libro.findViewById(R.id.txt_url);
+        EditText txtIdioma=(EditText) dialogo_libro.findViewById(R.id.txt_idioma);
+        EditText txtNombreDonante=(EditText) dialogo_libro.findViewById(R.id.txt_nombre_donante);
+        EditText txtNumeroPaginas=(EditText) dialogo_libro.findViewById(R.id.txt_numero_paginas);
+        EditText txtAnioPublicacion=(EditText) dialogo_libro.findViewById(R.id.txt_anio_publicacion);
+        EditText txtIndice1=(EditText) dialogo_libro.findViewById(R.id.txt_indice1);
+        EditText txtIndice2=(EditText) dialogo_libro.findViewById(R.id.txt_indice2);
+        EditText txtIndice3=(EditText) dialogo_libro.findViewById(R.id.txt_indice3);
+        ImageView imgGuardar=(ImageView) dialogo_libro.findViewById(R.id.img_guardar);
+        ImageButton btnAgregarTipo=(ImageButton) dialogo_libro.findViewById(R.id.btn_agregar_tipo);
+
+
+
+        for(int i=0; i<libros.size();i++){
+            if(libros.get(i).getId_libro()== idlibro){
+                txtTituloLlibro.setText(libros.get(i).getTitulo());
+                txtCodigodewey.setText(libros.get(i).getCodigo_dewey());
+                txtAdquisicionLibro.setText(libros.get(i).getAdquisicion());
+                txtDescripcion.setText(libros.get(i).getDescripcion());
+                txtDimensiones.setText(libros.get(i).getDimensiones());
+                txtEditor.setText(libros.get(i).getEditor());
+                // binding.comboTipo.setSelection(1);
+                txtCiudad.setText(libros.get(i).getCiudad());
+                txtArea.setText(libros.get(i).getArea());
+                txtCodigoIsbn.setText(libros.get(i).getCod_ISBN());
+                txtEstadoLibro.setText(libros.get(i).getEstadoLibro());
+                txtUrl.setText(libros.get(i).getUrl_digital());
+                txtIdioma.setText(libros.get(i).getIdioma());
+                txtNombreDonante.setText(libros.get(i).getNombre_donante());
+                txtNumeroPaginas.setText(libros.get(i).getNum_paginas()+"");
+                txtAnioPublicacion.setText(libros.get(i).getAnio_publicacion()+"");
+                txtIndice1.setText(libros.get(i).getIndice_uno());
+                txtIndice2.setText(libros.get(i).getIndice_dos());
+                txtIndice3.setText(libros.get(i).getIndice_tres());
+                if(libros.get(i).getDisponibilidad()==true){
+                    comboDisponibilidad.setSelection(0);
+                }else{
+                    comboDisponibilidad.setSelection(1);
+                }
+
+
+                imgGuardar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        String codigoDewey=txtCodigodewey.getText().toString();
+                        String titulo=txtTituloLlibro.getText().toString();
+                        String adquisicion= txtAdquisicionLibro.getText().toString();
+                        int anio=0;
+                        if(txtAnioPublicacion.getText().toString().equalsIgnoreCase("")){
+                            anio=0;
+                        }else{
+                            anio= Integer.parseInt(txtAnioPublicacion.getText().toString());
+                        }
+
+                        String editor=txtEditor.getText().toString();
+                        String ciudad= txtCiudad.getText().toString();
+
+                        int numpaginas=0;
+                        if(txtNumeroPaginas.getText().toString().equalsIgnoreCase("")) {
+                            numpaginas=0;
+                        }else{
+                            numpaginas = Integer.parseInt(txtNumeroPaginas.getText().toString());
+                        }
+                        String area= txtArea.getText().toString();
+                        String codisbn= txtCodigoIsbn.getText().toString();
+                        String idioma=txtIdioma.getText().toString();
+                        String descripcion= txtDescripcion.getText().toString();
+                        String in1= txtIndice1.getText().toString();
+                        String in2= txtIndice2.getText().toString();
+                        String in3= txtIndice3.getText().toString();
+                        String donante= txtNombreDonante.getText().toString();
+                        String dimensiones=txtDimensiones.getText().toString();
+                        String estadolibro=txtEstadoLibro.getText().toString();
+                        Boolean activo=true;
+                        String url=  txtUrl.getText().toString();
+                        byte[] documentodonacion= null;
+                        String d = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").format(new Date());
+
+                        String tipo= (String) comboTipo.getSelectedItem();
+                        System.out.println(tipo);
+
+
+
+                        Libro l = new Libro(idlibro,codigoDewey,titulo,objetotipo(tipo),adquisicion,anio,editor,ciudad,numpaginas,area,codisbn,idioma,descripcion,
+                                in1,in2,in3,dimensiones,estadolibro,activo,null,url,bibliotecario_ingresado,d,disponibilidad(),donante,documentodonacion);
+
+
+                        create(l,1);
+
+
+                    }
+                });
+
+
+
+            }
+        }
+
+        dialogotipo=new Dialog(getActivity());
+        btnAgregarTipo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogotipo();
+            }
+        });
+    }
+    public void dialogotipo(){
+        TextView txtcerrar;
+        EditText nombre;
+        Button agregar;
+        String agregar_tipo;
+        dialogotipo.setContentView(R.layout.dialogo_tipo);
+        txtcerrar=(TextView) dialogotipo.findViewById(R.id.txt_cerrar);
+        nombre=(EditText) dialogotipo.findViewById(R.id.txt_agregar);
+        agregar=(Button) dialogotipo.findViewById(R.id.btn_agregar);
+        txtcerrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogotipo.dismiss();
+            }
+        });
+        dialogotipo.show();
+        agregar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Tipo t= new Tipo(0,nombre.getText().toString());
+                CrearTipo(t);
+                nombre.setText("");
+                System.out.println("tipo creadooooooo");
+                dialogotipo.dismiss();
+            }
+        });
+    }
+    private void CrearTipo(Tipo l){
+        TipoService tipoService;
+        Retrofit retrofit= new Retrofit.Builder().baseUrl(Apis.URL_001).addConverterFactory(GsonConverterFactory.create()).build();
+        tipoService= retrofit.create(TipoService.class);
+        Call<Tipo> call= tipoService.addTipo(l);
+        call.enqueue(new Callback<Tipo>() {
+            @Override
+            public void onResponse(Call<Tipo> call, Response<Tipo> response) {
+                if(!response.isSuccessful()){
+                    Log.e("Response erra", response.message());
+                    return;
+                }
+                Tipo l=response.body();
+                getTipo();
+                combotipo();
+                Toast.makeText(getActivity(), " Tipo creado correctamente", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<Tipo> call, Throwable t) {
+                Log.e("Error:",t.getMessage());
+                System.out.println("error");
+            }
+        });
+    }
+    private void combodisponibilidad(){
+        ArrayList<String> comboDispoList = new ArrayList<String>();
+        comboDispoList.add("Si");
+        comboDispoList.add("No");
+
+        comboDisponibilidad.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, comboDispoList));
+    }
+    private Boolean disponibilidad(){
+        if(comboDisponibilidad.getSelectedItem().toString().equalsIgnoreCase("si")){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 

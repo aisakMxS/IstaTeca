@@ -60,6 +60,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static com.example.istateca.ui.lista_libros.listar_librosFragment.validar;
 import static com.example.istateca.ui.lista_libros.listar_librosFragment.idlibro;
 import static com.example.istateca.ui.lista_libros.listar_librosFragment.libros;
+import static com.example.istateca.V_principal.bibliotecario_ingresado;
 
 public class registro_librosFragment extends Fragment {
     LibroService libroService;
@@ -90,7 +91,6 @@ public class registro_librosFragment extends Fragment {
 
         if(validar==1){
             System.out.println("Abriendo modificar");
-            ventanamodificar();
 
             validar=0;
         }else{
@@ -123,95 +123,7 @@ public class registro_librosFragment extends Fragment {
 
     }
 
-    private void ventanamodificar(){
-        getTipo();
-        combotipo();
-        for(int i=0; i<libros.size();i++){
-            if(libros.get(i).getId_libro()== idlibro){
-                binding.txtTituloLlibro.setText(libros.get(i).getTitulo());
-                binding.txtCodigodewey.setText(libros.get(i).getCodigo_dewey());
-                binding.txtAdquisicionLibro.setText(libros.get(i).getAdquisicion());
-                binding.txtDescripcion.setText(libros.get(i).getDescripcion());
-                binding.txtDimensiones.setText(libros.get(i).getDimensiones());
-                binding.txtEditor.setText(libros.get(i).getEditor());
-              // binding.comboTipo.setSelection(1);
-                binding.txtCiudad.setText(libros.get(i).getCiudad());
-                binding.txtArea.setText(libros.get(i).getArea());
-                binding.txtCodigoIsbn.setText(libros.get(i).getCod_ISBN());
-                binding.txtEstadoLibro.setText(libros.get(i).getEstadoLibro());
-                binding.txtUrl.setText(libros.get(i).getUrl_digital());
-                binding.txtIdioma.setText(libros.get(i).getIdioma());
-                binding.txtNombreDonante.setText(libros.get(i).getNombre_donante());
-                binding.txtNumeroPaginas.setText(libros.get(i).getNum_paginas()+"");
-                binding.txtAnioPublicacion.setText(libros.get(i).getAnio_publicacion()+"");
-                binding.txtIndice1.setText(libros.get(i).getIndice_uno());
-                binding.txtIndice2.setText(libros.get(i).getIndice_dos());
-                binding.txtIndice3.setText(libros.get(i).getIndice_tres());
-                if(libros.get(i).getDisponibilidad()==true){
-                    binding.comboDisponibilidad.setSelection(0);
-                }else{
-                    binding.comboDisponibilidad.setSelection(1);
-                }
 
-
-                binding.imgGuardar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        String codigoDewey=binding.txtCodigodewey.getText().toString();
-                        String titulo=binding.txtTituloLlibro.getText().toString();
-                        String adquisicion= binding.txtAdquisicionLibro.getText().toString();
-                        int anio=0;
-                        if(binding.txtAnioPublicacion.getText().toString().equalsIgnoreCase("")){
-                            anio=0;
-                        }else{
-                            anio= Integer.parseInt(binding.txtAnioPublicacion.getText().toString());
-                        }
-
-                        String editor=binding.txtEditor.getText().toString();
-                        String ciudad= binding.txtCiudad.getText().toString();
-
-                        int numpaginas=0;
-                        if(binding.txtNumeroPaginas.getText().toString().equalsIgnoreCase("")) {
-                            numpaginas=0;
-                        }else{
-                            numpaginas = Integer.parseInt(binding.txtNumeroPaginas.getText().toString());
-                        }
-                        String area= binding.txtArea.getText().toString();
-                        String codisbn= binding.txtCodigoIsbn.getText().toString();
-                        String idioma=binding.txtIdioma.getText().toString();
-                        String descripcion= binding.txtDescripcion.getText().toString();
-                        String in1= binding.txtIndice1.getText().toString();
-                        String in2= binding.txtIndice2.getText().toString();
-                        String in3= binding.txtIndice3.getText().toString();
-                        String donante= binding.txtNombreDonante.getText().toString();
-                        String dimensiones=binding.txtDimensiones.getText().toString();
-                        String estadolibro=binding.txtEstadoLibro.getText().toString();
-                        Boolean activo=true;
-                        String url=  binding.txtUrl.getText().toString();
-                        byte[] documentodonacion= null;
-                        String d = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").format(new Date());
-
-                        String tipo= (String) binding.comboTipo.getSelectedItem();
-                        System.out.println(tipo);
-
-
-
-                        Libro l = new Libro(idlibro,codigoDewey,titulo,objetotipo(tipo),adquisicion,anio,editor,ciudad,numpaginas,area,codisbn,idioma,descripcion,
-                                in1,in2,in3,dimensiones,estadolibro,activo,null,url,0,d,disponibilidad(),donante,documentodonacion);
-
-
-                        create(l,1);
-
-
-                    }
-                });
-
-
-
-            }
-        }
-    }
 
     private void ventanacrear(){
         activitylauncher();
@@ -286,7 +198,7 @@ public class registro_librosFragment extends Fragment {
 
 
                 Libro l = new Libro(a,codigoDewey,titulo,objetotipo(tipo),adquisicion,anio,editor,ciudad,numpaginas,area,codisbn,idioma,descripcion,
-                        in1,in2,in3,dimensiones,estadolibro,activo,byteArray,url,0,d,disponibilidad(),donante,documentodonacion);
+                        in1,in2,in3,dimensiones,estadolibro,activo,byteArray,url,bibliotecario_ingresado,d,disponibilidad(),donante,documentodonacion);
 
 
                 create(l,0);
@@ -384,8 +296,8 @@ public class registro_librosFragment extends Fragment {
                 if(lista_autores.get(j).getNombre().equalsIgnoreCase(nombreautor)){
                     Autor au1= new Autor(lista_autores.get(j).getId(),nombreautor);
                     Libro li = new Libro(idlibro,"Deweys","El chemas",null,"adquisicionqwe",1980,"Editort","Cuenca", 90, "Area", "Isbn123"
-                            , "Español", "Descripcion aasfa", "IUno", "IDos","Itres","Dimensiones", "Estado", true,null,"asfasdURL",
-                            1,null,true,"Christian",null);
+                            , "Español", "Descripcion aasfa", "IUno", "IDos","Itres","Dimensiones", "Estado", true,null,"asfasdURL",bibliotecario_ingresado
+                            ,null,true,"Christian",null);
                     AutorLibro autorLibro = new AutorLibro(a, li, au1);
                     CrearAutor_Libro(autorLibro);
                     System.out.println("Autor "+ au1.getNombre() + " libro "+ li.getTitulo());
@@ -479,29 +391,6 @@ public class registro_librosFragment extends Fragment {
         });
 
 
-    }
-
-    public void Getautorsincrono(){
-        Retrofit retrofit= new Retrofit.Builder()
-                .baseUrl(Apis.URL_001).addConverterFactory(GsonConverterFactory.create()).build();
-        autorService= retrofit.create(AutorService.class);
-
-
-
-        Call<List<Autor>> call= autorService.getAutor();
-
-        try
-        {
-            Response <List<Autor>> response = call.execute();
-            lista_autoressincrono=response.body();
-
-            //API response
-            System.out.println(lista_autoressincrono.size()+" Sincoro");
-        }
-        catch (Exception ex)
-        {
-            ex.printStackTrace();
-        }
     }
 
 
