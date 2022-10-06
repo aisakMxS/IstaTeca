@@ -57,4 +57,9 @@
         android:name="com.example.istateca.ui.solicitud_l_pendientes.solicitud_l_pendientesFragment"
         android:label="@string/menu_Registro_B"
         tools:layout="@layout/fragment_solicitud_l_pendientes" />
+    <fragment
+        android:id="@+id/nav_editar_usuario"
+        android:name="com.example.istateca.ui.edituser.edituser"
+        android:label="@string/menu_editar_usuario"
+        tools:layout="@layout/fragment_edituser" />
 </navigation>

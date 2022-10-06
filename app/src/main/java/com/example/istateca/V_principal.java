@@ -61,7 +61,7 @@ public class V_principal extends AppCompatActivity {
         }
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_lista_l, R.id.nav_solicitud_l, R.id.nav_devolucion_l,R.id.nav_registro_b,R.id.nav_listado_p,R.id.nav_listado_b,R.id.nav_listado_l,
-                R.id.nav_listas,R.id.nav_registro_l,R.id.nav_solicitud_l_pen)
+                R.id.nav_listas,R.id.nav_registro_l,R.id.nav_solicitud_l_pen,R.id.nav_editar_usuario)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_vprincipal);
