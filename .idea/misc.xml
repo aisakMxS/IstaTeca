@@ -11,10 +11,24 @@
         <entry key="..\:/Users/HP/Documents/Instituto/CUARTO CICLO/aplicaciones moviles/IstaTeca/IstaTeca/app/src/main/res/layout/fragment_listado_l_.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/HP/Documents/Instituto/CUARTO CICLO/aplicaciones moviles/IstaTeca/IstaTeca/app/src/main/res/layout/fragment_registro_libros.xml" value="0.33" />
         <entry key="..\:/Users/HP/Documents/Instituto/CUARTO CICLO/aplicaciones moviles/IstaTeca/IstaTeca/app/src/main/res/layout/lista_item_libros.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/bibliote/app/src/main/res/drawable-v24/fecha_derecha.xml" value="0.1935" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/bibliote/app/src/main/res/drawable/agregar.xml" value="0.1935" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/bibliote/app/src/main/res/drawable/buscar.xml" value="0.1935" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/bibliote/app/src/main/res/drawable/check.xml" value="0.1935" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/bibliote/app/src/main/res/drawable/codigo_qr.xml" value="0.1935" />
         <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/bibliote/app/src/main/res/layout/activity_edit_user.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/bibliote/app/src/main/res/layout/activity_main.xml" value="0.2586050724637681" />
         <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/bibliote/app/src/main/res/layout/activity_registro.xml" value="0.4" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/bibliote/app/src/main/res/layout/activity_vprincipal.xml" value="0.15443840579710144" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/bibliote/app/src/main/res/layout/app_bar_vprincipal.xml" value="0.15443840579710144" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/bibliote/app/src/main/res/layout/content_vprincipal.xml" value="0.15443840579710144" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/bibliote/app/src/main/res/layout/dialogo_autor.xml" value="0.2586050724637681" />
         <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/bibliote/app/src/main/res/layout/fragment_bibliotecario.xml" value="0.264" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/bibliote/app/src/main/res/layout/fragment_devolucion_l.xml" value="0.1" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/bibliote/app/src/main/res/layout/fragment_edituser.xml" value="0.2586050724637681" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/bibliote/app/src/main/res/layout/fragment_l_libros.xml" value="0.26268115942028986" />
         <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/bibliote/app/src/main/res/layout/fragment_main.xml" value="0.2604166666666667" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/bibliote/app/src/main/res/layout/nav_header_vprincipal.xml" value="0.2586050724637681" />
         <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/bibliote/app/src/main/res/menu/activity_main_drawer.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/bibliote/app/src/main/res/menu/v_principal.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/drawable-v24/fecha_derecha.xml" value="0.2555" />
