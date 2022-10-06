@@ -3,8 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/HP/Documents/Instituto/CUARTO CICLO/Nueva carpeta/IstaTeca/app/src/main/res/layout/dialogo_detalle_libro.xml" value="0.16032608695652173" />
-        <entry key="..\:/Users/HP/Documents/Instituto/CUARTO CICLO/Nueva carpeta/IstaTeca/app/src/main/res/layout/dialogo_tipo.xml" value="0.16032608695652173" />
         <entry key="..\:/Users/HP/Documents/Instituto/CUARTO CICLO/Nueva carpeta/IstaTeca/app/src/main/res/layout/fragment_l_libros.xml" value="0.16032608695652173" />
         <entry key="..\:/Users/HP/Documents/Instituto/CUARTO CICLO/Nueva carpeta/IstaTeca/app/src/main/res/layout/fragment_registro_libros.xml" value="0.1234375" />
         <entry key="..\:/Users/HP/Documents/Instituto/CUARTO CICLO/Nueva carpeta/IstaTeca/app/src/main/res/layout/lista_item_libros.xml" value="0.16032608695652173" />
@@ -13,26 +11,50 @@
         <entry key="..\:/Users/HP/Documents/Instituto/CUARTO CICLO/aplicaciones moviles/IstaTeca/IstaTeca/app/src/main/res/layout/fragment_listado_l_.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/HP/Documents/Instituto/CUARTO CICLO/aplicaciones moviles/IstaTeca/IstaTeca/app/src/main/res/layout/fragment_registro_libros.xml" value="0.33" />
         <entry key="..\:/Users/HP/Documents/Instituto/CUARTO CICLO/aplicaciones moviles/IstaTeca/IstaTeca/app/src/main/res/layout/lista_item_libros.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/bibliote/app/src/main/res/layout/activity_edit_user.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/bibliote/app/src/main/res/layout/activity_registro.xml" value="0.4" />
-        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/bibliote/app/src/main/res/layout/fragment_bibliotecario.xml" value="0.4" />
-        <entry key="..\:/Users/MIGUEL/Desktop/ISTAteca/android/app/src/main/res/layout/activity_registro.xml" value="0.4083333333333333" />
-        <entry key="..\:/Users/MIGUEL/Desktop/ISTAteca/android/app/src/main/res/layout/dialogo_autor.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/MIGUEL/Desktop/ISTAteca/android/app/src/main/res/layout/fragment_edituser.xml" value="0.33" />
-        <entry key="..\:/Users/MIGUEL/Desktop/ISTAteca/android/app/src/main/res/layout/fragment_l_libros.xml" value="0.17074275362318841" />
-        <entry key="..\:/Users/MIGUEL/Desktop/ISTAteca/android/app/src/main/res/layout/fragment_registro_libros.xml" value="0.33" />
-        <entry key="..\:/Users/MIGUEL/Desktop/ISTAteca/android/app/src/main/res/menu/activity_main_drawer.xml" value="0.5" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/bibliote/app/src/main/res/layout/fragment_bibliotecario.xml" value="0.264" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/bibliote/app/src/main/res/layout/fragment_main.xml" value="0.2604166666666667" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/bibliote/app/src/main/res/menu/activity_main_drawer.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/KEVIN LANDIVAR/AndroidStudioProjects/bibliote/app/src/main/res/menu/v_principal.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/drawable-v24/fecha_derecha.xml" value="0.2555" />
+        <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/drawable/buscar.xml" value="0.2555" />
         <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/drawable/ic_baseline_save_24.xml" value="0.2555" />
-        <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/layout/dialogo_detalle_libro.xml" value="0.4483058210251955" />
+        <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/layout/activity_registro.xml" value="0.25" />
+        <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/layout/activity_vprincipal.xml" value="0.25" />
+        <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/layout/app_bar_vprincipal.xml" value="0.25" />
+        <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/layout/content_vprincipal.xml" value="0.25" />
+        <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/layout/dialogo_detalle_libro.xml" value="0.4" />
+        <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/layout/dialogo_solicitud_libro.xml" value="0.4" />
         <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/layout/dialogo_tipo.xml" value="0.264" />
         <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/layout/fragment_bibliotecario.xml" value="0.22282608695652173" />
         <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/layout/fragment_detalle_libro.xml" value="0.264" />
-        <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/layout/fragment_l_libros.xml" value="0.1" />
+        <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/layout/fragment_l_libros.xml" value="0.25" />
         <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/layout/fragment_listado_l_.xml" value="0.22282608695652173" />
-        <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/layout/fragment_registro_libros.xml" value="0.4" />
-        <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/layout/lista_item_libros.xml" value="0.1" />
+        <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/layout/fragment_registro_libros.xml" value="0.2" />
+        <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/layout/fragment_solicitud_l.xml" value="0.25" />
+        <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/layout/lista_item_libros.xml" value="0.3792172739541161" />
+        <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/layout/nav_header_vprincipal.xml" value="0.18795289855072464" />
+        <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/menu/activity_main_drawer.xml" value="0.25" />
+        <entry key="..\:/Users/Myrian/Documents/Ista/proyecto/IstaTeca/app/src/main/res/menu/v_principal.xml" value="0.25" />
         <entry key="..\:/Users/Public/Documents/Biblioteca/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/Public/Documents/Biblioteca/app/src/main/res/layout/activity_registro.xml" value="0.11307420494699646" />
+        <entry key="..\:/Users/Public/Documents/ista/app/src/main/res/layout/activity_lista_item_bibliotecario.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Public/Documents/ista/app/src/main/res/layout/activity_main.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Public/Documents/ista/app/src/main/res/layout/dialogo_bibliotecario.xml" value="0.25" />
+        <entry key="..\:/Users/Public/Documents/ista/app/src/main/res/layout/dialogo_detalle_libro.xml" value="0.33" />
+        <entry key="..\:/Users/Public/Documents/ista/app/src/main/res/layout/fragment_bibliotecario.xml" value="0.25" />
+        <entry key="..\:/Users/Public/Documents/ista/app/src/main/res/layout/fragment_detalle_libro.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Public/Documents/ista/app/src/main/res/layout/fragment_devolucion_l.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Public/Documents/ista/app/src/main/res/layout/fragment_l_libros.xml" value="0.1" />
+        <entry key="..\:/Users/Public/Documents/ista/app/src/main/res/layout/fragment_lisatdo_prestamos.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Public/Documents/ista/app/src/main/res/layout/fragment_listado_bibliotecario.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Public/Documents/ista/app/src/main/res/layout/fragment_listado_l_.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Public/Documents/ista/app/src/main/res/layout/fragment_listas.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Public/Documents/ista/app/src/main/res/layout/fragment_registro_libros.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Public/Documents/ista/app/src/main/res/layout/lista_item_bibliotecario.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Public/Documents/ista/app/src/main/res/layout/lista_item_libros.xml" value="0.22447916666666667" />
       </map>
     </option>
   </component>
