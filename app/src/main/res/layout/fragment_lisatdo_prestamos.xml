@@ -13,7 +13,7 @@
 
 
         <SearchView
-            android:id="@+id/txtbuscar"
+            android:id="@+id/txtbuscarp"
             android:layout_width="411dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"

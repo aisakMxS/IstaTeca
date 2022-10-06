@@ -6,7 +6,7 @@ import android.os.Parcelable;
 public class Usuario implements Parcelable {
     private int id_usuario;
     private int calificacion;
-    private String observacion;
+    private String observaciones;
     private Persona persona;
 
     public Usuario() {
@@ -16,10 +16,10 @@ public class Usuario implements Parcelable {
         this.id_usuario = id_usuario;
     }
 
-    public Usuario(int id, int calificacion, String observacion, Persona persona) {
+    public Usuario(int id, int calificacion, String observaciones, Persona persona) {
         this.id_usuario = id;
         this.calificacion = calificacion;
-        this.observacion = observacion;
+        this.observaciones = observaciones;
         this.persona = persona;
     }
 
@@ -27,7 +27,7 @@ public class Usuario implements Parcelable {
     protected Usuario(Parcel in) {
         id_usuario = in.readInt();
         calificacion = in.readInt();
-        observacion = in.readString();
+        observaciones = in.readString();
         persona = in.readParcelable(Persona.class.getClassLoader());
     }
 
@@ -35,7 +35,7 @@ public class Usuario implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id_usuario);
         dest.writeInt(calificacion);
-        dest.writeString(observacion);
+        dest.writeString(observaciones);
         dest.writeParcelable(persona, flags);
     }
 
@@ -73,11 +73,11 @@ public class Usuario implements Parcelable {
     }
 
     public String getObservacion() {
-        return observacion;
+        return observaciones;
     }
 
     public void setObservacion(String observacion) {
-        this.observacion = observacion;
+        this.observaciones = observacion;
     }
 
     public Persona getPersona() {
