@@ -200,6 +200,7 @@ public class listar_librosFragment extends Fragment implements SearchView.OnQuer
     }
     public void solicitar_libro(int i){
         dialogoSolicitud= new Dialog(getActivity());
+        dialogoSolicitud.setContentView(R.layout.dialogo_solicitud_libro);
         TextView txt_titulo_soli=(TextView) dialogoSolicitud.findViewById(R.id.txt_titulo_librosoli);
         Button btn_aceptar=(Button) dialogoSolicitud.findViewById(R.id.btn_ace_solicitud);
         txt_titulo_soli.setText(libros.get(i).getTitulo());
@@ -408,7 +409,7 @@ public class listar_librosFragment extends Fragment implements SearchView.OnQuer
 
 
                         Libro l = new Libro(idlibro,codigoDewey,titulo,objetotipo(tipo),adquisicion,anio,editor,ciudad,numpaginas,area,codisbn,idioma,descripcion,
-                                in1,in2,in3,dimensiones,estadolibro,activo,null,url,0,d,disponibilidad(),donante,documentodonacion);
+                                in1,in2,in3,dimensiones,estadolibro,activo,null,url,bibliotecario_ingresado,d,disponibilidad(),donante,documentodonacion);
 
 
                         create(l,1);
