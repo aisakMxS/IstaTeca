@@ -25,7 +25,7 @@ public class Libro {
     private boolean activo;
     private byte [] imagen;
     private String url_digital;
-    private Bibliotecario bibliotecario;
+    private int idbibliotecario;
     private String fecha_creacion;
     private boolean disponibilidad;
     private String nombre_donante;
@@ -35,7 +35,7 @@ public class Libro {
         this.id_libro=id_libro;
     }
 
-    public Libro(int id_libro, String codigo_dewey, String titulo, Tipo tipo, String adquisicion, int anio_publicacion, String editor, String ciudad, int num_paginas, String area, String cod_ISBN, String idioma, String descripcion, String indice_uno, String indice_dos, String indice_tres, String dimensiones, String estadoLibro, boolean activo, byte[] imagen, String url_digital, Bibliotecario idbibliotecario, String fecha_creacion, boolean disponibilidad, String nombre_donante, byte[] documento_donacion) {
+    public Libro(int id_libro, String codigo_dewey, String titulo, Tipo tipo, String adquisicion, int anio_publicacion, String editor, String ciudad, int num_paginas, String area, String cod_ISBN, String idioma, String descripcion, String indice_uno, String indice_dos, String indice_tres, String dimensiones, String estadoLibro, boolean activo, byte[] imagen, String url_digital, int idbibliotecario, String fecha_creacion, boolean disponibilidad, String nombre_donante, byte[] documento_donacion) {
         this.id_libro = id_libro;
         this.codigo_dewey = codigo_dewey;
         this.titulo = titulo;
@@ -57,7 +57,7 @@ public class Libro {
         this.activo = activo;
         this.imagen = imagen;
         this.url_digital = url_digital;
-        this.bibliotecario = idbibliotecario;
+        this.idbibliotecario = idbibliotecario;
         this.fecha_creacion = fecha_creacion;
         this.disponibilidad = disponibilidad;
         this.nombre_donante = nombre_donante;
@@ -240,12 +240,12 @@ public class Libro {
         this.url_digital = url_digital;
     }
 
-    public Bibliotecario getIdbibliotecario() {
-        return bibliotecario;
+    public int getIdbibliotecario() {
+        return idbibliotecario;
     }
 
-    public void setIdbibliotecario(Bibliotecario idbibliotecario) {
-        this.bibliotecario = idbibliotecario;
+    public void setIdbibliotecario(int idbibliotecario) {
+        this.idbibliotecario = idbibliotecario;
     }
 
     public String getFecha_creacion() {

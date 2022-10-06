@@ -60,7 +60,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static com.example.istateca.ui.lista_libros.listar_librosFragment.validar;
 import static com.example.istateca.ui.lista_libros.listar_librosFragment.idlibro;
 import static com.example.istateca.ui.lista_libros.listar_librosFragment.libros;
-import static com.example.istateca.V_principal.bibliotecario_ingresado;
 
 public class registro_librosFragment extends Fragment {
     LibroService libroService;
@@ -198,7 +197,7 @@ public class registro_librosFragment extends Fragment {
 
 
                 Libro l = new Libro(a,codigoDewey,titulo,objetotipo(tipo),adquisicion,anio,editor,ciudad,numpaginas,area,codisbn,idioma,descripcion,
-                        in1,in2,in3,dimensiones,estadolibro,activo,byteArray,url,bibliotecario_ingresado,d,disponibilidad(),donante,documentodonacion);
+                        in1,in2,in3,dimensiones,estadolibro,activo,byteArray,url,0,d,disponibilidad(),donante,documentodonacion);
 
 
                 create(l,0);
@@ -296,8 +295,8 @@ public class registro_librosFragment extends Fragment {
                 if(lista_autores.get(j).getNombre().equalsIgnoreCase(nombreautor)){
                     Autor au1= new Autor(lista_autores.get(j).getId(),nombreautor);
                     Libro li = new Libro(idlibro,"Deweys","El chemas",null,"adquisicionqwe",1980,"Editort","Cuenca", 90, "Area", "Isbn123"
-                            , "Español", "Descripcion aasfa", "IUno", "IDos","Itres","Dimensiones", "Estado", true,null,"asfasdURL",bibliotecario_ingresado
-                            ,null,true,"Christian",null);
+                            , "Español", "Descripcion aasfa", "IUno", "IDos","Itres","Dimensiones", "Estado", true,null,"asfasdURL",
+                            1,null,true,"Christian",null);
                     AutorLibro autorLibro = new AutorLibro(a, li, au1);
                     CrearAutor_Libro(autorLibro);
                     System.out.println("Autor "+ au1.getNombre() + " libro "+ li.getTitulo());
