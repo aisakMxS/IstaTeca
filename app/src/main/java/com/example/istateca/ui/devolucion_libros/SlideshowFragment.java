@@ -46,6 +46,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class SlideshowFragment extends Fragment {
 
     private FragmentDevolucionLBinding binding;
+    UsuarioService usuarioService;
     PrestamoService prestamoService;
     LibroService libroService;
     List<Prestamo> lista_prestamo= new ArrayList<>();
@@ -100,6 +101,7 @@ public class SlideshowFragment extends Fragment {
                        u.setObservacion(observacion);
                        if(rad=true){
                            u.setCalificacion(u.getCalificacion()-1);
+                           createUsuario(u);
                        }
                    }
                     prestamo_actualizado.setEstado_prestamo(estadoprestamo);
@@ -112,6 +114,7 @@ public class SlideshowFragment extends Fragment {
 
                     Libro l= prestamo_actualizado.getLibro();
                     l.setDisponibilidad(true);
+                    l.setEstado_libro(estadolibro);
                     createLibro(l);
 
                 }
@@ -190,6 +193,29 @@ public class SlideshowFragment extends Fragment {
         binding.comboEstado.setSelection(0);
         binding.radioNo.setChecked(false);
         binding.radioSi.setChecked(false);
+    }
+    private void createUsuario(Usuario usu){
+        Retrofit retrofit= new Retrofit.Builder().
+                baseUrl(Apis.URL_001).
+                addConverterFactory(GsonConverterFactory.create()).build();
+        usuarioService= retrofit.create(UsuarioService.class);
+        Call<Usuario> call= usuarioService.addUsuario(usu);
+        call.enqueue(new Callback<Usuario>() {
+            @Override
+            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                if (!response.isSuccessful()){
+                    Log.e("Error: ",response.message());
+                    return;
+                }
+                Usuario usuario = response.body();
+                /*Toast.makeText(RegistroActivity.this, "Create", Toast.LENGTH_SHORT).show();*/
+                System.out.println(usuario.getPersona().getNombres());
+            }
+            @Override
+            public void onFailure(Call<Usuario> call, Throwable t) {
+                Log.e("response","fail");
+            }
+        });
     }
     private void createLibro(Libro l){
         Retrofit retrofit= new Retrofit.Builder().baseUrl(Apis.URL_001).addConverterFactory(GsonConverterFactory.create()).build();
@@ -298,7 +324,7 @@ public class SlideshowFragment extends Fragment {
         comboTiposList.add("Seleccione: ");
         for (int i=0; i< lista_prestamo.size(); i++){
             for (int y=0; y< lista_libro.size(); y++){
-                    if((lista_prestamo.get(i).getLibro().getId_libro()==lista_libro.get(y).getId_libro())&&lista_prestamo.get(i).getEstado_prestamo().equalsIgnoreCase("Solicitado")){
+                    if((lista_prestamo.get(i).getLibro().getId_libro()==lista_libro.get(y).getId_libro())&&lista_prestamo.get(i).getEstado_prestamo().equalsIgnoreCase("Entregado")){
                         comboTiposList.add(lista_libro.get(y).getTitulo());
                         combo_getID.add(lista_prestamo.get(i).getId_prestamo());
                     }

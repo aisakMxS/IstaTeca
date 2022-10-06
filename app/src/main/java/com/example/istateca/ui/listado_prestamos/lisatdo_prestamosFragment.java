@@ -17,7 +17,9 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -56,8 +58,10 @@ public class lisatdo_prestamosFragment extends Fragment implements SearchView.On
     private FragmentLisatdoPrestamosBinding binding;
     Dialog dialogo;
     ImageView editar;
+    int k,y=0;
     List<Prestamo> lista_prestamobuscar= new ArrayList<>();
     List<Prestamo> lista_prestamo= new ArrayList<>();
+    public Prestamo prestamo_solicitud;
     public static lisatdo_prestamosFragment newInstance() {
         return new lisatdo_prestamosFragment();
     }
@@ -73,7 +77,7 @@ public class lisatdo_prestamosFragment extends Fragment implements SearchView.On
         listarPrestamoSolicitud("solicitado");
 
         //buscar prestamo
-        binding.txtbuscar.setOnQueryTextListener(this);
+        binding.txtbuscarp.setOnQueryTextListener(this);
 
         //Dialogo del detalle del libro
         dialogo=new Dialog(getActivity());
@@ -97,34 +101,6 @@ public class lisatdo_prestamosFragment extends Fragment implements SearchView.On
         return root;
     }
 
-
-    /*public void listarPrestamo(){
-        Retrofit retrofit=new Retrofit.Builder()
-                .baseUrl(Apis.URL_001)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        prestamoService=retrofit.create(PrestamoService.class);
-        Call<List<Prestamo>> call= prestamoService.getListarPrestamo();
-        call.enqueue(new Callback<List<Prestamo>>() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onResponse(Call<List<Prestamo>> call, Response<List<Prestamo>> response) {
-                if (!response.isSuccessful()){
-                    Log.e("Response err: ",response.message());
-                    return;
-                }
-                prestamo=response.body();
-                lista_prestamoAdapter lista_prestamoAdapter= new lista_prestamoAdapter(prestamo,getActivity());
-                recyclerView.setAdapter(lista_prestamoAdapter);
-                prestamo.forEach(p-> System.out.println(prestamo.toString()));
-            }
-
-            @Override
-            public void onFailure(Call<List<Prestamo>> call, Throwable t) {
-                System.out.println(t.getMessage());
-            }
-        });
-    }*/
     public void listarPrestamoSolicitud(String Solicitado){
         Retrofit retrofit=new Retrofit.Builder()
                 .baseUrl(Apis.URL_001)
@@ -164,6 +140,7 @@ public class lisatdo_prestamosFragment extends Fragment implements SearchView.On
         TextView txtbibliotecario = dialog.findViewById(R.id.text_bibliotecario_entrega);
         TextView txtestado = dialog.findViewById(R.id.text_estado);
         Button btnfecha =dialog.findViewById(R.id.btn_capturaf);
+        Spinner combodocumento= dialog.findViewById(R.id.cb_documentoHabilitante_solicitud5);
         TextView txt_devolucionfecha=dialog.findViewById(R.id.txt_fechaMaximaDev_solicitud5);
         Button btnguardad = dialog.findViewById(R.id.btnGuardarSolicitud6);
         txtcedula.setText(prestamo.get(i).getUsuario().getPersona().getCedula() + "-" + prestamo.get(i).getUsuario().getPersona().getNombres());
@@ -171,12 +148,13 @@ public class lisatdo_prestamosFragment extends Fragment implements SearchView.On
         txttitulo.setText(prestamo.get(i).getLibro().getTitulo());
         txtestado.setText(prestamo.get(i).getLibro().getEstado_libro());
         txtbibliotecario.setText(bibliotecario_ingresado.getPersona().getNombres());
-
+        prestamo_solicitud=prestamo.get(i);
         btnfecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String d = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").format(new Date());
                 btnfecha.setText(d);
+                k=1;
             }
         });
 
@@ -191,45 +169,65 @@ public class lisatdo_prestamosFragment extends Fragment implements SearchView.On
                 DatePickerDialog datePickerDialog = new DatePickerDialog(btnguardad.getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
-                        txt_devolucionfecha.setText(dayOfMonth+"/"+(monthOfYear+1)+"/"+year);
-                         fec= String.valueOf(txt_devolucionfecha);
+                        txt_devolucionfecha.setText(year+"-"+(monthOfYear+1)+"-"+dayOfMonth);
+                         fec= String.valueOf(year+"-"+(monthOfYear+1)+"-"+dayOfMonth+"T00:00:00.000");
                         System.out.println("fecha"+ txt_devolucionfecha);
+                        y=1;
                     }
                 }
                         ,ano,mes,dia);
 
                 datePickerDialog.show();
-                System.out.println("fecha"+ txt_devolucionfecha);
+                System.out.println("fecha maxima arrays "+ fec);
+                String d = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").format(new Date());
+                btnfecha.setText(d);
             }
 
         });
+
 
         btnguardad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (k==0){
+                    Toast.makeText(getActivity(),  " Añada la fecha de entrega", Toast.LENGTH_LONG).show();
+                }else if (y==0){
+                    Toast.makeText(getActivity(),  " Añada la fecha maxima", Toast.LENGTH_LONG).show();
+                }else if(combodocumento.getSelectedItem().toString().equals("Seleccione")){
+                    Toast.makeText(getActivity(),  " Seleccione el documento habilitante", Toast.LENGTH_LONG).show();
+                }else {
+                    prestamo_solicitud.setFecha_entrega(btnfecha.getText().toString());
+                    prestamo_solicitud.setBibliotecario_entrega(bibliotecario_ingresado);
+                    String rol=(String)combodocumento.getSelectedItem();
+                    prestamo_solicitud.setDocumento_habilitante(rol);
+                    prestamo_solicitud.setEstado_prestamo("Entregado");
+                    prestamo_solicitud.setEstado_libro(txtestado.getText().toString());
+                    prestamo_solicitud.setFecha_maxima(fec);
+                    create(prestamo_solicitud);
+                    System.out.println(btnfecha.getText().toString() + " fecha entrega");
+                    System.out.println(bibliotecario_ingresado + " bibliotecario");
+                    System.out.println(rol +  " documento");
+                    System.out.println("fecha maxima " + fec);
+                    dialogo.dismiss();
+                    listarPrestamoSolicitud("Solicitado");
+                }
             }
         });
     }
-    public int buscarLibroxnombre(int id) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Apis.URL_001)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        prestamoService = retrofit.create(PrestamoService.class);
-        Call<Prestamo> call = prestamoService.updatePersona(id);
+    private void create(Prestamo pres){
+        Retrofit retrofit= new Retrofit.Builder().baseUrl(Apis.URL_001).addConverterFactory(GsonConverterFactory.create()).build();
+        prestamoService= retrofit.create(PrestamoService.class);
+        Call<Prestamo> call= prestamoService.addPrestamo(pres);
         call.enqueue(new Callback<Prestamo>() {
             @Override
             public void onResponse(Call<Prestamo> call, Response<Prestamo> response) {
-                if (!response.isSuccessful()) {
-                    Log.e("Response err: ", response.message());
+                if(!response.isSuccessful()){
+                    //Toast.makeText("Se agrego con exito", Toast.LENGTH_LONG).show();
+                    Log.e("Response erra", response.message());
                     return;
                 }
-               // lista_prestamobuscar= response.body();
-                lista_prestamoAdapter lista_prestamoAdapter= new lista_prestamoAdapter(lista_prestamobuscar,getActivity());
-                recyclerView.setAdapter(lista_prestamoAdapter);
-
-
+                Prestamo pres=response.body();
+                Toast.makeText(getActivity()," Modificado", Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -238,21 +236,8 @@ public class lisatdo_prestamosFragment extends Fragment implements SearchView.On
                 System.out.println("error");
             }
         });
-
-        return id;
     }
-    private void prestamoSolicitud(){
-        Response<List<Prestamo>> response = null;
-        for (int i=0; i< prestamo.size(); i++){
-            if (prestamo.get(i).getEstado_prestamo().equalsIgnoreCase("Solicitado")){
 
-                lista_prestamo= response.body();
-                System.out.println("Prestamo" + lista_prestamo.size());
-                lista_prestamoAdapter lista_prestamoAdapter= new lista_prestamoAdapter(lista_prestamo,getActivity());
-                recyclerView.setAdapter(lista_prestamoAdapter);
-            }
-        }
-    }
     private void listarLibros(){
         Retrofit retrofit=new Retrofit.Builder()
                 .baseUrl(Apis.URL_001)
@@ -279,6 +264,35 @@ public class lisatdo_prestamosFragment extends Fragment implements SearchView.On
         });
     }
 
+    public void buscarPrestamoxcedula(String cedula) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Apis.URL_001)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        prestamoService = retrofit.create(PrestamoService.class);
+        Call<List<Prestamo>> call = prestamoService.getBuscarCedula(cedula);
+        call.enqueue(new Callback<List<Prestamo>>() {
+            @Override
+            public void onResponse(Call<List<Prestamo>> call, Response<List<Prestamo>> response) {
+                if (!response.isSuccessful()) {
+                    Log.e("Response err: ", response.message());
+                    return;
+                }
+                lista_prestamobuscar= response.body();
+                lista_prestamoAdapter lista_prestamosAdapter= new lista_prestamoAdapter(lista_prestamobuscar,getActivity());
+                recyclerView.setAdapter(lista_prestamosAdapter);
+                System.out.println("Actualizando Autores" + lista_prestamobuscar.size());
+            }
+
+            @Override
+            public void onFailure(Call<List<Prestamo>> call, Throwable t) {
+                Log.e("Error:",t.getMessage());
+                System.out.println("error");
+            }
+        });
+
+    }
+
 
     @Override
     public boolean onQueryTextSubmit(String query) {
@@ -287,6 +301,11 @@ public class lisatdo_prestamosFragment extends Fragment implements SearchView.On
 
     @Override
     public boolean onQueryTextChange(String newText) {
+        if(binding.txtbuscarp.getQuery().toString().length()==0){
+            listarLibros();
+        }else{
+            buscarPrestamoxcedula(binding.txtbuscarp.getQuery().toString());
+        }
         return false;
     }
 }
