@@ -8,6 +8,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -24,4 +25,7 @@ public interface UsuarioService {
 
     @GET("usuario/{id}")
     Call<Usuario> getBuscarDatos(@Path("id_usuario") int id);
+
+    @PUT("editarusuario/{id}")
+    Call<Usuario> modificar(@Body Usuario usuario,@Path("id") int id);
 }

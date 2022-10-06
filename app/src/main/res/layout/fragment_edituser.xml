@@ -1,13 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.edituser.edituser">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
+    <data>
+
+    </data>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        tools:context=".RegistroActivity">
 
-</FrameLayout>
+
+        <TextView
+            android:id="@+id/Crear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="Modificar Perfil"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/Cedula"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Crear"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Cedula:"
+            android:textColor="#3F51B5"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/txt_cedula"
+            android:layout_width="312dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Cedula"
+            android:layout_marginStart="21dp"
+            android:layout_marginTop="-20dp"
+            android:layout_toEndOf="@+id/Cedula"
+            android:inputType="text|number"
+            android:maxLength="10"
+            android:padding="5dp"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/Nombres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Cedula"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="10dp"
+            android:text="Nombres:"
+            android:textColor="#3F51B5"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/txt_nombres"
+            android:layout_width="311dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_cedula"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="4dp"
+            android:layout_toEndOf="@+id/Nombres"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            android:inputType="textPersonName"
+            android:padding="5dp"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/Usuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@+id/Nombres"
+            android:layout_marginTop="15dp"
+            android:text="Usuario:"
+            android:textColor="#3F51B5"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/txt_usuario"
+            android:layout_width="311dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_nombres"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/Usuario"
+            android:inputType="textPersonName"
+            android:padding="5dp"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/Celular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@+id/Usuario"
+            android:layout_marginTop="15dp"
+            android:text="Celular:"
+            android:textColor="#3F51B5"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/txt_celular"
+            android:layout_width="312dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_usuario"
+            android:layout_marginStart="21dp"
+            android:layout_marginTop="7dp"
+            android:layout_toEndOf="@+id/Celular"
+            android:inputType="text|number"
+            android:maxLength="10"
+            android:padding="5dp"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/Correo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Celular"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:text="Correo:"
+            android:textColor="#3F51B5"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/txt_correo"
+            android:layout_width="313dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_celular"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="7.5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toEndOf="@+id/Correo"
+            android:inputType="textEmailAddress"
+            android:padding="5dp"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/Clave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Correo"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="10dp"
+            android:text="Clave:"
+            android:textColor="#3F51B5"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/txt_clave"
+            android:layout_width="316dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_correo"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="7.5dp"
+            android:layout_toEndOf="@+id/Clave"
+            android:inputType="textPassword"
+            android:padding="5dp"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btn_registrar"
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="50dp"
+            android:text="Modificar"/>
+
+
+    </RelativeLayout>
+</layout>

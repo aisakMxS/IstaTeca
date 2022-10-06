@@ -24,7 +24,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -88,7 +87,6 @@ public class registro_librosFragment extends Fragment {
 
         combotipo();
         combodisponibilidad();
-        getAutor();
 
         if(validar==1){
             System.out.println("Abriendo modificar");
@@ -291,13 +289,11 @@ public class registro_librosFragment extends Fragment {
                         in1,in2,in3,dimensiones,estadolibro,activo,byteArray,url,0,d,disponibilidad(),donante,documentodonacion);
 
 
-
+                create(l,0);
                 CrearAutores();
                 getAutor();
-                create(l,0);
                 limpiarcampos();
-
-
+                crearautor_libro(1);
 
 
 
@@ -354,8 +350,7 @@ public class registro_librosFragment extends Fragment {
     private void CrearAutores(){
         for(int i=0; i<comboAutorList.size(); i++){
             int con=0;
-            String nombre= comboAutorList.get(i);
-            Autor au= new Autor(0,nombre);
+            Autor au= new Autor(lista_autores.size()+1,comboAutorList.get(i));
             for(int j=0; j<lista_autores.size(); j++){
                 if(lista_autores.get(j).getNombre().equalsIgnoreCase(au.getNombre())){
                     System.out.println("Autor Existente");
@@ -385,6 +380,7 @@ public class registro_librosFragment extends Fragment {
             nombreautor= comboAutorList.get(i);
 
             for (int j=0; j<lista_autores.size(); j++){
+
                 if(lista_autores.get(j).getNombre().equalsIgnoreCase(nombreautor)){
                     Autor au1= new Autor(lista_autores.get(j).getId(),nombreautor);
                     Libro li = new Libro(idlibro,"Deweys","El chemas",null,"adquisicionqwe",1980,"Editort","Cuenca", 90, "Area", "Isbn123"
@@ -538,17 +534,12 @@ public class registro_librosFragment extends Fragment {
     }
     public void dialogoautor(){
 
-        AutoCompleteTextView txtautor_autocomplete;
+
         TextView txtcerrar;
         EditText nombre;
         Button agregar;
         String agregar_tipo;
         dialogo.setContentView(R.layout.dialogo_autor);
-        txtautor_autocomplete= (AutoCompleteTextView)dialogo.findViewById(R.id.txt_autor_autocomplete) ;
-        ArrayAdapter adapter = new ArrayAdapter<Autor >(getActivity(), android.R.layout.simple_dropdown_item_1line, lista_autores);
-        txtautor_autocomplete.setThreshold(3);
-        txtautor_autocomplete.setAdapter(adapter);
-
         txtcerrar=(TextView) dialogo.findViewById(R.id.txt_cerrar);
         nombre=(EditText) dialogo.findViewById(R.id.txt_agregar);
         agregar=(Button) dialogo.findViewById(R.id.btn_agregar);
@@ -562,7 +553,7 @@ public class registro_librosFragment extends Fragment {
         agregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                comboAutorList.add(txtautor_autocomplete.getText().toString());
+                comboAutorList.add(nombre.getText().toString());
                 binding.comboAutores.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, comboAutorList));
                 dialogo.dismiss();
 
@@ -589,7 +580,6 @@ public class registro_librosFragment extends Fragment {
                // Toast.makeText(registro_librosFragment.this,l.getCodigoDewey()+" created!", Toast.LENGTH_LONG).show();
                 if(v==0) {
                     Toast.makeText(getActivity(), l.getTitulo() + " Creado", Toast.LENGTH_LONG).show();
-                    crearautor_libro(l.getId_libro());
                 }else
                 {
                     Toast.makeText(getActivity(), l.getTitulo() + " Modificado", Toast.LENGTH_LONG).show();
@@ -650,14 +640,27 @@ public class registro_librosFragment extends Fragment {
         });
     }
 
+    private void CrearAutorSincrono(Autor A)  {
+        Retrofit retrofit= new Retrofit.Builder().baseUrl(Apis.URL_001).addConverterFactory(GsonConverterFactory.create()).build();
+        autorService= retrofit.create(AutorService.class);
+        Call<Autor> call= autorService.addAutor(A);
 
+
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+            StrictMode.setThreadPolicy(policy);
+            Response <Autor> result= call.execute();
+        }catch (IOException e){
+            System.out.println("Error "+e.getMessage());
+        }
 
 
 
        // Intent intent = new Intent(this, BackgroundService.class);
 
 
-
+    }
 
     private void CrearAutor(Autor A){
         Retrofit retrofit= new Retrofit.Builder().baseUrl(Apis.URL_001).addConverterFactory(GsonConverterFactory.create()).build();
@@ -688,6 +691,8 @@ public class registro_librosFragment extends Fragment {
         Retrofit retrofit= new Retrofit.Builder().baseUrl(Apis.URL_001).addConverterFactory(GsonConverterFactory.create()).build();
         autor_libroService= retrofit.create(Autor_LibroService.class);
         Call<AutorLibro> call= autor_libroService.addAutor(al);
+        System.out.println(al.getLibro().getId_libro());
+        System.out.println(al.getAutor().getId());
         call.enqueue(new Callback<AutorLibro>() {
             @Override
             public void onResponse(Call<AutorLibro> call, Response<AutorLibro> response) {

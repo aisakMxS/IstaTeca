@@ -1,8 +1,10 @@
 package com.example.istateca;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Toast;
 
 import com.example.istateca.Clases.Bibliotecario;
 import com.example.istateca.Clases.Usuario;
@@ -20,8 +22,8 @@ import com.example.istateca.databinding.ActivityVprincipalBinding;
 
 public class V_principal extends AppCompatActivity {
 
-    public static  Usuario usuario_ingresado=new Usuario();
-    public static  Bibliotecario bibliotecario_ingresado=new Bibliotecario();
+    public static Usuario usuario_ingresado = new Usuario();
+    public static Bibliotecario bibliotecario_ingresado = new Bibliotecario();
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityVprincipalBinding binding;
@@ -33,9 +35,8 @@ public class V_principal extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         Bundle extras = getIntent().getExtras();
-        usuario_ingresado=MainActivity.viewModel.getUsuario_Ingrtesado().getValue();
-        bibliotecario_ingresado=MainActivity.viewModel.getBibliotecario_Ingrtesado().getValue();
 
+        revalidar_ingreso();
         //System.out.println(usuario_ingresado.getPersona().getNombres());
 
         setSupportActionBar(binding.appBarVprincipal.toolbar);
@@ -52,16 +53,16 @@ public class V_principal extends AppCompatActivity {
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        if (usuario_ingresado== null){
-            if (bibliotecario_ingresado.getPersona().getRol()==0){
+        if (usuario_ingresado == null) {
+            if (bibliotecario_ingresado.getPersona().getRol() == 0) {
                 //administrador acceso
-            }else{
+            } else {
                 //
             }
         }
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_lista_l, R.id.nav_solicitud_l, R.id.nav_devolucion_l,R.id.nav_registro_b,R.id.nav_listado_p,R.id.nav_listado_b,R.id.nav_listado_l,
-                R.id.nav_listas,R.id.nav_registro_l,R.id.nav_solicitud_l_pen,R.id.nav_editar_usuario)
+                R.id.nav_lista_l, R.id.nav_solicitud_l, R.id.nav_devolucion_l, R.id.nav_registro_b, R.id.nav_listado_p, R.id.nav_listado_b, R.id.nav_listado_l,
+                R.id.nav_listas, R.id.nav_registro_l, R.id.nav_solicitud_l_pen, R.id.nav_editar_usuario)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_vprincipal);
@@ -82,4 +83,12 @@ public class V_principal extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+    public static void revalidar_ingreso() {
+        usuario_ingresado = null;
+        bibliotecario_ingresado = null;
+        usuario_ingresado = MainActivity.viewModel.getUsuario_Ingrtesado().getValue();
+        bibliotecario_ingresado = MainActivity.viewModel.getBibliotecario_Ingrtesado().getValue();
+    }
+
 }

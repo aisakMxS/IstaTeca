@@ -26,12 +26,14 @@ public class MainActivity extends AppCompatActivity {
         //persona
         viewModel.getPersona().observe(this,persona -> {
             if (viewModel.getPersona()!=null){
+                V_principal.revalidar_ingreso();
                 viewModel.iniciousuario();
             }
         });
         //usuario
         viewModel.getUsuario_Ingrtesado().observe(this,usuario -> {
             if (viewModel.getUsuario_Ingrtesado()!=null){
+                V_principal.revalidar_ingreso();
                 System.out.println(viewModel.getUsuario_Ingrtesado().getValue().getPersona().getNombres());
                 openActivity();
             }

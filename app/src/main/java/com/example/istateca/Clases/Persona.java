@@ -139,4 +139,19 @@ public class Persona implements Parcelable {
         parcel.writeString(celular);
         parcel.writeByte((byte) (activo ? 1 : 0));
     }
+
+    @Override
+    public String toString() {
+        return "Persona{" +
+                "id_persona=" + id_persona +
+                ", cedula='" + cedula + '\'' +
+                ", usuario='" + usuario + '\'' +
+                ", clave='" + clave + '\'' +
+                ", nombres='" + nombres + '\'' +
+                ", rol=" + rol +
+                ", correo='" + correo + '\'' +
+                ", celular='" + celular + '\'' +
+                ", activo=" + activo +
+                '}';
+    }
 }

@@ -99,4 +99,15 @@ public class Bibliotecario implements Parcelable {
     public void setActivo_bibliotecario(boolean activo_bibliotecario) {
         this.activo_bibliotecario = activo_bibliotecario;
     }
+
+    @Override
+    public String toString() {
+        return "Bibliotecario{" +
+                "id_bibliotecario=" + id_bibliotecario +
+                ", persona=" + persona.toString() +
+                ", fecha_inicio='" + fecha_inicio + '\'' +
+                ", fecha_fin='" + fecha_fin + '\'' +
+                ", activo_bibliotecario=" + activo_bibliotecario +
+                '}';
+    }
 }

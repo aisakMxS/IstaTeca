@@ -39,7 +39,7 @@
             android:text="Cèdula:"
             android:textColor="#3F51B5"
             android:textSize="15sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/txt_cedula"
@@ -63,7 +63,7 @@
             android:text="Nombres:"
             android:textColor="#3F51B5"
             android:textSize="15sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/txt_nombres"
